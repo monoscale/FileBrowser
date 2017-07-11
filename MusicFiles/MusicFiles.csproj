@@ -82,6 +82,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormControls\HelpLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FormControls\HelpLabel.Designer.cs">
+      <DependentUpon>HelpLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ApplicationSetting.cs" />
     <Compile Include="Models\Database\MusicFilesDb.cs" />
     <Compile Include="Models\Database\Tables.cs" />
@@ -108,6 +120,12 @@
     <Compile Include="FormControls\MenuButton.Designer.cs">
       <DependentUpon>MenuButton.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormControls\HelpLabel.resx">
+      <DependentUpon>HelpLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>

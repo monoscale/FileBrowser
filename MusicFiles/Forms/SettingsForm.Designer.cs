@@ -327,6 +327,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
+            this.Text = "Settings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.GroupBoxDirectories.ResumeLayout(false);
             this.GroupBoxExtensions.ResumeLayout(false);

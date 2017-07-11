@@ -3,7 +3,6 @@ using MusicFiles.Models;
 using MusicFiles.Models.Repositories;
 using MusicFiles.Properties;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -176,6 +175,21 @@ namespace MusicFiles
             settingsForm.Show();
 
         }
+
+        /// <summary>
+        /// Opens the help view
+        /// </summary>
+        /// <param name="sender">MenuButton</param>
+        /// <param name="e">EventArgs</param>
+        private void MenuButtonGuide_Click(object sender, EventArgs e)
+        {
+            HelpForm helpForm = new HelpForm()
+            {
+                StartPosition = FormStartPosition.Manual,
+                Location = new Point(Location.X + 40, Location.Y + 40)
+            };
+            helpForm.Show();
+        }
         #endregion
 
         /* EVENTS RELATED TO THE TREEVIEW */
@@ -330,8 +344,9 @@ namespace MusicFiles
             DIRECTORY
         }
 
+
         #endregion
 
- 
+
     }
 }

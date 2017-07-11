@@ -31,8 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.PanelMenu = new System.Windows.Forms.Panel();
+            this.MenuButtonGuide = new MusicFiles.UI.MenuButton(this.components);
             this.MenuButtonSettings = new MusicFiles.UI.MenuButton(this.components);
-            this.LabelHorizontalLine = new System.Windows.Forms.Label();
             this.MenuButtonRefresh = new MusicFiles.UI.MenuButton(this.components);
             this.TreeViewDirectories = new System.Windows.Forms.TreeView();
             this.PanelContent = new System.Windows.Forms.Panel();
@@ -47,8 +47,8 @@
             // PanelMenu
             // 
             this.PanelMenu.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.PanelMenu.Controls.Add(this.MenuButtonGuide);
             this.PanelMenu.Controls.Add(this.MenuButtonSettings);
-            this.PanelMenu.Controls.Add(this.LabelHorizontalLine);
             this.PanelMenu.Controls.Add(this.MenuButtonRefresh);
             this.PanelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelMenu.Font = new System.Drawing.Font("Cambria", 12.25F);
@@ -59,28 +59,31 @@
             this.PanelMenu.Size = new System.Drawing.Size(141, 561);
             this.PanelMenu.TabIndex = 0;
             // 
+            // MenuButtonGuide
+            // 
+            this.MenuButtonGuide.Dock = System.Windows.Forms.DockStyle.Top;
+            this.MenuButtonGuide.FlatAppearance.BorderSize = 0;
+            this.MenuButtonGuide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MenuButtonGuide.Location = new System.Drawing.Point(0, 86);
+            this.MenuButtonGuide.Name = "MenuButtonGuide";
+            this.MenuButtonGuide.Size = new System.Drawing.Size(141, 43);
+            this.MenuButtonGuide.TabIndex = 6;
+            this.MenuButtonGuide.Text = "Help";
+            this.MenuButtonGuide.UseVisualStyleBackColor = true;
+            this.MenuButtonGuide.Click += new System.EventHandler(this.MenuButtonGuide_Click);
+            // 
             // MenuButtonSettings
             // 
             this.MenuButtonSettings.Dock = System.Windows.Forms.DockStyle.Top;
             this.MenuButtonSettings.FlatAppearance.BorderSize = 0;
             this.MenuButtonSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MenuButtonSettings.Location = new System.Drawing.Point(0, 44);
+            this.MenuButtonSettings.Location = new System.Drawing.Point(0, 43);
             this.MenuButtonSettings.Name = "MenuButtonSettings";
             this.MenuButtonSettings.Size = new System.Drawing.Size(141, 43);
             this.MenuButtonSettings.TabIndex = 5;
             this.MenuButtonSettings.Text = "Settings";
             this.MenuButtonSettings.UseVisualStyleBackColor = true;
             this.MenuButtonSettings.Click += new System.EventHandler(this.ButtonSettings_Click);
-            // 
-            // LabelHorizontalLine
-            // 
-            this.LabelHorizontalLine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.LabelHorizontalLine.Dock = System.Windows.Forms.DockStyle.Top;
-            this.LabelHorizontalLine.Location = new System.Drawing.Point(0, 43);
-            this.LabelHorizontalLine.Margin = new System.Windows.Forms.Padding(0);
-            this.LabelHorizontalLine.Name = "LabelHorizontalLine";
-            this.LabelHorizontalLine.Size = new System.Drawing.Size(141, 1);
-            this.LabelHorizontalLine.TabIndex = 3;
             // 
             // MenuButtonRefresh
             // 
@@ -146,7 +149,7 @@
             // 
             // TextBoxSearch
             // 
-            this.TextBoxSearch.Location = new System.Drawing.Point(61, 13);
+            this.TextBoxSearch.Location = new System.Drawing.Point(68, 13);
             this.TextBoxSearch.Name = "TextBoxSearch";
             this.TextBoxSearch.Size = new System.Drawing.Size(262, 20);
             this.TextBoxSearch.TabIndex = 2;
@@ -175,7 +178,6 @@
         #endregion
 
         private System.Windows.Forms.Panel PanelMenu;
-        private System.Windows.Forms.Label LabelHorizontalLine;
         private System.Windows.Forms.TreeView TreeViewDirectories;
         private UI.MenuButton MenuButtonRefresh;
         private UI.MenuButton MenuButtonSettings;
@@ -183,5 +185,6 @@
         private System.Windows.Forms.TextBox TextBoxSearch;
         private System.Windows.Forms.Panel PanelSearch;
         private System.Windows.Forms.Label LabelSearch;
+        private UI.MenuButton MenuButtonGuide;
     }
 }
