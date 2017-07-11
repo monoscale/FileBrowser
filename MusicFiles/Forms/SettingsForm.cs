@@ -167,7 +167,7 @@ namespace MusicFiles.Forms
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                folderBrowserDialog.ShowDialog();
+                //folderBrowserDialog.ShowDialog();
                 string newPath = folderBrowserDialog.SelectedPath;
                 MusicDirectory newDirectory = new MusicDirectory(newPath); // new instance for comparing
                 if (directories.Contains(newDirectory))
