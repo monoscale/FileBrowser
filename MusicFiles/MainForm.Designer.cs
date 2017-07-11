@@ -157,6 +157,7 @@
             this.TextBoxSearch.Size = new System.Drawing.Size(372, 20);
             this.TextBoxSearch.TabIndex = 2;
             this.TextBoxSearch.TextChanged += new System.EventHandler(this.TextBoxSearch_TextChanged);
+            this.TextBoxSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxSearch_KeyDown);
             // 
             // MainForm
             // 

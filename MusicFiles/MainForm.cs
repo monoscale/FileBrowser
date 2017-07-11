@@ -28,6 +28,9 @@ namespace MusicFiles
         /// </summary>
         private ExtensionRepository extensionRepository;
 
+
+        private ICollection<MusicDirectory> musicDirectories; // In-memory representation of all the directories
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -55,6 +58,7 @@ namespace MusicFiles
 
             Size = Settings.Default.WindowSize;
             Location = Settings.Default.WindowLocation;
+
             TreeViewDirectories.ForeColor = Settings.Default.ColorForeTreeView;
             TreeViewDirectories.BackColor = Settings.Default.ColorBackTreeView;
             PanelMenu.ForeColor = Settings.Default.ColorForeMenu;
@@ -64,9 +68,10 @@ namespace MusicFiles
 
             // TreeView
             directoryRepository = new DirectoryRepository();
+            musicDirectories = directoryRepository.GetDirectories();
             extensionRepository = new ExtensionRepository();
 
-            GenerateTree(directoryRepository.GetDirectories());
+            GenerateTree(musicDirectories);
 
         }
 
@@ -124,7 +129,8 @@ namespace MusicFiles
         }
 
         /// <summary>
-        /// A strange bug that sometimes makes this form appear out of the screens, thus being unable to bring it back
+        /// Sometimes the form can appear out of the screen (for example you disconnected your second monitor), thus being unable to bring the form back on your main screen.
+        /// This method determines if the form is on any active monitor.
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
@@ -198,7 +204,8 @@ namespace MusicFiles
         /// Generates the treeview for the directories and files
         /// </summary>
         /// <param name="directories">A collection of the directories</param>
-        private void GenerateTree(ICollection<MusicDirectory> directories)
+        /// <param name="isSearching">Indicates wether or not the directories should be expanded</param>
+        private void GenerateTree(ICollection<MusicDirectory> directories, bool expand = false)
         {
             TreeViewDirectories.Nodes.Clear(); // Clear the view
             int index = 0;
@@ -224,6 +231,8 @@ namespace MusicFiles
                     {
                         Text = directory.Path,
                         Tag = NODE_STAT.DIRECTORY
+
+
                     };
 
                     TreeViewDirectories.Nodes.Add(dirNode);
@@ -239,6 +248,23 @@ namespace MusicFiles
 
                         TreeViewDirectories.Nodes[index].Nodes.Add(fileNode);
                     }
+
+                    if (dirNode.Nodes.Count == 0)
+                    {
+                        dirNode.Nodes.Add(new TreeNode
+                        {
+                            Text = "No matches found",
+                            ForeColor = Color.Red
+                        });
+                    }
+
+                    if (expand)
+                    {
+                        dirNode.Expand(); // Expands the directory
+                        TreeViewDirectories.Nodes[0].EnsureVisible(); // make sure the top node is visible
+                    }
+
+
                     index++;
                 }
                 catch (DirectoryNotFoundException dnfe)
@@ -295,12 +321,12 @@ namespace MusicFiles
             {
                 TreeNode selectedNode = e.Node;
                 TreeView treeView = (TreeView)sender;
-                treeView.SelectedNode = selectedNode; // A right click doesnt set the selected node, dus we do it ourself
+                treeView.SelectedNode = selectedNode; // A right click doesnt set the selected node, so we do it ourself
 
                 ContextMenuStrip contextMenuNode = new ContextMenuStrip();
                 ToolStripMenuItem OpenFolder = new ToolStripMenuItem();
 
-                string path = "";
+                string path = ""; //predeclaration since the following if else statement fill this variable in a different way
 
                 if ((NODE_STAT)selectedNode.Tag == NODE_STAT.FILE)
                 {
@@ -336,17 +362,68 @@ namespace MusicFiles
             Process.Start(info);
         }
 
-        /// <summary>
-        /// Keeping track wether or not a node in the tree is a directory or a file
-        /// </summary>
-        private enum NODE_STAT
-        {
-            FILE,
-            DIRECTORY
-        }
         #endregion
 
 
+
+
+
+
+        private void TextBoxSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter)
+            {
+                return;
+            }
+            // We regenerate the full tree first, then delete what doesn't match. This causes a flicker since its deleting and rebuilding the tree
+            GenerateTree(musicDirectories, true);
+            string query = TextBoxSearch.Text.ToLower();
+            // Start the deletion process
+            List<TreeNode> nodesToDelete = new List<TreeNode>();
+            // Iterate all the directories
+            foreach (TreeNode directory in TreeViewDirectories.Nodes)
+            {
+                int nodeCount = directory.Nodes.Count;
+                // Iterate all the files in this directory
+                for (int i = 0; i < nodeCount; i++)
+                {
+                    TreeNode file = directory.Nodes[i]; // get current node
+                    string fileName = file.Text.ToLower(); // text in lowercase
+                    if (!(fileName.Contains(query))) // if not contains
+                    {
+                        nodesToDelete.Add(file); // mark node as deleted
+                    }
+                }
+            }
+            nodesToDelete.ForEach(f => f.Remove()); // Delete the nodes
+
+            foreach (TreeNode directory in TreeViewDirectories.Nodes)
+            {
+                if (directory.Nodes.Count == 0)
+                {
+                    directory.Nodes.Add(new TreeNode
+                    {
+                        Text = "No matches found",
+                        ForeColor = Color.Red
+                    });
+                }
+            }
+        }
+
+        private void TextBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            string input = TextBoxSearch.Text;
+            if(string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input))
+            {
+                GenerateTree(musicDirectories, true);
+            } 
+        }
+
+
+        /*
+        Work in progress
+
+        private List<TreeNodeProperties> nodeProperties = new List<TreeNodeProperties>();
 
         /// <summary>
         /// Updates the treeview to only show what matches the input. Is not case sensitive
@@ -355,8 +432,47 @@ namespace MusicFiles
         /// <param name="e"></param>
         private void TextBoxSearch_TextChanged(object sender, EventArgs e)
         {
+            // We must use the "TreeNode.Remove()" method here since there is nothing else available.
+            // We keep track of the deleted nodes and move them back in if the query is empty or it matches.
+            string query = TextBoxSearch.Text.ToLower();
 
+
+            // Lets see if there are any nodes that can be put back
+            foreach(TreeNodeProperties properties in nodeProperties)
+            {
+                string fileName = properties.Name.ToLower();
+                if (fileName.Contains(query))
+                {
+                    //put back in the list
+                }
+            }
+            
+            // Start the deletion process
+            List<TreeNode> nodesToDelete = new List<TreeNode>();
+            // Iterate all the directories
+            foreach (TreeNode directory in TreeViewDirectories.Nodes)
+            {
+                int nodeCount = directory.Nodes.Count;
+                // Iterate all the files in this directory
+                for (int i = 0; i < nodeCount; i++)
+                {
+                    TreeNode file = directory.Nodes[i]; // get current node
+                    string fileName = file.Text.ToLower(); // text in lowercase
+                    if (!(fileName.Contains(query))) // if not contains
+                    {
+                        nodesToDelete.Add(file); // mark node as deleted
+                        nodeProperties.Add(new TreeNodeProperties
+                        {
+                            Parent = directory.Text,
+                            Name = file.Text,
+                            FullName = file.Text,
+                            Index = i
+                        });
+                    }
+                }
+            }
+            nodesToDelete.ForEach(f => f.Remove()); // Delete the nodes
         }
-
+        */
     }
 }
