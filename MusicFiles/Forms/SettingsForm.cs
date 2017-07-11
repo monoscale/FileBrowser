@@ -239,13 +239,26 @@ namespace MusicFiles.Forms
         }
 
         /// <summary>
-        /// Validates the inputted extension and adds to the database if valid
+        /// The user pressed "Submit" when adding an extension
         /// </summary>
         /// <param name="sender">ButtonSubmit</param>
         /// <param name="e">EventArgs</param>
         private void ButtonSubmit_Click(object sender, EventArgs e)
         {
             AddExtension(TextBoxExtensionInput.Text);
+        }
+
+        /// <summary>
+        /// The user pressed "Enter" when adding an extension
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBoxExtensionInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                AddExtension(TextBoxExtensionInput.Text);
+            }
         }
 
         /// <summary>
@@ -258,18 +271,21 @@ namespace MusicFiles.Forms
             AddExtensionComplete();
         }
 
-
+        /// <summary>
+        /// Validates the inputted extension and adds to the database if valid
+        /// </summary>
+        /// <param name="extension">The extension to validate</param>
         private void AddExtension(string extension)
         {
             if (string.IsNullOrWhiteSpace(extension))
             {
-                MessageBox.Show("The extension cannot be empty", "Invalid Extension", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxUtils.ShowExclamation("Invalid extension", "The extension cannot be empty");
                 return;
             }
 
             if (extension.Any(c => char.IsDigit(c)))
             {
-                MessageBox.Show("The extension cannot contain a number", "Invalid Extension", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxUtils.ShowExclamation("Invalid extension", "The extension cannot contain a number");
                 return;
             }
 
@@ -279,9 +295,17 @@ namespace MusicFiles.Forms
                 extension = "." + extension;
             }
 
-            extensionRepository.AddExtension(extension);
-            extensions.Add(extension);
-            AddExtensionComplete();
+            if (extensions.Contains(extension))
+            {
+                MessageBoxUtils.ShowError("Duplicate extension", "This extension is already in the list.");
+            }
+            else
+            {
+
+                extensionRepository.AddExtension(extension);
+                extensions.Add(extension);
+                AddExtensionComplete();
+            }
         }
 
         /// <summary>
@@ -341,13 +365,7 @@ namespace MusicFiles.Forms
             UpdateExtensions();
         }
 
-        private void TextBoxExtensionInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                AddExtension(TextBoxExtensionInput.Text);
-            }
-        }
+
         /// <summary>
         /// Updates the extensionlist
         /// </summary>

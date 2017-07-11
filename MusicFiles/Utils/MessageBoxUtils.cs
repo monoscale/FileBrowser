@@ -12,5 +12,10 @@ namespace MusicFiles.Utils
         {
             MessageBox.Show(text, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        public static void ShowExclamation(string title, string text)
+        {
+            MessageBox.Show(text, title, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
     }
 }
