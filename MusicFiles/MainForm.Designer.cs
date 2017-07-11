@@ -100,25 +100,27 @@
             // 
             // TreeViewDirectories
             // 
+            this.TreeViewDirectories.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TreeViewDirectories.BackColor = System.Drawing.Color.White;
             this.TreeViewDirectories.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TreeViewDirectories.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.TreeViewDirectories.Font = new System.Drawing.Font("Cambria", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TreeViewDirectories.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.TreeViewDirectories.Location = new System.Drawing.Point(0, 46);
+            this.TreeViewDirectories.Location = new System.Drawing.Point(0, 40);
             this.TreeViewDirectories.Margin = new System.Windows.Forms.Padding(0);
             this.TreeViewDirectories.Name = "TreeViewDirectories";
             this.TreeViewDirectories.ShowLines = false;
             this.TreeViewDirectories.ShowNodeToolTips = true;
-            this.TreeViewDirectories.Size = new System.Drawing.Size(443, 515);
+            this.TreeViewDirectories.Size = new System.Drawing.Size(443, 521);
             this.TreeViewDirectories.TabIndex = 1;
             this.TreeViewDirectories.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeViewDirectories_NodeMouseClick);
             this.TreeViewDirectories.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeViewDirectories_NodeMouseDoubleClick);
             // 
             // PanelContent
             // 
-            this.PanelContent.Controls.Add(this.PanelSearch);
             this.PanelContent.Controls.Add(this.TreeViewDirectories);
+            this.PanelContent.Controls.Add(this.PanelSearch);
             this.PanelContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelContent.Location = new System.Drawing.Point(141, 0);
             this.PanelContent.Margin = new System.Windows.Forms.Padding(0);
@@ -134,25 +136,27 @@
             this.PanelSearch.Location = new System.Drawing.Point(0, 0);
             this.PanelSearch.Margin = new System.Windows.Forms.Padding(0);
             this.PanelSearch.Name = "PanelSearch";
-            this.PanelSearch.Size = new System.Drawing.Size(443, 44);
+            this.PanelSearch.Size = new System.Drawing.Size(443, 40);
             this.PanelSearch.TabIndex = 3;
             // 
             // LabelSearch
             // 
             this.LabelSearch.AutoSize = true;
-            this.LabelSearch.Location = new System.Drawing.Point(5, 16);
+            this.LabelSearch.Location = new System.Drawing.Point(6, 9);
             this.LabelSearch.Name = "LabelSearch";
-            this.LabelSearch.Size = new System.Drawing.Size(41, 13);
+            this.LabelSearch.Size = new System.Drawing.Size(47, 13);
             this.LabelSearch.TabIndex = 3;
-            this.LabelSearch.Text = "Search";
-            this.LabelSearch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LabelSearch.Text = "Search: ";
             // 
             // TextBoxSearch
             // 
-            this.TextBoxSearch.Location = new System.Drawing.Point(68, 13);
+            this.TextBoxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBoxSearch.Location = new System.Drawing.Point(59, 6);
             this.TextBoxSearch.Name = "TextBoxSearch";
-            this.TextBoxSearch.Size = new System.Drawing.Size(262, 20);
+            this.TextBoxSearch.Size = new System.Drawing.Size(372, 20);
             this.TextBoxSearch.TabIndex = 2;
+            this.TextBoxSearch.TextChanged += new System.EventHandler(this.TextBoxSearch_TextChanged);
             // 
             // MainForm
             // 
@@ -184,7 +188,7 @@
         private System.Windows.Forms.Panel PanelContent;
         private System.Windows.Forms.TextBox TextBoxSearch;
         private System.Windows.Forms.Panel PanelSearch;
-        private System.Windows.Forms.Label LabelSearch;
         private UI.MenuButton MenuButtonGuide;
+        private System.Windows.Forms.Label LabelSearch;
     }
 }

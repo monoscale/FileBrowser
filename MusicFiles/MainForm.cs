@@ -54,17 +54,18 @@ namespace MusicFiles
             }
 
             Size = Settings.Default.WindowSize;
+            Location = Settings.Default.WindowLocation;
             TreeViewDirectories.ForeColor = Settings.Default.ColorForeTreeView;
             TreeViewDirectories.BackColor = Settings.Default.ColorBackTreeView;
             PanelMenu.ForeColor = Settings.Default.ColorForeMenu;
             PanelMenu.BackColor = Settings.Default.ColorBackMenu;
 
             // Settings.Default.PropertyChanged += Settings_PropertyChanged;
-     
+
             // TreeView
             directoryRepository = new DirectoryRepository();
             extensionRepository = new ExtensionRepository();
-       
+
             GenerateTree(directoryRepository.GetDirectories());
 
         }
@@ -77,7 +78,7 @@ namespace MusicFiles
 
         private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            
+
             if (e.PropertyName.StartsWith("Color"))
             {
                 IList<string> settings = Enum.GetValues(typeof(ApplicationSetting)).Cast<ApplicationSetting>().Select(setting => setting.ToString()).ToList();
@@ -107,7 +108,7 @@ namespace MusicFiles
         /// <param name="sender">MainForm</param>
         /// <param name="e">FormClosingEventArgs</param>
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        { 
+        {
             Settings.Default.WindowLocation = Location;
 
             if (WindowState == FormWindowState.Normal)
@@ -130,7 +131,7 @@ namespace MusicFiles
         private bool IsOnScreen(Form form)
         {
             Screen[] screens = Screen.AllScreens;
-            Rectangle formRectangle = new Rectangle(form.Left, form.Top, form.Width, form.Height);  
+            Rectangle formRectangle = new Rectangle(form.Left, form.Top, form.Width, form.Height);
             foreach (Screen screen in screens)
             {
 
@@ -155,7 +156,6 @@ namespace MusicFiles
 
         private void MenuButtonRefresh_Click(object sender, EventArgs e)
         {
-            TreeViewDirectories.Nodes.Clear();
             GenerateTree(directoryRepository.GetDirectories());
         }
 
@@ -200,9 +200,10 @@ namespace MusicFiles
         /// <param name="directories">A collection of the directories</param>
         private void GenerateTree(ICollection<MusicDirectory> directories)
         {
+            TreeViewDirectories.Nodes.Clear(); // Clear the view
             int index = 0;
 
-            if(directories.Count == 0)
+            if (directories.Count == 0)
             {
                 TreeNode notificationNode = new TreeNode
                 {
@@ -343,10 +344,19 @@ namespace MusicFiles
             FILE,
             DIRECTORY
         }
-
-
         #endregion
 
+
+
+        /// <summary>
+        /// Updates the treeview to only show what matches the input. Is not case sensitive
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+
+        }
 
     }
 }
