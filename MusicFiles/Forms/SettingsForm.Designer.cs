@@ -51,12 +51,17 @@
             this.ButtonForeTreeViewColor = new System.Windows.Forms.Button();
             this.ButtonReset = new System.Windows.Forms.Button();
             this.GroupBoxColors = new System.Windows.Forms.GroupBox();
+            this.GroupBoxSettings = new System.Windows.Forms.GroupBox();
+            this.LabelLanguage = new System.Windows.Forms.Label();
+            this.ComboBoxLanguage = new System.Windows.Forms.ComboBox();
+            this.CheckBoxExpand = new System.Windows.Forms.CheckBox();
             this.GroupBoxDirectories.SuspendLayout();
             this.GroupBoxExtensions.SuspendLayout();
             this.PanelAddExtension.SuspendLayout();
             this.PanelAdd.SuspendLayout();
             this.TableLayoutPanelColors.SuspendLayout();
             this.GroupBoxColors.SuspendLayout();
+            this.GroupBoxSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // ListViewDirectories
@@ -110,7 +115,7 @@
             this.GroupBoxExtensions.Controls.Add(this.PanelAddExtension);
             this.GroupBoxExtensions.Controls.Add(this.ButtonAddExtension);
             this.GroupBoxExtensions.Controls.Add(this.ListViewExtensions);
-            this.GroupBoxExtensions.Location = new System.Drawing.Point(335, 3);
+            this.GroupBoxExtensions.Location = new System.Drawing.Point(339, 3);
             this.GroupBoxExtensions.Name = "GroupBoxExtensions";
             this.GroupBoxExtensions.Size = new System.Drawing.Size(322, 202);
             this.GroupBoxExtensions.TabIndex = 3;
@@ -175,13 +180,12 @@
             // 
             // PanelAdd
             // 
-            this.PanelAdd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.PanelAdd.Controls.Add(this.GroupBoxDirectories);
             this.PanelAdd.Controls.Add(this.GroupBoxExtensions);
-            this.PanelAdd.Location = new System.Drawing.Point(12, 12);
+            this.PanelAdd.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PanelAdd.Location = new System.Drawing.Point(10, 10);
             this.PanelAdd.Name = "PanelAdd";
-            this.PanelAdd.Size = new System.Drawing.Size(660, 211);
+            this.PanelAdd.Size = new System.Drawing.Size(664, 211);
             this.PanelAdd.TabIndex = 4;
             // 
             // ButtonBackMenuColor
@@ -308,25 +312,68 @@
             // GroupBoxColors
             // 
             this.GroupBoxColors.Controls.Add(this.TableLayoutPanelColors);
-            this.GroupBoxColors.Location = new System.Drawing.Point(12, 229);
+            this.GroupBoxColors.Location = new System.Drawing.Point(10, 302);
             this.GroupBoxColors.Name = "GroupBoxColors";
-            this.GroupBoxColors.Size = new System.Drawing.Size(660, 144);
+            this.GroupBoxColors.Size = new System.Drawing.Size(664, 143);
             this.GroupBoxColors.TabIndex = 5;
             this.GroupBoxColors.TabStop = false;
-            this.GroupBoxColors.Text = "Colors";
+            this.GroupBoxColors.Text = "Colors (*requires restart)";
+            // 
+            // GroupBoxSettings
+            // 
+            this.GroupBoxSettings.Controls.Add(this.LabelLanguage);
+            this.GroupBoxSettings.Controls.Add(this.ComboBoxLanguage);
+            this.GroupBoxSettings.Controls.Add(this.CheckBoxExpand);
+            this.GroupBoxSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.GroupBoxSettings.Location = new System.Drawing.Point(10, 221);
+            this.GroupBoxSettings.Name = "GroupBoxSettings";
+            this.GroupBoxSettings.Size = new System.Drawing.Size(664, 81);
+            this.GroupBoxSettings.TabIndex = 6;
+            this.GroupBoxSettings.TabStop = false;
+            this.GroupBoxSettings.Text = "Settings";
+            // 
+            // LabelLanguage
+            // 
+            this.LabelLanguage.AutoSize = true;
+            this.LabelLanguage.Location = new System.Drawing.Point(9, 46);
+            this.LabelLanguage.Name = "LabelLanguage";
+            this.LabelLanguage.Size = new System.Drawing.Size(88, 13);
+            this.LabelLanguage.TabIndex = 2;
+            this.LabelLanguage.Text = "Select Language";
+            // 
+            // ComboBoxLanguage
+            // 
+            this.ComboBoxLanguage.FormattingEnabled = true;
+            this.ComboBoxLanguage.Location = new System.Drawing.Point(103, 43);
+            this.ComboBoxLanguage.Name = "ComboBoxLanguage";
+            this.ComboBoxLanguage.Size = new System.Drawing.Size(148, 21);
+            this.ComboBoxLanguage.TabIndex = 1;
+            // 
+            // CheckBoxExpand
+            // 
+            this.CheckBoxExpand.AutoSize = true;
+            this.CheckBoxExpand.Location = new System.Drawing.Point(12, 20);
+            this.CheckBoxExpand.Name = "CheckBoxExpand";
+            this.CheckBoxExpand.Size = new System.Drawing.Size(207, 17);
+            this.CheckBoxExpand.TabIndex = 0;
+            this.CheckBoxExpand.Text = "Expand directories on load and refresh";
+            this.CheckBoxExpand.UseVisualStyleBackColor = true;
+            this.CheckBoxExpand.CheckedChanged += new System.EventHandler(this.CheckBoxExpand_CheckedChanged);
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(684, 385);
+            this.ClientSize = new System.Drawing.Size(684, 451);
             this.Controls.Add(this.GroupBoxColors);
+            this.Controls.Add(this.GroupBoxSettings);
             this.Controls.Add(this.PanelAdd);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
+            this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.GroupBoxDirectories.ResumeLayout(false);
@@ -337,6 +384,8 @@
             this.TableLayoutPanelColors.ResumeLayout(false);
             this.TableLayoutPanelColors.PerformLayout();
             this.GroupBoxColors.ResumeLayout(false);
+            this.GroupBoxSettings.ResumeLayout(false);
+            this.GroupBoxSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -366,5 +415,9 @@
         private System.Windows.Forms.Button ButtonForeTreeViewColor;
         private System.Windows.Forms.Button ButtonReset;
         private System.Windows.Forms.GroupBox GroupBoxColors;
+        private System.Windows.Forms.GroupBox GroupBoxSettings;
+        private System.Windows.Forms.CheckBox CheckBoxExpand;
+        private System.Windows.Forms.ComboBox ComboBoxLanguage;
+        private System.Windows.Forms.Label LabelLanguage;
     }
 }

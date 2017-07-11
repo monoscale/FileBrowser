@@ -122,6 +122,21 @@
     <Compile Include="FormControls\MenuButton.Designer.cs">
       <DependentUpon>MenuButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Strings.nl.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.nl.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="Resources\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\ContextMenuBuilder.cs" />
+    <Compile Include="Utils\FormUtils.cs" />
+    <Compile Include="Utils\MessageBoxUtils.cs" />
+    <Compile Include="Utils\ProcessUtils.cs" />
     <EmbeddedResource Include="FormControls\HelpLabel.resx">
       <DependentUpon>HelpLabel.cs</DependentUpon>
     </EmbeddedResource>
@@ -146,6 +161,14 @@
     </Compile>
     <EmbeddedResource Include="FormControls\MenuButton.resx">
       <DependentUpon>MenuButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.nl.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.nl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Models\Class Diagram.cd" />
     <None Include="packages.config" />

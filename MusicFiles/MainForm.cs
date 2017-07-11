@@ -2,15 +2,17 @@
 using MusicFiles.Models;
 using MusicFiles.Models.Repositories;
 using MusicFiles.Properties;
+using MusicFiles.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
-
 
 namespace MusicFiles
 {
@@ -19,17 +21,13 @@ namespace MusicFiles
     /// </summary>
     public partial class MainForm : Form
     {
-        /// <summary>
-        /// Private instance of a DirectoryRepository
-        /// </summary>
         private DirectoryRepository directoryRepository;
-        /// <summary>
-        /// Private instance of a ExtensionRepository
-        /// </summary>
         private ExtensionRepository extensionRepository;
 
-
-        private ICollection<MusicDirectory> musicDirectories; // In-memory representation of all the directories
+        /// <summary>
+        /// In-memory representation of all the directories
+        /// </summary>
+        private ICollection<MusicDirectory> musicDirectories;
 
         /// <summary>
         /// Default Constructor
@@ -49,31 +47,53 @@ namespace MusicFiles
         /// <param name="e">EventArgs</param>
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // Settings
-            Text = Settings.Default.Title;
-            if (!IsOnScreen(this))
+            extensionRepository = new ExtensionRepository();
+            directoryRepository = new DirectoryRepository();
+            musicDirectories = directoryRepository.GetDirectories();
+
+            UpdateSizeAndLocation();
+            UpdateColor();
+            UpdateText();
+            GenerateTree(musicDirectories, Settings.Default.Expand);
+        }
+
+        /// <summary>
+        /// Sets the saved size and location of the form
+        /// </summary>
+        private void UpdateSizeAndLocation()
+        {
+            if (!FormUtils.IsOnScreen(this))
             {
                 Location = Settings.Default.WindowLocation;
             }
-
             Size = Settings.Default.WindowSize;
             Location = Settings.Default.WindowLocation;
+        }
 
+        /// <summary>
+        /// Update the color scheme
+        /// </summary>
+        private void UpdateColor()
+        {
             TreeViewDirectories.ForeColor = Settings.Default.ColorForeTreeView;
             TreeViewDirectories.BackColor = Settings.Default.ColorBackTreeView;
             PanelMenu.ForeColor = Settings.Default.ColorForeMenu;
             PanelMenu.BackColor = Settings.Default.ColorBackMenu;
-
-            // Settings.Default.PropertyChanged += Settings_PropertyChanged;
-
-            // TreeView
-            directoryRepository = new DirectoryRepository();
-            musicDirectories = directoryRepository.GetDirectories();
-            extensionRepository = new ExtensionRepository();
-
-            GenerateTree(musicDirectories);
-
         }
+
+        /// <summary>
+        /// Updates the UI text according to the chosen language
+        /// </summary>
+        private void UpdateText()
+        {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
+            Text = Settings.Default.Title; // title
+            MenuButtonGuide.Text = Resources.Strings.MenuHelp;
+            MenuButtonRefresh.Text = Resources.Strings.MenuRefresh;
+            MenuButtonSettings.Text = Resources.Strings.MenuSettings;
+            LabelSearch.Text = Resources.Strings.Search;
+        }
+
 
         /// <summary>
         /// Live color changing | NOT WORKING
@@ -127,28 +147,6 @@ namespace MusicFiles
 
             Settings.Default.Save();
         }
-
-        /// <summary>
-        /// Sometimes the form can appear out of the screen (for example you disconnected your second monitor), thus being unable to bring the form back on your main screen.
-        /// This method determines if the form is on any active monitor.
-        /// </summary>
-        /// <param name="form"></param>
-        /// <returns></returns>
-        private bool IsOnScreen(Form form)
-        {
-            Screen[] screens = Screen.AllScreens;
-            Rectangle formRectangle = new Rectangle(form.Left, form.Top, form.Width, form.Height);
-            foreach (Screen screen in screens)
-            {
-
-                if (screen.WorkingArea.Contains(formRectangle))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         #endregion
 
         /* EVENTS RELATED THE THE MENU */
@@ -162,7 +160,8 @@ namespace MusicFiles
 
         private void MenuButtonRefresh_Click(object sender, EventArgs e)
         {
-            GenerateTree(directoryRepository.GetDirectories());
+            musicDirectories = directoryRepository.GetDirectories(); // Reload in-memory object
+            GenerateTree(musicDirectories, Settings.Default.Expand);
         }
 
 
@@ -173,13 +172,7 @@ namespace MusicFiles
         /// <param name="e">EventArgs</param>
         private void ButtonSettings_Click(object sender, EventArgs e)
         {
-            SettingsForm settingsForm = new SettingsForm()
-            {
-                StartPosition = FormStartPosition.Manual,
-                Location = new Point(Location.X + 40, Location.Y + 40) // A small offset so the new forms isn't perfectly over the old form
-            };
-            settingsForm.Show();
-
+            FormUtils.OpenForm(new SettingsForm(), Location);
         }
 
         /// <summary>
@@ -189,12 +182,8 @@ namespace MusicFiles
         /// <param name="e">EventArgs</param>
         private void MenuButtonGuide_Click(object sender, EventArgs e)
         {
-            HelpForm helpForm = new HelpForm()
-            {
-                StartPosition = FormStartPosition.Manual,
-                Location = new Point(Location.X + 40, Location.Y + 40)
-            };
-            helpForm.Show();
+            FormUtils.OpenForm(new HelpForm(), Location);
+
         }
         #endregion
 
@@ -204,7 +193,7 @@ namespace MusicFiles
         /// Generates the treeview for the directories and files
         /// </summary>
         /// <param name="directories">A collection of the directories</param>
-        /// <param name="isSearching">Indicates wether or not the directories should be expanded</param>
+        /// <param name="expand">Indicates wether or not the directories should be expanded; default value is false</param>
         private void GenerateTree(ICollection<MusicDirectory> directories, bool expand = false)
         {
             TreeViewDirectories.Nodes.Clear(); // Clear the view
@@ -294,17 +283,13 @@ namespace MusicFiles
                     TreeNode selectedNode = e.Node;
                     if ((NODE_STAT)selectedNode.Tag == NODE_STAT.FILE)
                     {
-                        ProcessStartInfo info = new ProcessStartInfo()
-                        {
-                            FileName = selectedNode.ToolTipText
-                        };
-                        Process.Start(info);
+                        ProcessUtils.StartProcess(selectedNode.ToolTipText);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxUtils.ShowError("Unexpected error", ex.Message);
             }
         }
 
@@ -323,27 +308,26 @@ namespace MusicFiles
                 TreeView treeView = (TreeView)sender;
                 treeView.SelectedNode = selectedNode; // A right click doesnt set the selected node, so we do it ourself
 
-                ContextMenuStrip contextMenuNode = new ContextMenuStrip();
-                ToolStripMenuItem OpenFolder = new ToolStripMenuItem();
+                ContextMenuBuilder builder = new ContextMenuBuilder();
 
-                string path = ""; //predeclaration since the following if else statement fill this variable in a different way
+                string path = string.Empty; // The path of the file
+                string text = string.Empty; // The text to show in the contextmenu
 
                 if ((NODE_STAT)selectedNode.Tag == NODE_STAT.FILE)
                 {
                     path = selectedNode.ToolTipText;
                     path = Path.GetDirectoryName(path) + Path.DirectorySeparatorChar;
-                    OpenFolder.Text = "Open file location";
-
+                    text = "Open file location";
                 }
                 else if ((NODE_STAT)selectedNode.Tag == NODE_STAT.DIRECTORY)
                 {
                     path = selectedNode.Text;
-                    OpenFolder.Text = "Open folder";
+                    text = "Open folder";
                 }
-                OpenFolder.Click += (s, ea) => OpenFolder_Click(s, ea, path);
 
-                contextMenuNode.Items.AddRange(new[] { OpenFolder });
-                contextMenuNode.Show(Cursor.Position);
+                builder.Add(text, (s, ea) => OpenFolder_Click(s, ea, path));
+                builder.Show();
+
             }
         }
 
@@ -355,18 +339,8 @@ namespace MusicFiles
         /// <param name="path">The folder to open</param>
         private void OpenFolder_Click(object sender, EventArgs e, string path)
         {
-            ProcessStartInfo info = new ProcessStartInfo()
-            {
-                FileName = path
-            };
-            Process.Start(info);
+            ProcessUtils.StartProcess(path);
         }
-
-        #endregion
-
-
-
-
 
 
         private void TextBoxSearch_KeyDown(object sender, KeyEventArgs e)
@@ -413,11 +387,15 @@ namespace MusicFiles
         private void TextBoxSearch_TextChanged(object sender, EventArgs e)
         {
             string input = TextBoxSearch.Text;
-            if(string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input))
+            if (string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input))
             {
                 GenerateTree(musicDirectories, true);
-            } 
+            }
         }
+
+        #endregion
+
+
 
 
         /*

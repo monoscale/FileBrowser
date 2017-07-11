@@ -1,9 +1,14 @@
 ﻿using MusicFiles.Models;
 using MusicFiles.Models.Repositories;
 using MusicFiles.Properties;
+using MusicFiles.Utils;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace MusicFiles.Forms
@@ -26,7 +31,21 @@ namespace MusicFiles.Forms
         public SettingsForm()
         {
             InitializeComponent();
+        }
 
+
+        /**
+         * All the code related to creating the SettingsForm
+         */
+        #region SETTINGSFORM
+
+        /// <summary>
+        /// Occurs when SettingsForm has loaded. Loads the color settings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SettingsForm_Load(object sender, EventArgs e)
+        {
             Text = Settings.Default.Title + " - Settings";
 
             directoryRepository = new DirectoryRepository();
@@ -50,26 +69,38 @@ namespace MusicFiles.Forms
 
             UpdateDirectories();
             UpdateExtensions();
+            UpdateSettings();
+            UpdateColor();
+            UpdateText();
         }
 
+        private void UpdateSettings()
+        {
+            CheckBoxExpand.Checked = Settings.Default.Expand;
+            IList<string> languages = new List<string>();
+            languages.Add("English");
+            languages.Add("Nederlands");
+            ComboBoxLanguage.Items.AddRange(languages.ToArray());
 
-        /**
-         * All the code related to creating the SettingsForm
-         */
-        #region SETTINGSFORM
 
-        /// <summary>
-        /// Occurs when SettingsForm has loaded. Loads the color settings
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SettingsForm_Load(object sender, EventArgs e)
+        }
+
+        private void UpdateColor()
         {
             ButtonForeMenuColor.BackColor = Settings.Default.ColorForeMenu;
             ButtonBackMenuColor.BackColor = Settings.Default.ColorBackMenu;
 
             ButtonForeTreeViewColor.BackColor = Settings.Default.ColorForeTreeView;
             ButtonBackTreeViewColor.BackColor = Settings.Default.ColorBackTreeView;
+        }
+        /// <summary>
+        /// Updates the UI text according to the chosen language
+        /// </summary>
+        private void UpdateText()
+        {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
+            Text = Settings.Default.Title + " - " + Resources.Strings.MenuSettings;
+
         }
         #endregion
 
@@ -89,8 +120,17 @@ namespace MusicFiles.Forms
             if (result == DialogResult.OK)
             {
                 string path = folderBrowserDialog.SelectedPath;
-                directoryRepository.AddDirectory(path);
-                directories.Add(new MusicDirectory(path));
+                MusicDirectory newDirectory = new MusicDirectory(path);
+                if (directories.Contains(newDirectory))
+                {
+                    MessageBoxUtils.ShowError("Duplicate folder", "This folder is already in the list.");
+                }
+                else
+                {
+                    directoryRepository.AddDirectory(path);
+                    directories.Add(new MusicDirectory(path));
+                }
+
             }
         }
 
@@ -108,16 +148,10 @@ namespace MusicFiles.Forms
                 string path = selectedListViewItem.Text;
                 if (e.Button == MouseButtons.Right)
                 {
-                    ContextMenuStrip ContextMenuDirectories = new ContextMenuStrip();
-
-                    ToolStripMenuItem EditDirectory = new ToolStripMenuItem("Edit");
-                    EditDirectory.Click += (s, ea) => EditDirectory_Click(s, ea, path);
-
-                    ToolStripMenuItem DeleteDirectory = new ToolStripMenuItem("Delete");
-                    DeleteDirectory.Click += (s, ea) => DeleteDirectory_Click(s, ea, path);
-
-                    ContextMenuDirectories.Items.AddRange(new[] { EditDirectory, DeleteDirectory });
-                    ContextMenuDirectories.Show(Cursor.Position);
+                    ContextMenuBuilder builder = new ContextMenuBuilder();
+                    builder.Add("Edit", (s, ea) => EditDirectory_Click(s, ea, path));
+                    builder.Add("Delete", (s, ea) => DeleteDirectory_Click(s, ea, path));
+                    builder.Show();
                 }
             }
         }
@@ -135,9 +169,18 @@ namespace MusicFiles.Forms
             {
                 folderBrowserDialog.ShowDialog();
                 string newPath = folderBrowserDialog.SelectedPath;
-                directoryRepository.EditDirectory(oldPath, newPath);
-                directories.First(d => d.Path == oldPath).Path = newPath;
-                UpdateDirectories();
+                MusicDirectory newDirectory = new MusicDirectory(newPath); // new instance for comparing
+                if (directories.Contains(newDirectory))
+                {
+                    MessageBoxUtils.ShowError("Duplicate folder", "This folder is already in the list.");
+                }
+                else
+                {
+                    directoryRepository.EditDirectory(oldPath, newPath);
+                    directories.First(d => d.Path == oldPath).Path = newPath;
+                    UpdateDirectories();
+                }
+
             }
         }
 
@@ -393,5 +436,10 @@ namespace MusicFiles.Forms
             ButtonForeTreeViewColor.BackColor = Settings.Default.ColorForeTreeView;
         }
         #endregion
+
+        private void CheckBoxExpand_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.Expand = CheckBoxExpand.Checked;
+        }
     }
 }

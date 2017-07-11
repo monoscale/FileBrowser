@@ -8,7 +8,7 @@ namespace MusicFiles.Models
     /// <summary>
     /// This class represents a directory that is dedicated to storing music related files
     /// </summary>
-    public class MusicDirectory
+    public class MusicDirectory : IEquatable<MusicDirectory>
     {
         /// <summary>
         /// Path of the directory
@@ -56,6 +56,21 @@ namespace MusicFiles.Models
             }
             files.Sort(new FileInfoComparer());
             return files;
+        }
+
+
+        /// <summary>
+        /// Overriden from IEquatable. Determines if an other MusicDirectory instance is equal to this one.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(MusicDirectory other)
+        {
+            if(other == null)
+            {
+                return false;
+            }
+            return (Path.Equals(other.Path));
         }
 
 
