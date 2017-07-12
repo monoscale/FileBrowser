@@ -117,6 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddDirectory" xml:space="preserve">
+    <value>Add Directory</value>
+  </data>
+  <data name="AddExtension" xml:space="preserve">
+    <value>Add Extension</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Colors</value>
+  </data>
+  <data name="Directories" xml:space="preserve">
+    <value>Directories</value>
+  </data>
+  <data name="ExpandInfo" xml:space="preserve">
+    <value>Expand directories on load and refresh</value>
+  </data>
+  <data name="Extensions" xml:space="preserve">
+    <value>Extensions</value>
+  </data>
+  <data name="ListBackground" xml:space="preserve">
+    <value>List Background</value>
+  </data>
+  <data name="ListForeground" xml:space="preserve">
+    <value>List Text</value>
+  </data>
+  <data name="MenuBackground" xml:space="preserve">
+    <value>Menu Background</value>
+  </data>
+  <data name="MenuForeground" xml:space="preserve">
+    <value>Menu Text</value>
+  </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>Help</value>
   </data>
@@ -126,7 +156,16 @@
   <data name="MenuSettings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="RequiresRestart" xml:space="preserve">
+    <value>Requires restart</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Select Language</value>
   </data>
 </root>

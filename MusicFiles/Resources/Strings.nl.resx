@@ -117,6 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddDirectory" xml:space="preserve">
+    <value>Map toevoegen</value>
+  </data>
+  <data name="AddExtension" xml:space="preserve">
+    <value>Extensie toevoegen</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Kleuren</value>
+  </data>
+  <data name="Directories" xml:space="preserve">
+    <value>Mappen</value>
+  </data>
+  <data name="ExpandInfo" xml:space="preserve">
+    <value>Vouw mappen uit bij opstarten en hernieuwen</value>
+  </data>
+  <data name="Extensions" xml:space="preserve">
+    <value>Extensies</value>
+  </data>
+  <data name="ListBackground" xml:space="preserve">
+    <value>Lijst Achtergrond</value>
+  </data>
+  <data name="ListForeground" xml:space="preserve">
+    <value>Lijst Tekstkleur</value>
+  </data>
+  <data name="MenuBackground" xml:space="preserve">
+    <value>Menu Achtergrond</value>
+  </data>
+  <data name="MenuForeground" xml:space="preserve">
+    <value>Menu Tekstkleur</value>
+  </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>Hulp</value>
   </data>
@@ -126,7 +156,16 @@
   <data name="MenuSettings" xml:space="preserve">
     <value>Instellingen</value>
   </data>
+  <data name="RequiresRestart" xml:space="preserve">
+    <value>Opnieuw opstarten vereist</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Herstellen</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Zoek</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Selecteer taal</value>
   </data>
 </root>

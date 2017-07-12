@@ -6,6 +6,7 @@ using MusicFiles.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -47,6 +48,7 @@ namespace MusicFiles
         /// <param name="e">EventArgs</param>
         private void MainForm_Load(object sender, EventArgs e)
         {
+
             extensionRepository = new ExtensionRepository();
             directoryRepository = new DirectoryRepository();
             musicDirectories = directoryRepository.GetDirectories();
@@ -172,7 +174,14 @@ namespace MusicFiles
         /// <param name="e">EventArgs</param>
         private void ButtonSettings_Click(object sender, EventArgs e)
         {
-            FormUtils.OpenForm(new SettingsForm(), Location);
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.LanguageChanged += SettingsForm_LanguageChanged;
+            FormUtils.OpenForm(settingsForm, Location);
+        }
+
+        private void SettingsForm_LanguageChanged(object sender, EventArgs e)
+        {
+            UpdateText();
         }
 
         /// <summary>

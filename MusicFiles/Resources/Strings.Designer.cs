@@ -61,6 +61,96 @@ namespace MusicFiles.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Directory.
+        /// </summary>
+        internal static string AddDirectory {
+            get {
+                return ResourceManager.GetString("AddDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Extension.
+        /// </summary>
+        internal static string AddExtension {
+            get {
+                return ResourceManager.GetString("AddExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Colors.
+        /// </summary>
+        internal static string Colors {
+            get {
+                return ResourceManager.GetString("Colors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directories.
+        /// </summary>
+        internal static string Directories {
+            get {
+                return ResourceManager.GetString("Directories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expand directories on load and refresh.
+        /// </summary>
+        internal static string ExpandInfo {
+            get {
+                return ResourceManager.GetString("ExpandInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extensions.
+        /// </summary>
+        internal static string Extensions {
+            get {
+                return ResourceManager.GetString("Extensions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List Background.
+        /// </summary>
+        internal static string ListBackground {
+            get {
+                return ResourceManager.GetString("ListBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List Text.
+        /// </summary>
+        internal static string ListForeground {
+            get {
+                return ResourceManager.GetString("ListForeground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menu Background.
+        /// </summary>
+        internal static string MenuBackground {
+            get {
+                return ResourceManager.GetString("MenuBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menu Text.
+        /// </summary>
+        internal static string MenuForeground {
+            get {
+                return ResourceManager.GetString("MenuForeground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
         internal static string MenuHelp {
@@ -88,11 +178,38 @@ namespace MusicFiles.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Requires restart.
+        /// </summary>
+        internal static string RequiresRestart {
+            get {
+                return ResourceManager.GetString("RequiresRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        internal static string Reset {
+            get {
+                return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         internal static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Language.
+        /// </summary>
+        internal static string SelectLanguage {
+            get {
+                return ResourceManager.GetString("SelectLanguage", resourceCulture);
             }
         }
     }

@@ -135,6 +135,7 @@
     </Compile>
     <Compile Include="Utils\ContextMenuBuilder.cs" />
     <Compile Include="Utils\FormUtils.cs" />
+    <Compile Include="Utils\LanguageMapper.cs" />
     <Compile Include="Utils\MessageBoxUtils.cs" />
     <Compile Include="Utils\ProcessUtils.cs" />
     <EmbeddedResource Include="FormControls\HelpLabel.resx">

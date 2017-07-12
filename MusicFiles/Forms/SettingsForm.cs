@@ -25,6 +25,8 @@ namespace MusicFiles.Forms
         private ObservableCollection<string> extensions;
 
 
+        public event EventHandler<EventArgs> LanguageChanged;
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -77,10 +79,11 @@ namespace MusicFiles.Forms
         private void UpdateSettings()
         {
             CheckBoxExpand.Checked = Settings.Default.Expand;
-            IList<string> languages = new List<string>();
-            languages.Add("English");
-            languages.Add("Nederlands");
-            ComboBoxLanguage.Items.AddRange(languages.ToArray());
+            LanguageMapper languageMapper = new LanguageMapper();
+            ComboBoxLanguage.Items.AddRange(languageMapper.GetReadableLanguages().ToArray());
+            string code = Settings.Default.Language;
+            string language = languageMapper.CodeToLanguage(code);
+            ComboBoxLanguage.SelectedItem = language;
 
 
         }
@@ -100,6 +103,19 @@ namespace MusicFiles.Forms
         {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
             Text = Settings.Default.Title + " - " + Resources.Strings.MenuSettings;
+            GroupBoxDirectories.Text = Resources.Strings.Directories;
+            GroupBoxExtensions.Text = Resources.Strings.Extensions;
+            ButtonAddDirectory.Text = Resources.Strings.AddDirectory;
+            ButtonAddExtension.Text = Resources.Strings.AddExtension;
+            GroupBoxSettings.Text = Resources.Strings.MenuSettings;
+            GroupBoxColors.Text = Resources.Strings.Colors;
+            LabelBackMenuColor.Text = Resources.Strings.MenuBackground;
+            LabelForeMenuColor.Text = Resources.Strings.MenuForeground;
+            LabelBackTreeViewColor.Text = Resources.Strings.ListBackground;
+            LabelForeTreeViewColor.Text = Resources.Strings.ListForeground;
+            ButtonReset.Text = Resources.Strings.Reset;
+            CheckBoxExpand.Text = Resources.Strings.ExpandInfo;
+            LabelLanguage.Text = Resources.Strings.SelectLanguage;
 
         }
         #endregion
@@ -167,7 +183,7 @@ namespace MusicFiles.Forms
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                //folderBrowserDialog.ShowDialog();
+
                 string newPath = folderBrowserDialog.SelectedPath;
                 MusicDirectory newDirectory = new MusicDirectory(newPath); // new instance for comparing
                 if (directories.Contains(newDirectory))
@@ -455,9 +471,36 @@ namespace MusicFiles.Forms
         }
         #endregion
 
+
+        /*
+         * SETTINGS
+         */
+        #region SETTINGS
+
         private void CheckBoxExpand_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.Expand = CheckBoxExpand.Checked;
+        }
+
+        #endregion
+
+        private void ComboBoxLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = (string)ComboBoxLanguage.SelectedItem;
+            LanguageMapper languageMapper = new LanguageMapper();
+            string code = languageMapper.LanguageToCode(selected);
+            Settings.Default.Language = code;
+            UpdateText();
+            LanguageChangedArgs args = new LanguageChangedArgs();
+            args.Language = selected;
+            args.Code = code;
+            LanguageChanged(this, args);
+        }
+
+        private class LanguageChangedArgs : EventArgs
+        {
+            public string Language { get; set; }
+            public string Code { get; set; }
         }
     }
 }

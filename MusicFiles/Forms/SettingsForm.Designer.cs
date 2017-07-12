@@ -216,7 +216,7 @@
             this.TableLayoutPanelColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.TableLayoutPanelColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.TableLayoutPanelColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.TableLayoutPanelColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.TableLayoutPanelColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 451F));
             this.TableLayoutPanelColors.Controls.Add(this.LabelBackTreeViewColor, 0, 1);
             this.TableLayoutPanelColors.Controls.Add(this.LabelBackMenuColor, 0, 0);
             this.TableLayoutPanelColors.Controls.Add(this.ButtonBackMenuColor, 1, 0);
@@ -232,7 +232,7 @@
             this.TableLayoutPanelColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.TableLayoutPanelColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.TableLayoutPanelColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.TableLayoutPanelColors.Size = new System.Drawing.Size(229, 111);
+            this.TableLayoutPanelColors.Size = new System.Drawing.Size(649, 111);
             this.TableLayoutPanelColors.TabIndex = 2;
             // 
             // LabelBackTreeViewColor
@@ -343,11 +343,14 @@
             // 
             // ComboBoxLanguage
             // 
+            this.ComboBoxLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBoxLanguage.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.ComboBoxLanguage.FormattingEnabled = true;
             this.ComboBoxLanguage.Location = new System.Drawing.Point(103, 43);
             this.ComboBoxLanguage.Name = "ComboBoxLanguage";
             this.ComboBoxLanguage.Size = new System.Drawing.Size(148, 21);
             this.ComboBoxLanguage.TabIndex = 1;
+            this.ComboBoxLanguage.SelectedIndexChanged += new System.EventHandler(this.ComboBoxLanguage_SelectedIndexChanged);
             // 
             // CheckBoxExpand
             // 
