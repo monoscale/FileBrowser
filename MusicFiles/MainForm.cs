@@ -355,9 +355,10 @@ namespace MusicFiles
         private void TextBoxSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.Enter)
-            {
+            {  
                 return;
             }
+            e.SuppressKeyPress = true;
             // We regenerate the full tree first, then delete what doesn't match. This causes a flicker since its deleting and rebuilding the tree
             GenerateTree(musicDirectories, true);
             string query = TextBoxSearch.Text.ToLower();

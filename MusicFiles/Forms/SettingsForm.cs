@@ -25,6 +25,9 @@ namespace MusicFiles.Forms
         private ObservableCollection<string> extensions;
 
 
+        /// <summary>
+        /// Special event in case the user switches language
+        /// </summary>
         public event EventHandler<EventArgs> LanguageChanged;
 
         /// <summary>
@@ -273,6 +276,7 @@ namespace MusicFiles.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
+                e.SuppressKeyPress = true;
                 AddExtension(TextBoxExtensionInput.Text);
             }
         }
