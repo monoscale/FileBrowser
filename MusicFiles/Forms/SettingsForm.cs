@@ -29,6 +29,7 @@ namespace MusicFiles.Forms
         /// Special event in case the user switches language
         /// </summary>
         public event EventHandler<EventArgs> LanguageChanged;
+        public event EventHandler<EventArgs> ColorChanged;
 
         /// <summary>
         /// Default Constructor
@@ -454,8 +455,7 @@ namespace MusicFiles.Forms
             {
                 Settings.Default.PropertyValues[setting.ToString()].PropertyValue = ColorDialog.Color;
                 button.BackColor = ColorDialog.Color;
-
-
+                ColorChanged(this, new EventArgs());
             }
         }
 
@@ -472,6 +472,7 @@ namespace MusicFiles.Forms
 
             ButtonForeMenuColor.BackColor = Settings.Default.ColorForeMenu;
             ButtonForeTreeViewColor.BackColor = Settings.Default.ColorForeTreeView;
+            ColorChanged(this, new EventArgs());
         }
         #endregion
 
@@ -486,8 +487,6 @@ namespace MusicFiles.Forms
             Settings.Default.Expand = CheckBoxExpand.Checked;
         }
 
-        #endregion
-
         private void ComboBoxLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selected = (string)ComboBoxLanguage.SelectedItem;
@@ -501,10 +500,18 @@ namespace MusicFiles.Forms
             LanguageChanged(this, args);
         }
 
+
+
+
         private class LanguageChangedArgs : EventArgs
         {
             public string Language { get; set; }
             public string Code { get; set; }
         }
     }
+
+    #endregion
+
+
 }
+

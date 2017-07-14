@@ -98,38 +98,6 @@ namespace MusicFiles
 
 
         /// <summary>
-        /// Live color changing | NOT WORKING
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-
-            if (e.PropertyName.StartsWith("Color"))
-            {
-                IList<string> settings = Enum.GetValues(typeof(ApplicationSetting)).Cast<ApplicationSetting>().Select(setting => setting.ToString()).ToList();
-                Color color = (Color)Settings.Default.PropertyValues[e.PropertyName].PropertyValue;
-
-                switch ((ApplicationSetting)Enum.Parse(typeof(ApplicationSetting), e.PropertyName, false))
-                {
-                    case ApplicationSetting.ColorBackMenu:
-                        PanelMenu.BackColor = color;
-                        break;
-                    case ApplicationSetting.ColorBackTreeView:
-                        TreeViewDirectories.BackColor = Settings.Default.ColorBackTreeView;
-                        break;
-                    case ApplicationSetting.ColorForeMenu:
-                        PanelMenu.ForeColor = Settings.Default.ColorForeMenu;
-                        break;
-                    case ApplicationSetting.ColorForeTreeView:
-                        TreeViewDirectories.BackColor = Settings.Default.ColorForeTreeView;
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Occurs when closing MainForm. Saves the location and size settings
         /// </summary>
         /// <param name="sender">MainForm</param>
@@ -176,7 +144,13 @@ namespace MusicFiles
         {
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.LanguageChanged += SettingsForm_LanguageChanged;
+            settingsForm.ColorChanged += SettingsForm_ColorChanged;
             FormUtils.OpenForm(settingsForm, Location);
+        }
+
+        private void SettingsForm_ColorChanged(object sender, EventArgs e)
+        {
+            UpdateColor();
         }
 
         private void SettingsForm_LanguageChanged(object sender, EventArgs e)
