@@ -1,10 +1,11 @@
 ﻿
-using MusicFiles.Models.Database;
+using MusicFiles.Models;
+using MusicFiles.Persistence.Database;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 
-namespace MusicFiles.Models.Repositories
+namespace MusicFiles.Persistence.Repositories
 {
     public class DirectoryRepository
     {

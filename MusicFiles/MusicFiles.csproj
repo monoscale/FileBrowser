@@ -94,9 +94,10 @@
     <Compile Include="Forms\HelpForm.Designer.cs">
       <DependentUpon>HelpForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\ApplicationSetting.cs" />
-    <Compile Include="Models\Database\MusicFilesDb.cs" />
-    <Compile Include="Models\Database\Tables.cs" />
+    <Compile Include="Models\Language\LanguageManager.cs" />
+    <Compile Include="Models\Language\LanguageCollection.cs" />
+    <Compile Include="Persistence\Database\MusicFilesDb.cs" />
+    <Compile Include="Persistence\Database\Tables.cs" />
     <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,11 +112,10 @@
     </Compile>
     <Compile Include="Models\MusicDirectory.cs" />
     <Compile Include="Models\NODE_STAT.cs" />
-    <Compile Include="Models\TreeNodeProperties.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\Repositories\DirectoryRepository.cs" />
-    <Compile Include="Models\Repositories\ExtensionRepository.cs" />
+    <Compile Include="Persistence\Repositories\DirectoryRepository.cs" />
+    <Compile Include="Persistence\Repositories\ExtensionRepository.cs" />
     <Compile Include="FormControls\MenuButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -135,9 +135,8 @@
     </Compile>
     <Compile Include="Utils\ContextMenuBuilder.cs" />
     <Compile Include="Utils\FormUtils.cs" />
-    <Compile Include="Utils\LanguageMapper.cs" />
+    <Compile Include="Models\Language\LanguageMapper.cs" />
     <Compile Include="Utils\MessageBoxUtils.cs" />
-    <Compile Include="Utils\ProcessUtils.cs" />
     <EmbeddedResource Include="FormControls\HelpLabel.resx">
       <DependentUpon>HelpLabel.cs</DependentUpon>
     </EmbeddedResource>

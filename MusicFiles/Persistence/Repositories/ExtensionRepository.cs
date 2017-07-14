@@ -1,9 +1,10 @@
 ﻿
-using MusicFiles.Models.Database;
+
+using MusicFiles.Persistence.Database;
 using System.Collections.Generic;
 using System.Data.SQLite;
 
-namespace MusicFiles.Models.Repositories
+namespace MusicFiles.Persistence.Repositories
 {
     public class ExtensionRepository
     {
@@ -14,7 +15,6 @@ namespace MusicFiles.Models.Repositories
         public ExtensionRepository()
         {
             db = new MusicFilesDb();
-
         }
 
 

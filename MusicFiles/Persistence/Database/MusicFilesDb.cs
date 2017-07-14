@@ -1,7 +1,7 @@
 ﻿using System.Data.SQLite;
 using System.IO;
 
-namespace MusicFiles.Models.Database
+namespace MusicFiles.Persistence.Database
 {
     public class MusicFilesDb
     {

@@ -4,28 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicFiles.Utils
+namespace MusicFiles.Models.Language
 {
+    /// <summary>
+    /// This class is able to map a language code to a specific language and vice versa
+    /// </summary>
     public class LanguageMapper
     {
         private IDictionary<string, string> languages;
 
-        public LanguageMapper()
+        public LanguageMapper(IDictionary<string, string> languages)
         {
-            languages = new Dictionary<string, string>();
-            languages.Add("en", "English");
-            languages.Add("nl", "Nederlands");
-        }
-
-        public ICollection<string> GetReadableLanguages()
-        {
-            IList<string> langs = new List<string>();
-            foreach(string key in languages.Keys)
-            {
-                langs.Add(languages[key]);
-            }
-
-            return langs;
+            this.languages = languages;
         }
 
         public string CodeToLanguage(string code)

@@ -1,4 +1,4 @@
-﻿namespace MusicFiles.Models.Database
+﻿namespace MusicFiles.Persistence.Database
 {
     /// <summary>
     /// All the tables to be used in the database

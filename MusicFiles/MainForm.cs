@@ -1,10 +1,12 @@
 ﻿using MusicFiles.Forms;
 using MusicFiles.Models;
-using MusicFiles.Models.Repositories;
+using MusicFiles.Models.Language;
+using MusicFiles.Persistence.Repositories;
 using MusicFiles.Properties;
 using MusicFiles.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -20,6 +22,8 @@ namespace MusicFiles
     {
         private DirectoryRepository directoryRepository;
         private ExtensionRepository extensionRepository;
+
+        private LanguageManager languageManager;
 
         /// <summary>
         /// In-memory representation of all the directories
@@ -45,13 +49,13 @@ namespace MusicFiles
         {
             extensionRepository = new ExtensionRepository();
             directoryRepository = new DirectoryRepository();
+            languageManager = new LanguageManager();
             musicDirectories = directoryRepository.GetDirectories();
 
             UpdateSizeAndLocation();
             UpdateColor();
             UpdateText();
             GenerateTree(musicDirectories, Settings.Default.Expand);
-
             base.OnLoad(e);
         }
 
@@ -84,7 +88,8 @@ namespace MusicFiles
         /// </summary>
         private void UpdateText()
         {
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
+
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(languageManager.GetPreferredLanguageCode());
             Text = Settings.Default.Title; // title
             MenuButtonGuide.Text = Resources.Strings.MenuHelp;
             MenuButtonRefresh.Text = Resources.Strings.MenuRefresh;
@@ -126,7 +131,7 @@ namespace MusicFiles
         /// <param name="sender">MenuButton</param>
         /// <param name="e">EventArgs</param>
         private void MenuButtonRefresh_Click(object sender, EventArgs e)
-        {   
+        {
             musicDirectories = directoryRepository.GetDirectories(); // Reload in-memory object
             GenerateTree(musicDirectories, Settings.Default.Expand);
         }
@@ -186,6 +191,7 @@ namespace MusicFiles
         private void GenerateTree(ICollection<MusicDirectory> directories, bool expand = false)
         {
             TreeViewDirectories.Nodes.Clear(); // Clear the view
+
             int index = 0;
 
             if (directories.Count == 0)
@@ -211,8 +217,6 @@ namespace MusicFiles
                     {
                         Text = directory.Path,
                         Tag = NODE_STAT.DIRECTORY
-
-
                     };
 
                     TreeViewDirectories.Nodes.Add(dirNode);
@@ -241,10 +245,7 @@ namespace MusicFiles
                     if (expand)
                     {
                         dirNode.Expand(); // Expands the directory
-                        TreeViewDirectories.Nodes[0].EnsureVisible(); // make sure the top node is visible
                     }
-
-
                     index++;
                 }
                 catch (DirectoryNotFoundException dnfe)
@@ -258,6 +259,7 @@ namespace MusicFiles
                     TreeViewDirectories.Nodes.Add(dirNode);
                 }
             }
+            TreeViewDirectories.Nodes[0].EnsureVisible(); // make sure the top node is visible
         }
 
         /// <summary>
@@ -274,12 +276,13 @@ namespace MusicFiles
                     TreeNode selectedNode = e.Node;
                     if ((NODE_STAT)selectedNode.Tag == NODE_STAT.FILE)
                     {
-                        ProcessUtils.StartProcess(selectedNode.ToolTipText);
+                        Process.Start(selectedNode.ToolTipText);
                     }
                 }
             }
             catch (Exception ex)
             {
+
                 MessageBoxUtils.ShowError("Unexpected error", ex.Message);
             }
         }
@@ -329,14 +332,14 @@ namespace MusicFiles
         /// <param name="path">The folder to open</param>
         private void OpenFolder_Click(object sender, EventArgs e, string path)
         {
-            ProcessUtils.StartProcess(path);
+            Process.Start(path);
         }
 
 
         private void TextBoxSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.Enter)
-            {  
+            {
                 return;
             }
             e.SuppressKeyPress = true;
@@ -388,13 +391,17 @@ namespace MusicFiles
 
         private void MenuButtonCollapseAll_Click(object sender, EventArgs e)
         {
-            TreeViewDirectories.CollapseAll();    
+            TreeViewDirectories.Visible = false;
+            TreeViewDirectories.CollapseAll();
+            TreeViewDirectories.Visible = true;
         }
 
         private void MenuButtonShowAll_Click(object sender, EventArgs e)
         {
+            TreeViewDirectories.Visible = false; // We do this so the treeview does not flicker
             TreeViewDirectories.ExpandAll();
             TreeViewDirectories.Nodes[0].EnsureVisible(); // scroll to top
+            TreeViewDirectories.Visible = true;
         }
     }
 }

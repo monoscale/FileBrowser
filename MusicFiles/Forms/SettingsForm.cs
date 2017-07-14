@@ -1,5 +1,6 @@
 ﻿using MusicFiles.Models;
-using MusicFiles.Models.Repositories;
+using MusicFiles.Models.Language;
+using MusicFiles.Persistence.Repositories;
 using MusicFiles.Properties;
 using MusicFiles.Utils;
 using System;
@@ -18,6 +19,7 @@ namespace MusicFiles.Forms
     {
         private DirectoryRepository directoryRepository;
         private ExtensionRepository extensionRepository;
+        private LanguageManager languageManager;
 
         private ObservableCollection<MusicDirectory> directories;
         private ObservableCollection<string> extensions;
@@ -58,6 +60,8 @@ namespace MusicFiles.Forms
             directoryRepository = new DirectoryRepository();
             extensionRepository = new ExtensionRepository();
 
+            languageManager = new LanguageManager();
+
             directories = new ObservableCollection<MusicDirectory>();
             extensions = new ObservableCollection<string>();
 
@@ -87,10 +91,9 @@ namespace MusicFiles.Forms
             try
             {
                 CheckBoxExpand.Checked = Settings.Default.Expand;
-                LanguageMapper languageMapper = new LanguageMapper();
-                ComboBoxLanguage.Items.AddRange(languageMapper.GetReadableLanguages().ToArray());
-                string code = Settings.Default.Language;
-                string language = languageMapper.CodeToLanguage(code);
+                ComboBoxLanguage.Items.AddRange(languageManager.GetReadableLanguages().ToArray());
+                string code = languageManager.GetPreferredLanguageCode();
+                string language = languageManager.CodeToLanguage(code);
                 ComboBoxLanguage.SelectedItem = language;
             }
             catch (ArgumentException)
@@ -112,7 +115,7 @@ namespace MusicFiles.Forms
         /// </summary>
         private void UpdateText()
         {
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(languageManager.GetPreferredLanguageCode());
             Text = Settings.Default.Title + " - " + Resources.Strings.MenuSettings;
             GroupBoxDirectories.Text = Resources.Strings.Directories;
             GroupBoxExtensions.Text = Resources.Strings.Extensions;
@@ -419,7 +422,7 @@ namespace MusicFiles.Forms
         /// <param name="e">EventArgs</param>
         private void ButtonBackMenuColor_Click(object sender, EventArgs e)
         {
-            ChangeColor(ApplicationSetting.ColorBackMenu, (Button)sender);
+            ChangeColor("ColorBackMenu", (Button)sender);
         }
 
         /// <summary>
@@ -429,7 +432,7 @@ namespace MusicFiles.Forms
         /// <param name="e">EventArgs</param>
         private void ButtonBackTreeViewColor_Click(object sender, EventArgs e)
         {
-            ChangeColor(ApplicationSetting.ColorBackTreeView, (Button)sender);
+            ChangeColor("ColorBackTreeView", (Button)sender);
         }
 
         /// <summary>
@@ -439,7 +442,7 @@ namespace MusicFiles.Forms
         /// <param name="e">EventArgs</param>
         private void ButtonForeMenuColor_Click(object sender, EventArgs e)
         {
-            ChangeColor(ApplicationSetting.ColorForeMenu, (Button)sender);
+            ChangeColor("ColorForeMenu", (Button)sender);
         }
 
         /// <summary>
@@ -449,7 +452,7 @@ namespace MusicFiles.Forms
         /// <param name="e">EventArgs</param>
         private void ButtonForeTreeViewColor_Click(object sender, EventArgs e)
         {
-            ChangeColor(ApplicationSetting.ColorForeTreeView, (Button)sender);
+            ChangeColor("ColorForeTreeView", (Button)sender);
         }
 
         /// <summary>
@@ -457,11 +460,11 @@ namespace MusicFiles.Forms
         /// </summary>
         /// <param name="setting">The value of the setting that must be changed</param>
         /// <param name="button">The button that called this function</param>
-        private void ChangeColor(ApplicationSetting setting, Button button)
+        private void ChangeColor(string colorComponent, Button button)
         {
             if (ColorDialog.ShowDialog() == DialogResult.OK)
             {
-                Settings.Default.PropertyValues[setting.ToString()].PropertyValue = ColorDialog.Color;
+                Settings.Default.PropertyValues[colorComponent].PropertyValue = ColorDialog.Color;
                 button.BackColor = ColorDialog.Color;
                 ColorChanged(this, new EventArgs());
             }
@@ -500,14 +503,11 @@ namespace MusicFiles.Forms
             try
             {
                 string selected = (string)ComboBoxLanguage.SelectedItem;
-                LanguageMapper languageMapper = new LanguageMapper();
-                string code = languageMapper.LanguageToCode(selected);
-                Settings.Default.Language = code;
+
+                string code = languageManager.LanguageToCode(selected);
+                languageManager.SavePreferredLanguageCode(code);
                 UpdateText();
-                LanguageChangedArgs args = new LanguageChangedArgs();
-                args.Language = selected;
-                args.Code = code;
-                LanguageChanged(this, args);
+                LanguageChanged(this, new EventArgs());
             }
             catch (ArgumentException)
             {
@@ -516,14 +516,6 @@ namespace MusicFiles.Forms
 
         }
 
-
-
-
-        private class LanguageChangedArgs : EventArgs
-        {
-            public string Language { get; set; }
-            public string Code { get; set; }
-        }
     }
 
     #endregion
