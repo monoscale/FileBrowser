@@ -32,7 +32,7 @@ namespace MusicFiles.Models
         }
 
         /// <summary>
-        /// Default construct
+        /// Default constructor
         /// </summary>
         /// <param name="path">The path of the directory</param>
         public MusicDirectory(string path)
@@ -44,7 +44,7 @@ namespace MusicFiles.Models
         /// Gets all the files that match the extensions
         /// </summary>
         /// <param name="extensions">A collection of extensions</param>
-        /// <returns></returns>
+        /// <returns>A collection of files that match the extensions</returns>
         public ICollection<FileInfo> GetFiles(ICollection<string> extensions)
         {
             DirectoryInfo directory = new DirectoryInfo(path);
@@ -63,10 +63,10 @@ namespace MusicFiles.Models
         /// Overriden from IEquatable. Determines if an other MusicDirectory instance is equal to this one.
         /// </summary>
         /// <param name="other"></param>
-        /// <returns></returns>
+        /// <returns>true if equal; else false</returns>
         public bool Equals(MusicDirectory other)
         {
-            if(other == null)
+            if (other == null)
             {
                 return false;
             }
@@ -80,7 +80,7 @@ namespace MusicFiles.Models
         /// </summary>
         private class FileInfoComparer : IComparer<FileInfo>
         {
-          
+
             [DllImport("shlwapi.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
             public static extern int StrCmpLogicalW(string x, string y);
 
@@ -90,8 +90,10 @@ namespace MusicFiles.Models
             /// </summary>
             /// <param name="x">First FileInfo instance</param>
             /// <param name="y">Second FileInfo instance</param>
-            /// <returns></returns>
-
+            /// <returns>0 if identical
+            /// 1 if x > y
+            /// -1 if x < y
+            /// </returns>
             public int Compare(FileInfo x, FileInfo y)
             {
                 return StrCmpLogicalW(x.Name, y.Name);

@@ -30,34 +30,38 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.PanelMenu = new System.Windows.Forms.Panel();
+            this.PanelMainMenu = new System.Windows.Forms.Panel();
             this.MenuButtonGuide = new MusicFiles.UI.MenuButton(this.components);
             this.MenuButtonSettings = new MusicFiles.UI.MenuButton(this.components);
             this.MenuButtonRefresh = new MusicFiles.UI.MenuButton(this.components);
             this.TreeViewDirectories = new System.Windows.Forms.TreeView();
             this.PanelContent = new System.Windows.Forms.Panel();
+            this.FlowLayoutPanelMenu = new System.Windows.Forms.FlowLayoutPanel();
             this.PanelSearch = new System.Windows.Forms.Panel();
             this.LabelSearch = new System.Windows.Forms.Label();
             this.TextBoxSearch = new System.Windows.Forms.TextBox();
-            this.PanelMenu.SuspendLayout();
+            this.MenuButtonCollapseAll = new MusicFiles.UI.MenuButton(this.components);
+            this.MenuButtonShowAll = new MusicFiles.UI.MenuButton(this.components);
+            this.PanelMainMenu.SuspendLayout();
             this.PanelContent.SuspendLayout();
+            this.FlowLayoutPanelMenu.SuspendLayout();
             this.PanelSearch.SuspendLayout();
             this.SuspendLayout();
             // 
-            // PanelMenu
+            // PanelMainMenu
             // 
-            this.PanelMenu.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.PanelMenu.Controls.Add(this.MenuButtonGuide);
-            this.PanelMenu.Controls.Add(this.MenuButtonSettings);
-            this.PanelMenu.Controls.Add(this.MenuButtonRefresh);
-            this.PanelMenu.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PanelMenu.Font = new System.Drawing.Font("Cambria", 12.25F);
-            this.PanelMenu.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.PanelMenu.Location = new System.Drawing.Point(0, 0);
-            this.PanelMenu.Margin = new System.Windows.Forms.Padding(0);
-            this.PanelMenu.Name = "PanelMenu";
-            this.PanelMenu.Size = new System.Drawing.Size(141, 561);
-            this.PanelMenu.TabIndex = 0;
+            this.PanelMainMenu.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.PanelMainMenu.Controls.Add(this.MenuButtonGuide);
+            this.PanelMainMenu.Controls.Add(this.MenuButtonSettings);
+            this.PanelMainMenu.Controls.Add(this.MenuButtonRefresh);
+            this.PanelMainMenu.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PanelMainMenu.Font = new System.Drawing.Font("Cambria", 12.25F);
+            this.PanelMainMenu.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.PanelMainMenu.Location = new System.Drawing.Point(0, 0);
+            this.PanelMainMenu.Margin = new System.Windows.Forms.Padding(0);
+            this.PanelMainMenu.Name = "PanelMainMenu";
+            this.PanelMainMenu.Size = new System.Drawing.Size(141, 561);
+            this.PanelMainMenu.TabIndex = 0;
             // 
             // MenuButtonGuide
             // 
@@ -107,12 +111,12 @@
             this.TreeViewDirectories.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TreeViewDirectories.Font = new System.Drawing.Font("Cambria", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TreeViewDirectories.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.TreeViewDirectories.Location = new System.Drawing.Point(0, 40);
+            this.TreeViewDirectories.Location = new System.Drawing.Point(0, 64);
             this.TreeViewDirectories.Margin = new System.Windows.Forms.Padding(0);
             this.TreeViewDirectories.Name = "TreeViewDirectories";
             this.TreeViewDirectories.ShowLines = false;
             this.TreeViewDirectories.ShowNodeToolTips = true;
-            this.TreeViewDirectories.Size = new System.Drawing.Size(443, 521);
+            this.TreeViewDirectories.Size = new System.Drawing.Size(443, 497);
             this.TreeViewDirectories.TabIndex = 1;
             this.TreeViewDirectories.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeViewDirectories_NodeMouseClick);
             this.TreeViewDirectories.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeViewDirectories_NodeMouseDoubleClick);
@@ -120,6 +124,7 @@
             // PanelContent
             // 
             this.PanelContent.Controls.Add(this.TreeViewDirectories);
+            this.PanelContent.Controls.Add(this.FlowLayoutPanelMenu);
             this.PanelContent.Controls.Add(this.PanelSearch);
             this.PanelContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelContent.Location = new System.Drawing.Point(141, 0);
@@ -127,6 +132,16 @@
             this.PanelContent.Name = "PanelContent";
             this.PanelContent.Size = new System.Drawing.Size(443, 561);
             this.PanelContent.TabIndex = 2;
+            // 
+            // FlowLayoutPanelMenu
+            // 
+            this.FlowLayoutPanelMenu.Controls.Add(this.MenuButtonCollapseAll);
+            this.FlowLayoutPanelMenu.Controls.Add(this.MenuButtonShowAll);
+            this.FlowLayoutPanelMenu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.FlowLayoutPanelMenu.Location = new System.Drawing.Point(0, 40);
+            this.FlowLayoutPanelMenu.Name = "FlowLayoutPanelMenu";
+            this.FlowLayoutPanelMenu.Size = new System.Drawing.Size(443, 24);
+            this.FlowLayoutPanelMenu.TabIndex = 4;
             // 
             // PanelSearch
             // 
@@ -142,7 +157,7 @@
             // LabelSearch
             // 
             this.LabelSearch.AutoSize = true;
-            this.LabelSearch.Location = new System.Drawing.Point(6, 9);
+            this.LabelSearch.Location = new System.Drawing.Point(6, 15);
             this.LabelSearch.Name = "LabelSearch";
             this.LabelSearch.Size = new System.Drawing.Size(47, 13);
             this.LabelSearch.TabIndex = 3;
@@ -152,12 +167,38 @@
             // 
             this.TextBoxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBoxSearch.Location = new System.Drawing.Point(59, 6);
+            this.TextBoxSearch.Location = new System.Drawing.Point(59, 12);
             this.TextBoxSearch.Name = "TextBoxSearch";
             this.TextBoxSearch.Size = new System.Drawing.Size(372, 20);
             this.TextBoxSearch.TabIndex = 2;
             this.TextBoxSearch.TextChanged += new System.EventHandler(this.TextBoxSearch_TextChanged);
             this.TextBoxSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxSearch_KeyDown);
+            // 
+            // MenuButtonCollapseAll
+            // 
+            this.MenuButtonCollapseAll.FlatAppearance.BorderSize = 0;
+            this.MenuButtonCollapseAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MenuButtonCollapseAll.Location = new System.Drawing.Point(0, 0);
+            this.MenuButtonCollapseAll.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuButtonCollapseAll.Name = "MenuButtonCollapseAll";
+            this.MenuButtonCollapseAll.Size = new System.Drawing.Size(75, 21);
+            this.MenuButtonCollapseAll.TabIndex = 2;
+            this.MenuButtonCollapseAll.Text = "Collapse All";
+            this.MenuButtonCollapseAll.UseVisualStyleBackColor = true;
+            this.MenuButtonCollapseAll.Click += new System.EventHandler(this.MenuButtonCollapseAll_Click);
+            // 
+            // MenuButtonShowAll
+            // 
+            this.MenuButtonShowAll.FlatAppearance.BorderSize = 0;
+            this.MenuButtonShowAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MenuButtonShowAll.Location = new System.Drawing.Point(75, 0);
+            this.MenuButtonShowAll.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuButtonShowAll.Name = "MenuButtonShowAll";
+            this.MenuButtonShowAll.Size = new System.Drawing.Size(75, 21);
+            this.MenuButtonShowAll.TabIndex = 3;
+            this.MenuButtonShowAll.Text = "Show All";
+            this.MenuButtonShowAll.UseVisualStyleBackColor = true;
+            this.MenuButtonShowAll.Click += new System.EventHandler(this.MenuButtonShowAll_Click);
             // 
             // MainForm
             // 
@@ -166,14 +207,13 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(584, 561);
             this.Controls.Add(this.PanelContent);
-            this.Controls.Add(this.PanelMenu);
+            this.Controls.Add(this.PanelMainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(500, 39);
             this.Name = "MainForm";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            this.PanelMenu.ResumeLayout(false);
+            this.PanelMainMenu.ResumeLayout(false);
             this.PanelContent.ResumeLayout(false);
+            this.FlowLayoutPanelMenu.ResumeLayout(false);
             this.PanelSearch.ResumeLayout(false);
             this.PanelSearch.PerformLayout();
             this.ResumeLayout(false);
@@ -182,7 +222,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel PanelMenu;
+        private System.Windows.Forms.Panel PanelMainMenu;
         private System.Windows.Forms.TreeView TreeViewDirectories;
         private UI.MenuButton MenuButtonRefresh;
         private UI.MenuButton MenuButtonSettings;
@@ -191,5 +231,8 @@
         private System.Windows.Forms.Panel PanelSearch;
         private UI.MenuButton MenuButtonGuide;
         private System.Windows.Forms.Label LabelSearch;
+        private System.Windows.Forms.FlowLayoutPanel FlowLayoutPanelMenu;
+        private UI.MenuButton MenuButtonCollapseAll;
+        private UI.MenuButton MenuButtonShowAll;
     }
 }

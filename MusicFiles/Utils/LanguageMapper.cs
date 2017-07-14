@@ -34,10 +34,7 @@ namespace MusicFiles.Utils
             {
                 return languages[code];
             }
-
-            return $"The code {code} is not a valid country code.";
-
-
+            throw new ArgumentException($"The code {code} is not a valid country code.");
         }
 
         public string LanguageToCode(string language)
@@ -50,7 +47,7 @@ namespace MusicFiles.Utils
                     return key;
                 }
             }
-            return $"The language {language} is not valid in this program.";
+            throw new ArgumentException($"The language {language} is not valid in this program.");
         }
     }
 }

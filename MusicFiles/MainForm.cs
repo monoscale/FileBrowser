@@ -5,13 +5,9 @@ using MusicFiles.Properties;
 using MusicFiles.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -44,11 +40,9 @@ namespace MusicFiles
         /// <summary>
         ///  Occurs when MainForm has loaded. Loads the settings and generates the treeview
         /// </summary>
-        /// <param name="sender">MainForm</param>
         /// <param name="e">EventArgs</param>
-        private void MainForm_Load(object sender, EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
-
             extensionRepository = new ExtensionRepository();
             directoryRepository = new DirectoryRepository();
             musicDirectories = directoryRepository.GetDirectories();
@@ -57,6 +51,8 @@ namespace MusicFiles
             UpdateColor();
             UpdateText();
             GenerateTree(musicDirectories, Settings.Default.Expand);
+
+            base.OnLoad(e);
         }
 
         /// <summary>
@@ -79,8 +75,8 @@ namespace MusicFiles
         {
             TreeViewDirectories.ForeColor = Settings.Default.ColorForeTreeView;
             TreeViewDirectories.BackColor = Settings.Default.ColorBackTreeView;
-            PanelMenu.ForeColor = Settings.Default.ColorForeMenu;
-            PanelMenu.BackColor = Settings.Default.ColorBackMenu;
+            PanelMainMenu.ForeColor = Settings.Default.ColorForeMenu;
+            PanelMainMenu.BackColor = Settings.Default.ColorBackMenu;
         }
 
         /// <summary>
@@ -102,7 +98,7 @@ namespace MusicFiles
         /// </summary>
         /// <param name="sender">MainForm</param>
         /// <param name="e">FormClosingEventArgs</param>
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
             Settings.Default.WindowLocation = Location;
 
@@ -116,6 +112,8 @@ namespace MusicFiles
             }
 
             Settings.Default.Save();
+            base.OnFormClosing(e);
+
         }
         #endregion
 
@@ -127,9 +125,8 @@ namespace MusicFiles
         /// </summary>
         /// <param name="sender">MenuButton</param>
         /// <param name="e">EventArgs</param>
-
         private void MenuButtonRefresh_Click(object sender, EventArgs e)
-        {
+        {   
             musicDirectories = directoryRepository.GetDirectories(); // Reload in-memory object
             GenerateTree(musicDirectories, Settings.Default.Expand);
         }
@@ -148,11 +145,21 @@ namespace MusicFiles
             FormUtils.OpenForm(settingsForm, Location);
         }
 
+        /// <summary>
+        /// Occurs when a color is changed in the SettingsForm
+        /// </summary>
+        /// <param name="sender">SettingsForm</param>
+        /// <param name="e">EventArgs</param>
         private void SettingsForm_ColorChanged(object sender, EventArgs e)
         {
             UpdateColor();
         }
 
+        /// <summary>
+        /// Occurs when the language is changed in the SettingsForm
+        /// </summary>
+        /// <param name="sender">SettingsForm</param>
+        /// <param name="e">EventArgs</param>
         private void SettingsForm_LanguageChanged(object sender, EventArgs e)
         {
             UpdateText();
@@ -166,7 +173,6 @@ namespace MusicFiles
         private void MenuButtonGuide_Click(object sender, EventArgs e)
         {
             FormUtils.OpenForm(new HelpForm(), Location);
-
         }
         #endregion
 
@@ -189,10 +195,12 @@ namespace MusicFiles
                     Text = "You have not selected any directory yet. Go to the options menu.",
                     ForeColor = Color.OrangeRed
                 };
+                TreeViewDirectories.Enabled = false;
                 TreeViewDirectories.Nodes.Add(notificationNode);
                 return;
             }
 
+            TreeViewDirectories.Enabled = true;
             foreach (MusicDirectory directory in directories)
             {
                 try
@@ -310,7 +318,6 @@ namespace MusicFiles
 
                 builder.Add(text, (s, ea) => OpenFolder_Click(s, ea, path));
                 builder.Show();
-
             }
         }
 
@@ -379,62 +386,15 @@ namespace MusicFiles
 
         #endregion
 
-
-
-
-        /*
-        Work in progress
-
-        private List<TreeNodeProperties> nodeProperties = new List<TreeNodeProperties>();
-
-        /// <summary>
-        /// Updates the treeview to only show what matches the input. Is not case sensitive
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TextBoxSearch_TextChanged(object sender, EventArgs e)
+        private void MenuButtonCollapseAll_Click(object sender, EventArgs e)
         {
-            // We must use the "TreeNode.Remove()" method here since there is nothing else available.
-            // We keep track of the deleted nodes and move them back in if the query is empty or it matches.
-            string query = TextBoxSearch.Text.ToLower();
-
-
-            // Lets see if there are any nodes that can be put back
-            foreach(TreeNodeProperties properties in nodeProperties)
-            {
-                string fileName = properties.Name.ToLower();
-                if (fileName.Contains(query))
-                {
-                    //put back in the list
-                }
-            }
-            
-            // Start the deletion process
-            List<TreeNode> nodesToDelete = new List<TreeNode>();
-            // Iterate all the directories
-            foreach (TreeNode directory in TreeViewDirectories.Nodes)
-            {
-                int nodeCount = directory.Nodes.Count;
-                // Iterate all the files in this directory
-                for (int i = 0; i < nodeCount; i++)
-                {
-                    TreeNode file = directory.Nodes[i]; // get current node
-                    string fileName = file.Text.ToLower(); // text in lowercase
-                    if (!(fileName.Contains(query))) // if not contains
-                    {
-                        nodesToDelete.Add(file); // mark node as deleted
-                        nodeProperties.Add(new TreeNodeProperties
-                        {
-                            Parent = directory.Text,
-                            Name = file.Text,
-                            FullName = file.Text,
-                            Index = i
-                        });
-                    }
-                }
-            }
-            nodesToDelete.ForEach(f => f.Remove()); // Delete the nodes
+            TreeViewDirectories.CollapseAll();    
         }
-        */
+
+        private void MenuButtonShowAll_Click(object sender, EventArgs e)
+        {
+            TreeViewDirectories.ExpandAll();
+            TreeViewDirectories.Nodes[0].EnsureVisible(); // scroll to top
+        }
     }
 }

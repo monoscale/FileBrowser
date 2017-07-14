@@ -25,11 +25,13 @@ namespace MusicFiles.UI
         private void MenuButton_MouseEnter(object sender, EventArgs e)
         {
             BackColor = Color.AntiqueWhite;
+            Cursor = Cursors.Hand;
         }
 
         private void MenuButton_MouseLeave(object sender, EventArgs e)
         {
             BackColor = Color.Transparent;
+            Cursor.Current = Cursors.Default;
         }
     }
 }

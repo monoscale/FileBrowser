@@ -3,8 +3,6 @@ using MusicFiles.Models.Repositories;
 using MusicFiles.Properties;
 using MusicFiles.Utils;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
@@ -26,9 +24,12 @@ namespace MusicFiles.Forms
 
 
         /// <summary>
-        /// Special event in case the user switches language
+        /// Event in case the user changes language
         /// </summary>
         public event EventHandler<EventArgs> LanguageChanged;
+        /// <summary>
+        /// Event in case the user changes a color
+        /// </summary>
         public event EventHandler<EventArgs> ColorChanged;
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace MusicFiles.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SettingsForm_Load(object sender, EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             Text = Settings.Default.Title + " - Settings";
 
@@ -78,18 +79,24 @@ namespace MusicFiles.Forms
             UpdateSettings();
             UpdateColor();
             UpdateText();
+            base.OnLoad(e);
         }
 
         private void UpdateSettings()
         {
-            CheckBoxExpand.Checked = Settings.Default.Expand;
-            LanguageMapper languageMapper = new LanguageMapper();
-            ComboBoxLanguage.Items.AddRange(languageMapper.GetReadableLanguages().ToArray());
-            string code = Settings.Default.Language;
-            string language = languageMapper.CodeToLanguage(code);
-            ComboBoxLanguage.SelectedItem = language;
-
-
+            try
+            {
+                CheckBoxExpand.Checked = Settings.Default.Expand;
+                LanguageMapper languageMapper = new LanguageMapper();
+                ComboBoxLanguage.Items.AddRange(languageMapper.GetReadableLanguages().ToArray());
+                string code = Settings.Default.Language;
+                string language = languageMapper.CodeToLanguage(code);
+                ComboBoxLanguage.SelectedItem = language;
+            }
+            catch (ArgumentException)
+            {
+                MessageBoxUtils.ShowError("Wrong language", "An invalid language was selected.");
+            }
         }
 
         private void UpdateColor()
@@ -277,8 +284,9 @@ namespace MusicFiles.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                e.SuppressKeyPress = true;
                 AddExtension(TextBoxExtensionInput.Text);
+                e.SuppressKeyPress = true;
+
             }
         }
 
@@ -489,15 +497,23 @@ namespace MusicFiles.Forms
 
         private void ComboBoxLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selected = (string)ComboBoxLanguage.SelectedItem;
-            LanguageMapper languageMapper = new LanguageMapper();
-            string code = languageMapper.LanguageToCode(selected);
-            Settings.Default.Language = code;
-            UpdateText();
-            LanguageChangedArgs args = new LanguageChangedArgs();
-            args.Language = selected;
-            args.Code = code;
-            LanguageChanged(this, args);
+            try
+            {
+                string selected = (string)ComboBoxLanguage.SelectedItem;
+                LanguageMapper languageMapper = new LanguageMapper();
+                string code = languageMapper.LanguageToCode(selected);
+                Settings.Default.Language = code;
+                UpdateText();
+                LanguageChangedArgs args = new LanguageChangedArgs();
+                args.Language = selected;
+                args.Code = code;
+                LanguageChanged(this, args);
+            }
+            catch (ArgumentException)
+            {
+                MessageBoxUtils.ShowError("Wrong language", "An invalid language was selected.");
+            }
+
         }
 
 

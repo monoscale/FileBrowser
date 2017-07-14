@@ -378,7 +378,6 @@
             this.Name = "SettingsForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Settings";
-            this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.GroupBoxDirectories.ResumeLayout(false);
             this.GroupBoxExtensions.ResumeLayout(false);
             this.PanelAddExtension.ResumeLayout(false);
