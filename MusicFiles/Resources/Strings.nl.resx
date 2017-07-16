@@ -123,6 +123,9 @@
   <data name="AddExtension" xml:space="preserve">
     <value>Extensie toevoegen</value>
   </data>
+  <data name="CollapseAll" xml:space="preserve">
+    <value>Alles verbergen</value>
+  </data>
   <data name="Colors" xml:space="preserve">
     <value>Kleuren</value>
   </data>
@@ -134,6 +137,18 @@
   </data>
   <data name="Extensions" xml:space="preserve">
     <value>Extensies</value>
+  </data>
+  <data name="HelpFour" xml:space="preserve">
+    <value>Als het programma opnieuw opstart zal het automatisch de lijst hernieuwen</value>
+  </data>
+  <data name="HelpOne" xml:space="preserve">
+    <value>Ga naar instellingen en voeg de mappen toe die je wilt scannen</value>
+  </data>
+  <data name="HelpThree" xml:space="preserve">
+    <value>Verlaat het instellingenmenu en klik op "Hernieuwen". Dit zal een lijst genereren van alle bestanden die aan de extensies voldoen in de gespecifieerde mappen</value>
+  </data>
+  <data name="HelpTwo" xml:space="preserve">
+    <value>Voeg de extensies toe van de bestanden die je wilt scannen</value>
   </data>
   <data name="ListBackground" xml:space="preserve">
     <value>Lijst Achtergrond</value>
@@ -167,5 +182,8 @@
   </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Selecteer taal</value>
+  </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>Alles tonen</value>
   </data>
 </root>

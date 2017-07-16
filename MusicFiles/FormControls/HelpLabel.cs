@@ -19,13 +19,8 @@ namespace MusicFiles.FormControls
 
         public HelpLabel(IContainer container)
         {
-
-         
             container.Add(this);
             InitializeComponent();
-
-
-
         }
     }
 }

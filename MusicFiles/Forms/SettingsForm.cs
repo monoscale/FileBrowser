@@ -116,7 +116,8 @@ namespace MusicFiles.Forms
         private void UpdateText()
         {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(languageManager.GetPreferredLanguageCode());
-            Text = Settings.Default.Title + " - " + Resources.Strings.MenuSettings;
+            TitleBuilder titleBuilder = new TitleBuilder();
+            Text = titleBuilder.BuildSecondaryTitle(Resources.Strings.MenuSettings);
             GroupBoxDirectories.Text = Resources.Strings.Directories;
             GroupBoxExtensions.Text = Resources.Strings.Extensions;
             ButtonAddDirectory.Text = Resources.Strings.AddDirectory;

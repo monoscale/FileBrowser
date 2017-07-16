@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.ListViewDirectories = new System.Windows.Forms.ListView();
             this.ListViewExtensions = new System.Windows.Forms.ListView();
             this.GroupBoxDirectories = new System.Windows.Forms.GroupBox();
@@ -373,6 +374,7 @@
             this.Controls.Add(this.GroupBoxSettings);
             this.Controls.Add(this.PanelAdd);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";

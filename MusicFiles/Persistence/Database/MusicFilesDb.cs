@@ -10,16 +10,18 @@ namespace MusicFiles.Persistence.Database
         private const string connectionString = "Data Source=" + dbName + ";Version=" + sqliteVersion;
 
 
-        private const string folderTable = "CREATE TABLE IF NOT EXISTS [" + Tables.DIRECTORY_TABLE + "] " +
+        private const string folderTable =
+            "CREATE TABLE IF NOT EXISTS " + "[" + Tables.DIRECTORY_TABLE + "] " +
             "([" + Tables.DIRECTORY_TABLE_PATH + "] VARCHAR(100))";
 
-        private const string extensionTable = "CREATE TABLE IF NOT EXISTS [" + Tables.EXTENSION_TABLE + "] ([" + Tables.EXTENSION_TABLE_EXTENSION + "] VARCHAR(8))";
+        private const string extensionTable =
+            "CREATE TABLE IF NOT EXISTS [" + Tables.EXTENSION_TABLE + "]" +
+            " ([" + Tables.EXTENSION_TABLE_EXTENSION + "] VARCHAR(8))";
 
 
         /// <summary>
         /// Default constructor for MusicFilesDb
         /// </summary>
-        /// <param name="createDatabase">Wether or not a database should be created</param>
         public MusicFilesDb()
         {
             CreateDatabaseIfNotExists();
@@ -30,7 +32,7 @@ namespace MusicFiles.Persistence.Database
         /// </summary>
         public void CreateDatabaseIfNotExists()
         {
-            if (File.Exists(dbName)) 
+            if (File.Exists(dbName))
             {
                 return;
             }

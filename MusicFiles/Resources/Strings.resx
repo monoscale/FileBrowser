@@ -123,6 +123,9 @@
   <data name="AddExtension" xml:space="preserve">
     <value>Add Extension</value>
   </data>
+  <data name="CollapseAll" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
   <data name="Colors" xml:space="preserve">
     <value>Colors</value>
   </data>
@@ -134,6 +137,18 @@
   </data>
   <data name="Extensions" xml:space="preserve">
     <value>Extensions</value>
+  </data>
+  <data name="HelpFour" xml:space="preserve">
+    <value>On program startup, the list will automatically refresh</value>
+  </data>
+  <data name="HelpOne" xml:space="preserve">
+    <value>Go to settings and add the directories you want this program to scan</value>
+  </data>
+  <data name="HelpThree" xml:space="preserve">
+    <value>When done, exit the settings menu and click on "Refresh". This will generate a list of all the files that match the extensions in the specified folders</value>
+  </data>
+  <data name="HelpTwo" xml:space="preserve">
+    <value>Add the extensions of the files you want to scan</value>
   </data>
   <data name="ListBackground" xml:space="preserve">
     <value>List Background</value>
@@ -167,5 +182,8 @@
   </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Select Language</value>
+  </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>Show All</value>
   </data>
 </root>

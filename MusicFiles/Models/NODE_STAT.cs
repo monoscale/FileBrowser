@@ -6,6 +6,7 @@
     public enum NODE_STAT
     {
         FILE,
-        DIRECTORY
+        DIRECTORY,
+        INVALID
     }
 }

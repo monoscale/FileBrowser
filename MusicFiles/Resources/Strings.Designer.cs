@@ -79,6 +79,15 @@ namespace MusicFiles.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collapse All.
+        /// </summary>
+        internal static string CollapseAll {
+            get {
+                return ResourceManager.GetString("CollapseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Colors.
         /// </summary>
         internal static string Colors {
@@ -111,6 +120,42 @@ namespace MusicFiles.Resources {
         internal static string Extensions {
             get {
                 return ResourceManager.GetString("Extensions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On program startup, the list will automatically refresh.
+        /// </summary>
+        internal static string HelpFour {
+            get {
+                return ResourceManager.GetString("HelpFour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to settings and add the directories you want this program to scan.
+        /// </summary>
+        internal static string HelpOne {
+            get {
+                return ResourceManager.GetString("HelpOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When done, exit the settings menu and click on &quot;Refresh&quot;. This will generate a list of all the files that match the extensions in the specified folders.
+        /// </summary>
+        internal static string HelpThree {
+            get {
+                return ResourceManager.GetString("HelpThree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add the extensions of the files you want to scan.
+        /// </summary>
+        internal static string HelpTwo {
+            get {
+                return ResourceManager.GetString("HelpTwo", resourceCulture);
             }
         }
         
@@ -210,6 +255,15 @@ namespace MusicFiles.Resources {
         internal static string SelectLanguage {
             get {
                 return ResourceManager.GetString("SelectLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show All.
+        /// </summary>
+        internal static string ShowAll {
+            get {
+                return ResourceManager.GetString("ShowAll", resourceCulture);
             }
         }
     }
