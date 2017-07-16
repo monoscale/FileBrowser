@@ -82,6 +82,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormControls\DirectoryTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FormControls\DirectoryTreeView.Designer.cs">
+      <DependentUpon>DirectoryTreeView.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormControls\HelpLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -138,6 +144,9 @@
     <Compile Include="Models\Language\LanguageMapper.cs" />
     <Compile Include="Utils\MessageBoxUtils.cs" />
     <Compile Include="Utils\TitleBuilder.cs" />
+    <EmbeddedResource Include="FormControls\DirectoryTreeView.resx">
+      <DependentUpon>DirectoryTreeView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormControls\HelpLabel.resx">
       <DependentUpon>HelpLabel.cs</DependentUpon>
     </EmbeddedResource>

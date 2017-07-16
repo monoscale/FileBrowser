@@ -34,15 +34,14 @@
             this.MenuButtonGuide = new MusicFiles.UI.MenuButton(this.components);
             this.MenuButtonSettings = new MusicFiles.UI.MenuButton(this.components);
             this.MenuButtonRefresh = new MusicFiles.UI.MenuButton(this.components);
-            this.TreeViewDirectories = new System.Windows.Forms.TreeView();
             this.PanelContent = new System.Windows.Forms.Panel();
+            this.FlowLayoutPanelExtensions = new System.Windows.Forms.FlowLayoutPanel();
             this.FlowLayoutPanelMenu = new System.Windows.Forms.FlowLayoutPanel();
             this.MenuButtonCollapseAll = new MusicFiles.UI.MenuButton(this.components);
             this.MenuButtonShowAll = new MusicFiles.UI.MenuButton(this.components);
             this.PanelSearch = new System.Windows.Forms.Panel();
             this.LabelSearch = new System.Windows.Forms.Label();
             this.TextBoxSearch = new System.Windows.Forms.TextBox();
-            this.FlowLayoutPanelExtensions = new System.Windows.Forms.FlowLayoutPanel();
             this.PanelMainMenu.SuspendLayout();
             this.PanelContent.SuspendLayout();
             this.FlowLayoutPanelMenu.SuspendLayout();
@@ -103,28 +102,8 @@
             this.MenuButtonRefresh.UseVisualStyleBackColor = true;
             this.MenuButtonRefresh.Click += new System.EventHandler(this.MenuButtonRefresh_Click);
             // 
-            // TreeViewDirectories
-            // 
-            this.TreeViewDirectories.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TreeViewDirectories.BackColor = System.Drawing.Color.White;
-            this.TreeViewDirectories.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TreeViewDirectories.Font = new System.Drawing.Font("Cambria", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TreeViewDirectories.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.TreeViewDirectories.Location = new System.Drawing.Point(0, 89);
-            this.TreeViewDirectories.Margin = new System.Windows.Forms.Padding(0);
-            this.TreeViewDirectories.Name = "TreeViewDirectories";
-            this.TreeViewDirectories.ShowLines = false;
-            this.TreeViewDirectories.ShowNodeToolTips = true;
-            this.TreeViewDirectories.Size = new System.Drawing.Size(443, 472);
-            this.TreeViewDirectories.TabIndex = 1;
-            this.TreeViewDirectories.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeViewDirectories_NodeMouseClick);
-            this.TreeViewDirectories.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeViewDirectories_NodeMouseDoubleClick);
-            // 
             // PanelContent
             // 
-            this.PanelContent.Controls.Add(this.TreeViewDirectories);
             this.PanelContent.Controls.Add(this.FlowLayoutPanelExtensions);
             this.PanelContent.Controls.Add(this.FlowLayoutPanelMenu);
             this.PanelContent.Controls.Add(this.PanelSearch);
@@ -134,6 +113,14 @@
             this.PanelContent.Name = "PanelContent";
             this.PanelContent.Size = new System.Drawing.Size(443, 561);
             this.PanelContent.TabIndex = 2;
+            // 
+            // FlowLayoutPanelExtensions
+            // 
+            this.FlowLayoutPanelExtensions.Dock = System.Windows.Forms.DockStyle.Top;
+            this.FlowLayoutPanelExtensions.Location = new System.Drawing.Point(0, 64);
+            this.FlowLayoutPanelExtensions.Name = "FlowLayoutPanelExtensions";
+            this.FlowLayoutPanelExtensions.Size = new System.Drawing.Size(443, 24);
+            this.FlowLayoutPanelExtensions.TabIndex = 5;
             // 
             // FlowLayoutPanelMenu
             // 
@@ -204,14 +191,6 @@
             this.TextBoxSearch.TextChanged += new System.EventHandler(this.TextBoxSearch_TextChanged);
             this.TextBoxSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxSearch_KeyDown);
             // 
-            // FlowLayoutPanelExtensions
-            // 
-            this.FlowLayoutPanelExtensions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.FlowLayoutPanelExtensions.Location = new System.Drawing.Point(0, 64);
-            this.FlowLayoutPanelExtensions.Name = "FlowLayoutPanelExtensions";
-            this.FlowLayoutPanelExtensions.Size = new System.Drawing.Size(443, 24);
-            this.FlowLayoutPanelExtensions.TabIndex = 5;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -235,7 +214,6 @@
         #endregion
 
         private System.Windows.Forms.Panel PanelMainMenu;
-        private System.Windows.Forms.TreeView TreeViewDirectories;
         private UI.MenuButton MenuButtonRefresh;
         private UI.MenuButton MenuButtonSettings;
         private System.Windows.Forms.Panel PanelContent;

@@ -1,4 +1,5 @@
-﻿using MusicFiles.Forms;
+﻿using MusicFiles.FormControls;
+using MusicFiles.Forms;
 using MusicFiles.Models;
 using MusicFiles.Models.Language;
 using MusicFiles.Persistence.Repositories;
@@ -21,13 +22,13 @@ namespace MusicFiles {
         private DirectoryRepository directoryRepository;
         private ExtensionRepository extensionRepository;
 
+        private DirectoryTreeView DirectoryTreeView;
+
         private LanguageManager languageManager;
 
-        /// <summary>
-        /// In-memory representation of all the directories
-        /// </summary>
         private ICollection<MusicDirectory> musicDirectories;
         private ICollection<string> extensions;
+        private ICollection<string> filteredExtensions;
 
         /// <summary>
         /// Default Constructor
@@ -47,28 +48,51 @@ namespace MusicFiles {
             extensionRepository = new ExtensionRepository();
             directoryRepository = new DirectoryRepository();
             languageManager = new LanguageManager();
+            filteredExtensions = new List<string>();
             musicDirectories = directoryRepository.GetDirectories();
             extensions = extensionRepository.GetExtensions();
+
+            //Treeview specific UI
+            DirectoryTreeView = new DirectoryTreeView(directoryRepository, extensionRepository);
+            PanelContent.Controls.Add(DirectoryTreeView);
+            PanelContent.Controls.SetChildIndex(DirectoryTreeView, 0);
+            DirectoryTreeView.Anchor = AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
+            DirectoryTreeView.BorderStyle = BorderStyle.None;
+            DirectoryTreeView.Dock = DockStyle.Fill;
+  
 
             UpdateSizeAndLocation();
             UpdateExtensionMenu();
             UpdateColor();
             UpdateText();
-            GenerateTree(musicDirectories, Settings.Default.Expand);
+
+            DirectoryTreeView.Generate(Settings.Default.Expand);
             base.OnLoad(e);
         }
 
         private void UpdateExtensionMenu() {
             foreach ( string ext in extensions ) {
-                CheckBox checkBox = new CheckBox {
+                CheckBox checkBoxExtension = new CheckBox {
                     Text = ext,
                     AutoSize = true,
                 };
 
-                //TODO listener
-                FlowLayoutPanelExtensions.Controls.Add(checkBox);
+                checkBoxExtension.CheckedChanged += CheckBoxExtension_CheckedChanged;
+                FlowLayoutPanelExtensions.Controls.Add(checkBoxExtension);
             }
         }
+
+        private void CheckBoxExtension_CheckedChanged( object sender, EventArgs e ) {
+            CheckBox checkBoxExtension = (CheckBox)sender;
+            if ( checkBoxExtension.Checked ) {
+                filteredExtensions.Add(checkBoxExtension.Text);
+            } else {
+                filteredExtensions.Remove(checkBoxExtension.Text);
+            }
+
+            DirectoryTreeView.FilterExtensions(filteredExtensions);
+        }
+
         /// <summary>
         /// Sets the saved size and location of the form
         /// </summary>
@@ -80,19 +104,13 @@ namespace MusicFiles {
             Location = Settings.Default.WindowLocation;
         }
 
-        /// <summary>
-        /// Update the color scheme
-        /// </summary>
         private void UpdateColor() {
-            TreeViewDirectories.ForeColor = Settings.Default.ColorForeTreeView;
-            TreeViewDirectories.BackColor = Settings.Default.ColorBackTreeView;
+            DirectoryTreeView.ForeColor = Settings.Default.ColorForeTreeView;
+            DirectoryTreeView.BackColor = Settings.Default.ColorBackTreeView;
             PanelMainMenu.ForeColor = Settings.Default.ColorForeMenu;
             PanelMainMenu.BackColor = Settings.Default.ColorBackMenu;
         }
 
-        /// <summary>
-        /// Updates the UI text according to the chosen language
-        /// </summary>
         private void UpdateText() {
 
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(languageManager.GetPreferredLanguageCode());
@@ -104,12 +122,6 @@ namespace MusicFiles {
             LabelSearch.Text = Resources.Strings.Search;
         }
 
-
-        /// <summary>
-        /// Occurs when closing MainForm. Saves the location and size settings
-        /// </summary>
-        /// <param name="sender">MainForm</param>
-        /// <param name="e">FormClosingEventArgs</param>
         protected override void OnFormClosing( FormClosingEventArgs e ) {
             Settings.Default.WindowLocation = Location;
 
@@ -121,7 +133,6 @@ namespace MusicFiles {
 
             Settings.Default.Save();
             base.OnFormClosing(e);
-
         }
         #endregion
 
@@ -129,22 +140,19 @@ namespace MusicFiles {
         #region MENU EVENTS
 
         /// <summary>
-        /// Refresh the treeview
+        /// Refreshes the TreeView
         /// </summary>
-        /// <param name="sender">MenuButton</param>
-        /// <param name="e">EventArgs</param>
         private void MenuButtonRefresh_Click( object sender, EventArgs e ) {
             musicDirectories = directoryRepository.GetDirectories();
             extensions = extensionRepository.GetExtensions();
-            GenerateTree(musicDirectories, Settings.Default.Expand);
+
+            DirectoryTreeView.Generate(Settings.Default.Expand);
         }
 
 
         /// <summary>
         /// Open the settings view
         /// </summary>
-        /// <param name="sender">MenuButton</param>
-        /// <param name="e">EventArgs</param>
         private void ButtonSettings_Click( object sender, EventArgs e ) {
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.LanguageChanged += SettingsForm_LanguageChanged;
@@ -155,8 +163,6 @@ namespace MusicFiles {
         /// <summary>
         /// Occurs when a color is changed in the SettingsForm
         /// </summary>
-        /// <param name="sender">SettingsForm</param>
-        /// <param name="e">EventArgs</param>
         private void SettingsForm_ColorChanged( object sender, EventArgs e ) {
             UpdateColor();
         }
@@ -164,8 +170,6 @@ namespace MusicFiles {
         /// <summary>
         /// Occurs when the language is changed in the SettingsForm
         /// </summary>
-        /// <param name="sender">SettingsForm</param>
-        /// <param name="e">EventArgs</param>
         private void SettingsForm_LanguageChanged( object sender, EventArgs e ) {
             UpdateText();
         }
@@ -173,8 +177,6 @@ namespace MusicFiles {
         /// <summary>
         /// Opens the help view
         /// </summary>
-        /// <param name="sender">MenuButton</param>
-        /// <param name="e">EventArgs</param>
         private void MenuButtonGuide_Click( object sender, EventArgs e ) {
             FormUtils.OpenForm(new HelpForm(), Location);
         }
@@ -182,144 +184,26 @@ namespace MusicFiles {
 
         /* EVENTS RELATED TO THE TREEVIEW */
         #region TREE
-        /// <summary>
-        /// Generates the treeview for the directories and files
-        /// </summary>
-        /// <param name="directories">A collection of the directories</param>
-        /// <param name="expand">Indicates wether or not the directories should be expanded; default value is false</param>
-        private void GenerateTree( ICollection<MusicDirectory> directories, bool expand = false ) {
-            TreeViewDirectories.Nodes.Clear(); // Clear the view
-
-            int index = 0;
-
-            if ( directories.Count == 0 ) {
-                TreeNode notificationNode = new TreeNode {
-                    Text = "You have not selected any directory yet. Go to the options menu.",
-                    ForeColor = Color.OrangeRed
-                };
-                TreeViewDirectories.Enabled = false;
-                TreeViewDirectories.Nodes.Add(notificationNode);
-                return;
-            }
-
-            TreeViewDirectories.Enabled = true;
-            foreach ( MusicDirectory directory in directories ) {
-                try {
-                    ICollection<FileInfo> files = directory.GetFiles(extensions);
-
-                    TreeNode dirNode = new TreeNode() {
-                        Text = directory.Path,
-                        Tag = NODE_STAT.DIRECTORY
-                    };
-
-                    TreeViewDirectories.Nodes.Add(dirNode);
-
-                    foreach ( FileInfo file in files ) {
-                        TreeNode fileNode = new TreeNode() {
-                            Text = file.Name,
-                            ToolTipText = file.FullName,
-                            Tag = NODE_STAT.FILE
-                        };
-
-                        TreeViewDirectories.Nodes[index].Nodes.Add(fileNode);
-                    }
-
-                    if ( dirNode.Nodes.Count == 0 ) {
-                        dirNode.Nodes.Add(new TreeNode {
-                            Text = "No matches found",
-                            ForeColor = Color.Red,
-                            Tag = NODE_STAT.INVALID
-                        });
-                    }
-
-                    if ( expand ) {
-                        dirNode.Expand(); // Expands the directory
-                    }
-                    index++;
-                } catch ( DirectoryNotFoundException dnfe ) {
-                    TreeNode dirNode = new TreeNode() {
-                        Text = "(!) " + directory.Path,
-                        ToolTipText = dnfe.Message,
-                        Tag = NODE_STAT.INVALID
-                    };
-                    dirNode.ForeColor = Color.Red;
-                    TreeViewDirectories.Nodes.Add(dirNode);
-                }
-            }
-            TreeViewDirectories.Nodes[0].EnsureVisible(); // make sure the top node is visible
-        }
 
         /// <summary>
-        /// Occurs when there is doubleclicked inside the treeview. Opens a file if one was double clicked
+        /// Occurs when a doubleclick occured in the TreeView
         /// </summary>
-        /// <param name="sender">TreeViewDirectories</param>
-        /// <param name="e">TreeNodeMouseClickEventArgs</param>
         private void TreeViewDirectories_NodeMouseDoubleClick( object sender, TreeNodeMouseClickEventArgs e ) {
-            if ( e.Button != MouseButtons.Left ) {
-                return; // The left mousebutton was not clicked
+            if ( e.Button == MouseButtons.Left ) {
+                DirectoryTreeView.DoubleClicked(e.Node);
             }
 
-            try {
-                TreeNode selectedNode = e.Node;
-                if ( (NODE_STAT)selectedNode.Tag == NODE_STAT.FILE ) {
-                    Process.Start(selectedNode.ToolTipText);
-                }
-
-            } catch ( Exception ex ) {
-
-                MessageBoxUtils.ShowError("Unexpected error", ex.Message);
-            }
         }
 
         /// <summary>
         /// Occurs when right clicking inside the treeview. 
-        /// Opens a menu where the user can select to open the folder if a folder was right clicked.
-        /// If a file was right clicked, the user will get to choose wether or not to open the file location
         /// </summary>
-        /// <param name="sender">TreeViewDirectories</param>
-        /// <param name="e">TreeNodeMouseClickEventArgs</param>
         private void TreeViewDirectories_NodeMouseClick( object sender, TreeNodeMouseClickEventArgs e ) {
-            if ( e.Button != MouseButtons.Right ) {
-                return; // The right mouse button was not clicked
+            if ( e.Button == MouseButtons.Right ) {
+                DirectoryTreeView.RightClicked(e.Node);
             }
 
-            TreeNode selectedNode = e.Node;
-            TreeView treeView = (TreeView)sender;
-            treeView.SelectedNode = selectedNode; // A right click doesnt set the selected node, so we do it ourself
-
-
-            if ( (NODE_STAT)selectedNode.Tag == NODE_STAT.INVALID ) {
-                // This happens in the case a directory is no longer available on the filesystem
-                return;
-            }
-
-            ContextMenuBuilder builder = new ContextMenuBuilder();
-            string path = string.Empty; // The path of the file
-            string text = string.Empty; // The text to show in the contextmenu
-
-            if ( (NODE_STAT)selectedNode.Tag == NODE_STAT.FILE ) {
-                path = selectedNode.ToolTipText;
-                path = Path.GetDirectoryName(path) + Path.DirectorySeparatorChar;
-                text = "Open file location";
-            } else if ( (NODE_STAT)selectedNode.Tag == NODE_STAT.DIRECTORY ) {
-                path = selectedNode.Text;
-                text = "Open folder";
-            }
-
-            builder.Add(text, ( s, ea ) => OpenFolder_Click(s, ea, path));
-            builder.Show();
         }
-
-        /// <summary>
-        /// Opens the windows file explorer for a given path
-        /// </summary>
-        /// <param name="sender">ToolStripMenuItem</param>
-        /// <param name="e">EventArgs</param>
-        /// <param name="path">The folder to open</param>
-        private void OpenFolder_Click( object sender, EventArgs e, string path ) {
-            Process.Start(path);
-        }
-
 
         /// <summary>
         /// Occurs when Enter is pressed while focused on TextBoxSearch
@@ -331,38 +215,7 @@ namespace MusicFiles {
                 return;
             }
             e.SuppressKeyPress = true;
-            TreeViewDirectories.Visible = false; // We do this so the treeview does not flicker
-            // We regenerate the full tree first, then delete what doesn't match. This causes a flicker since its deleting and rebuilding the tree
-            GenerateTree(musicDirectories, true);
-            string query = TextBoxSearch.Text.ToLower();
-            // Start the deletion process
-            List<TreeNode> nodesToDelete = new List<TreeNode>();
-            // Iterate all the directories
-            foreach ( TreeNode directory in TreeViewDirectories.Nodes ) {
-                int nodeCount = directory.Nodes.Count;
-                // Iterate all the files in this directory
-                for ( int i = 0; i < nodeCount; i++ ) {
-                    TreeNode file = directory.Nodes[i]; // get current node
-                    string fileName = file.Text.ToLower(); // text in lowercase
-                    if ( !( fileName.Contains(query) ) ) // if not contains
-                    {
-                        nodesToDelete.Add(file); // mark node as deleted
-                    }
-                }
-            }
-            nodesToDelete.ForEach(f => f.Remove()); // Delete the nodes
-
-            foreach ( TreeNode directory in TreeViewDirectories.Nodes ) {
-                if ( directory.Nodes.Count == 0 ) {
-                    directory.Nodes.Add(new TreeNode {
-                        Text = "No matches found",
-                        ForeColor = Color.Red,
-                        Tag = NODE_STAT.INVALID
-                    });
-
-                }
-            }
-            TreeViewDirectories.Visible = true;
+            DirectoryTreeView.Search(TextBoxSearch.Text);
         }
 
         /// <summary>
@@ -373,7 +226,7 @@ namespace MusicFiles {
         private void TextBoxSearch_TextChanged( object sender, EventArgs e ) {
             string input = TextBoxSearch.Text;
             if ( string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input) ) {
-                GenerateTree(musicDirectories, true);
+                DirectoryTreeView.Generate(true);
             }
         }
 
@@ -383,9 +236,9 @@ namespace MusicFiles {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MenuButtonCollapseAll_Click( object sender, EventArgs e ) {
-            TreeViewDirectories.Visible = false;
-            TreeViewDirectories.CollapseAll();
-            TreeViewDirectories.Visible = true;
+            DirectoryTreeView.Visible = false;
+            DirectoryTreeView.CollapseAll();
+            DirectoryTreeView.Visible = true;
         }
 
         /// <summary>
@@ -394,12 +247,11 @@ namespace MusicFiles {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MenuButtonShowAll_Click( object sender, EventArgs e ) {
-            TreeViewDirectories.Visible = false; // We do this so the treeview does not flicker
-            TreeViewDirectories.ExpandAll();
-            TreeViewDirectories.Nodes[0].EnsureVisible(); // scroll to top
-            TreeViewDirectories.Visible = true;
+            DirectoryTreeView.Visible = false; // We do this so the treeview does not flicker
+            DirectoryTreeView.ExpandAll();
+            DirectoryTreeView.Nodes[0].EnsureVisible(); // scroll to top
+            DirectoryTreeView.Visible = true;
         }
-
         #endregion
     }
 }
