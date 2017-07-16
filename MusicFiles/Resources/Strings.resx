@@ -132,6 +132,9 @@
   <data name="Directories" xml:space="preserve">
     <value>Directories</value>
   </data>
+  <data name="ErrorNoDirectories" xml:space="preserve">
+    <value>You have not selected any directory yet. Go to the settings menu.</value>
+  </data>
   <data name="ExpandInfo" xml:space="preserve">
     <value>Expand directories on load and refresh</value>
   </data>

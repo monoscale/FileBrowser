@@ -106,6 +106,15 @@ namespace MusicFiles.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have not selected any directory yet. Go to the settings menu..
+        /// </summary>
+        internal static string ErrorNoDirectories {
+            get {
+                return ResourceManager.GetString("ErrorNoDirectories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expand directories on load and refresh.
         /// </summary>
         internal static string ExpandInfo {

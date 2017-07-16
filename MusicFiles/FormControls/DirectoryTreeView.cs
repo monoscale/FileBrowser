@@ -35,7 +35,7 @@ namespace MusicFiles.FormControls {
             int index = 0;
             if ( directories.Count == 0 ) {
                 TreeNode notificationNode = new TreeNode {
-                    Text = "You have not selected any directory yet. Go to the settings menu.",
+                    Text = Resources.Strings.ErrorNoDirectories,
                     ForeColor = Color.OrangeRed
                 };
                 Enabled = false;
