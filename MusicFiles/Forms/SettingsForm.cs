@@ -316,8 +316,6 @@ namespace MusicFiles.Forms
                 return;
             }
 
-
-
             // Add a . if the user forgets it
             if (!extension.StartsWith("."))
             {

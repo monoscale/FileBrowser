@@ -62,19 +62,19 @@ namespace MusicFiles {
 
             DirectoryTreeView.NodeMouseClick += DirectoryTreeViews_NodeMouseClick;
             DirectoryTreeView.NodeMouseDoubleClick += DirectoryTreeViews_NodeMouseDoubleClick;
-  
+
 
             UpdateSizeAndLocation();
             UpdateExtensionMenu();
             UpdateColor();
             UpdateText();
 
-            DirectoryTreeView.Generate(musicDirectories, Settings.Default.Expand);
+            DirectoryTreeView.Generate(Settings.Default.Expand);
             base.OnLoad(e);
         }
 
         private void UpdateExtensionMenu() {
-            foreach ( string ext in extensions ) {
+            foreach(string ext in extensions) {
                 CheckBox checkBoxExtension = new CheckBox {
                     Text = ext,
                     AutoSize = true,
@@ -87,7 +87,7 @@ namespace MusicFiles {
 
         private void CheckBoxExtension_CheckedChanged( object sender, EventArgs e ) {
             CheckBox checkBoxExtension = (CheckBox)sender;
-            if ( checkBoxExtension.Checked ) {
+            if(checkBoxExtension.Checked) {
                 filteredExtensions.Add(checkBoxExtension.Text);
             } else {
                 filteredExtensions.Remove(checkBoxExtension.Text);
@@ -100,7 +100,7 @@ namespace MusicFiles {
         /// Sets the saved size and location of the form
         /// </summary>
         private void UpdateSizeAndLocation() {
-            if ( !FormUtils.IsOnScreen(this) ) {
+            if(!FormUtils.IsOnScreen(this)) {
                 Location = Settings.Default.WindowLocation;
             }
             Size = Settings.Default.WindowSize;
@@ -128,7 +128,7 @@ namespace MusicFiles {
         protected override void OnFormClosing( FormClosingEventArgs e ) {
             Settings.Default.WindowLocation = Location;
 
-            if ( WindowState == FormWindowState.Normal ) {
+            if(WindowState == FormWindowState.Normal) {
                 Settings.Default.WindowSize = Size;
             } else {
                 Settings.Default.WindowSize = RestoreBounds.Size;
@@ -149,7 +149,7 @@ namespace MusicFiles {
             musicDirectories = directoryRepository.GetDirectories();
             extensions = extensionRepository.GetExtensions();
 
-            DirectoryTreeView.Generate(musicDirectories, Settings.Default.Expand);
+            DirectoryTreeView.Generate(Settings.Default.Expand);
         }
 
 
@@ -192,7 +192,7 @@ namespace MusicFiles {
         /// Occurs when a doubleclick occured in the TreeView
         /// </summary>
         private void DirectoryTreeViews_NodeMouseDoubleClick( object sender, TreeNodeMouseClickEventArgs e ) {
-            if ( e.Button == MouseButtons.Left ) {
+            if(e.Button == MouseButtons.Left) {
                 DirectoryTreeView.DoubleClicked(e.Node);
             }
 
@@ -202,7 +202,7 @@ namespace MusicFiles {
         /// Occurs when right clicking inside the treeview. 
         /// </summary>
         private void DirectoryTreeViews_NodeMouseClick( object sender, TreeNodeMouseClickEventArgs e ) {
-            if ( e.Button == MouseButtons.Right ) {
+            if(e.Button == MouseButtons.Right) {
                 DirectoryTreeView.RightClicked(e.Node);
             }
 
@@ -214,7 +214,7 @@ namespace MusicFiles {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void TextBoxSearch_KeyDown( object sender, KeyEventArgs e ) {
-            if ( e.KeyCode != Keys.Enter ) {
+            if(e.KeyCode != Keys.Enter) {
                 return;
             }
             e.SuppressKeyPress = true;
@@ -228,8 +228,8 @@ namespace MusicFiles {
         /// <param name="e"></param>
         private void TextBoxSearch_TextChanged( object sender, EventArgs e ) {
             string input = TextBoxSearch.Text;
-            if ( string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input) ) {
-                DirectoryTreeView.Generate(musicDirectories, true);
+            if(string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input)) {
+                DirectoryTreeView.Generate(true);
             }
         }
 
