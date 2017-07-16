@@ -316,11 +316,7 @@ namespace MusicFiles.Forms
                 return;
             }
 
-            if (extension.Any(c => char.IsDigit(c)))
-            {
-                MessageBoxUtils.ShowExclamation("Invalid extension", "The extension cannot contain a number");
-                return;
-            }
+
 
             // Add a . if the user forgets it
             if (!extension.StartsWith("."))

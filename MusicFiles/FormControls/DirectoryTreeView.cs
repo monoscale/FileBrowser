@@ -29,7 +29,7 @@ namespace MusicFiles.FormControls {
         /// Generates the treeview for the directories and files
         /// </summary>
         /// <param name="expand">Indicates wether or not the directories should be expanded; default value is false</param>
-        public void Generate( bool expand = false ) {
+        public void Generate(ICollection<MusicDirectory> directories, bool expand = false ) {
 
             Nodes.Clear(); // Clear the view
             int index = 0;
@@ -97,7 +97,7 @@ namespace MusicFiles.FormControls {
         public void Search( string query ) {
             Visible = false;
             query = query.ToLower();
-            Generate(true);
+         //   Generate(true);
             List<TreeNode> nodesToDelete = new List<TreeNode>();
             // Iterate all the directories
             foreach ( TreeNode directory in Nodes ) {
@@ -135,7 +135,7 @@ namespace MusicFiles.FormControls {
         /// <param name="extensions">The list of extensions</param>
         public void FilterExtensions( ICollection<string> extensions ) {
             Visible = false;
-            Generate(true);
+          //  Generate(true);
 
             List<TreeNode> nodesToDelete = new List<TreeNode>();
             foreach ( TreeNode directory in Nodes ) {

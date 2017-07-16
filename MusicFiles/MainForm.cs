@@ -59,6 +59,9 @@ namespace MusicFiles {
             DirectoryTreeView.Anchor = AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
             DirectoryTreeView.BorderStyle = BorderStyle.None;
             DirectoryTreeView.Dock = DockStyle.Fill;
+
+            DirectoryTreeView.NodeMouseClick += DirectoryTreeViews_NodeMouseClick;
+            DirectoryTreeView.NodeMouseDoubleClick += DirectoryTreeViews_NodeMouseDoubleClick;
   
 
             UpdateSizeAndLocation();
@@ -66,7 +69,7 @@ namespace MusicFiles {
             UpdateColor();
             UpdateText();
 
-            DirectoryTreeView.Generate(Settings.Default.Expand);
+            DirectoryTreeView.Generate(musicDirectories, Settings.Default.Expand);
             base.OnLoad(e);
         }
 
@@ -146,7 +149,7 @@ namespace MusicFiles {
             musicDirectories = directoryRepository.GetDirectories();
             extensions = extensionRepository.GetExtensions();
 
-            DirectoryTreeView.Generate(Settings.Default.Expand);
+            DirectoryTreeView.Generate(musicDirectories, Settings.Default.Expand);
         }
 
 
@@ -188,7 +191,7 @@ namespace MusicFiles {
         /// <summary>
         /// Occurs when a doubleclick occured in the TreeView
         /// </summary>
-        private void TreeViewDirectories_NodeMouseDoubleClick( object sender, TreeNodeMouseClickEventArgs e ) {
+        private void DirectoryTreeViews_NodeMouseDoubleClick( object sender, TreeNodeMouseClickEventArgs e ) {
             if ( e.Button == MouseButtons.Left ) {
                 DirectoryTreeView.DoubleClicked(e.Node);
             }
@@ -198,7 +201,7 @@ namespace MusicFiles {
         /// <summary>
         /// Occurs when right clicking inside the treeview. 
         /// </summary>
-        private void TreeViewDirectories_NodeMouseClick( object sender, TreeNodeMouseClickEventArgs e ) {
+        private void DirectoryTreeViews_NodeMouseClick( object sender, TreeNodeMouseClickEventArgs e ) {
             if ( e.Button == MouseButtons.Right ) {
                 DirectoryTreeView.RightClicked(e.Node);
             }
@@ -226,7 +229,7 @@ namespace MusicFiles {
         private void TextBoxSearch_TextChanged( object sender, EventArgs e ) {
             string input = TextBoxSearch.Text;
             if ( string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input) ) {
-                DirectoryTreeView.Generate(true);
+                DirectoryTreeView.Generate(musicDirectories, true);
             }
         }
 
