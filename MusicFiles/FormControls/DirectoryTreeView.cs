@@ -1,23 +1,24 @@
 ﻿using FileBrowser.Models;
 using FileBrowser.Persistence.Repositories;
-using FileBrowser.Properties;
 using FileBrowser.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
 namespace FileBrowser.FormControls {
+
+
+    /// <summary>
+    /// Subclass of <see cref="TreeView"/> with additional features
+    /// </summary>
     public partial class DirectoryTreeView : TreeView {
 
         private DirectoryRepository directoryRepository;
         private ExtensionRepository extensionRepository;
 
-
-        
         private TreeNode NoDirectoriesTreeNode; // TreeNode for when no directories are yet selected
         
         public DirectoryTreeView( DirectoryRepository directoryRepository, ExtensionRepository extensionReposiitory ) {
@@ -25,16 +26,17 @@ namespace FileBrowser.FormControls {
             this.directoryRepository = directoryRepository;
             this.extensionRepository = extensionReposiitory;
 
-
             NoDirectoriesTreeNode = new TreeNode {
                 Text = Resources.Strings.ErrorNoDirectories,
-                ForeColor = Color.OrangeRed,
-                
+                ForeColor = Color.OrangeRed,  
             };
         }
 
 
 
+        /// <summary>
+        /// Updates the text in the TreeView
+        /// </summary>
         public void UpdateText() {
             NoDirectoriesTreeNode.Text = Resources.Strings.ErrorNoDirectories;
         }

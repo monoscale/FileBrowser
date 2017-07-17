@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,8 +27,8 @@ namespace FileBrowser.Utils
         /// <summary>
         /// Adds a ToolStripMenuItem to the ContextMenuStrip
         /// </summary>
-        /// <param name="name">The text that has to show</param>
-        /// <param name="handler">The handler that occurs when clicking the ToolStripMenuItem</param>
+        /// <param name="name">The text on the ToolStrip</param>
+        /// <param name="handler">The event that occurs when clicking the ToolStripMenuItem</param>
         public void Add(string text, EventHandler handler)
         {
             ToolStripMenuItem item = new ToolStripMenuItem(text);
@@ -41,6 +42,16 @@ namespace FileBrowser.Utils
         public void Show()
         {
             menu.Show(Cursor.Position);
+        }
+
+
+
+        /// <summary>
+        /// Shows the ContextMenuStrip at the location given as a parameter
+        /// </summary>
+        /// <param name="location">The location</param>
+        public void Show( Point location ) {
+            menu.Show(location);
         }
     }
 }

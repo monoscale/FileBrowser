@@ -15,8 +15,11 @@ using System.Threading;
 using System.Windows.Forms;
 
 namespace FileBrowser {
+
+
+
     /// <summary>
-    /// The main form
+    /// The main entry point of the application.
     /// </summary>
     public partial class MainForm : Form {
         private DirectoryRepository directoryRepository;
@@ -37,11 +40,16 @@ namespace FileBrowser {
             InitializeComponent();
         }
 
+
+
+
         /* EVENTS RELATED TO THE WHOLE FORM*/
         #region MAINFORM EVENTS
         /// <summary>
-        ///  Occurs when MainForm has loaded. Loads the settings and generates the treeview
+        ///  Occurs when MainForm has loaded. Initializes everything needed to load the DirectoryTreeView
         /// </summary>
+        /// <seealso cref="DirectoryTreeView"/>
+        /// <remarks>This method should never be called by the User, but by <see cref="MainForm"/> itself</remarks>
         /// <param name="e">EventArgs</param>
         protected override void OnLoad( EventArgs e ) {
 
@@ -62,7 +70,6 @@ namespace FileBrowser {
 
             DirectoryTreeView.NodeMouseClick += DirectoryTreeViews_NodeMouseClick;
             DirectoryTreeView.NodeMouseDoubleClick += DirectoryTreeViews_NodeMouseDoubleClick;
-
 
             UpdateSizeAndLocation();
             UpdateExtensionMenu();
@@ -149,6 +156,7 @@ namespace FileBrowser {
 
         /// <summary>
         /// Refreshes the TreeView
+        /// <seealso cref="DirectoryTreeView"/>
         /// </summary>
         private void MenuButtonRefresh_Click( object sender, EventArgs e ) {
             musicDirectories = directoryRepository.GetDirectories();
@@ -161,6 +169,7 @@ namespace FileBrowser {
 
         /// <summary>
         /// Open the settings view
+        /// <seealso cref="SettingsForm"/>
         /// </summary>
         private void ButtonSettings_Click( object sender, EventArgs e ) {
             SettingsForm settingsForm = new SettingsForm();
@@ -171,6 +180,7 @@ namespace FileBrowser {
 
         /// <summary>
         /// Occurs when a color is changed in the SettingsForm
+        /// <seealso cref="SettingsForm"/>
         /// </summary>
         private void SettingsForm_ColorChanged( object sender, EventArgs e ) {
             UpdateColor();
@@ -178,6 +188,7 @@ namespace FileBrowser {
 
         /// <summary>
         /// Occurs when the language is changed in the SettingsForm
+        /// <seealso cref="SettingsForm"/>
         /// </summary>
         private void SettingsForm_LanguageChanged( object sender, EventArgs e ) {
             UpdateText();
@@ -185,6 +196,7 @@ namespace FileBrowser {
 
         /// <summary>
         /// Opens the help view
+        /// <seealso cref="HelpForm"/>
         /// </summary>
         private void MenuButtonGuide_Click( object sender, EventArgs e ) {
             FormUtils.OpenForm(new HelpForm(), Location);
@@ -196,6 +208,7 @@ namespace FileBrowser {
 
         /// <summary>
         /// Occurs when a doubleclick occured in the TreeView
+        /// <seealso cref="DirectoryTreeView.DoubleClicked(TreeNode)"/>
         /// </summary>
         private void DirectoryTreeViews_NodeMouseDoubleClick( object sender, TreeNodeMouseClickEventArgs e ) {
             if(e.Button == MouseButtons.Left) {
@@ -206,6 +219,7 @@ namespace FileBrowser {
 
         /// <summary>
         /// Occurs when right clicking inside the treeview. 
+        /// <seealso cref="DirectoryTreeView.RightClicked(TreeNode)"/>
         /// </summary>
         private void DirectoryTreeViews_NodeMouseClick( object sender, TreeNodeMouseClickEventArgs e ) {
             if(e.Button == MouseButtons.Right) {
@@ -215,10 +229,8 @@ namespace FileBrowser {
         }
 
         /// <summary>
-        /// Occurs when Enter is pressed while focused on TextBoxSearch
+        /// Occurs when Enter is pressed while focused on TextBoxSearch and searches The DirectoryTreeView
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void TextBoxSearch_KeyDown( object sender, KeyEventArgs e ) {
             if(e.KeyCode != Keys.Enter) {
                 return;

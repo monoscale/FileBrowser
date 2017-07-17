@@ -16,7 +16,7 @@ namespace FileBrowser.Models
         private string path;
 
         /// <summary>
-        /// Gets or Sets the path of the directory
+        /// Gets or sets the path of the directory
         /// </summary>
         public string Path
         {
