@@ -36,7 +36,7 @@ namespace FileBrowser.Utils
         /// </summary>
         /// <param name="form"></param>
         /// <param name="parentLocation"></param>
-        public static void OpenForm(Form form, Point parentLocation, int offset = 40)
+        public static void OpenForm(Form form, Point parentLocation, int offset = 100)
         {
             form.StartPosition = FormStartPosition.Manual;
             form.Location = new Point(parentLocation.X + offset, parentLocation.Y + offset);

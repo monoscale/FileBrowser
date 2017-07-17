@@ -131,7 +131,6 @@ namespace FileBrowser.Forms
             ButtonReset.Text = Resources.Strings.Reset;
             CheckBoxExpand.Text = Resources.Strings.ExpandInfo;
             LabelLanguage.Text = Resources.Strings.SelectLanguage;
-
         }
         #endregion
 

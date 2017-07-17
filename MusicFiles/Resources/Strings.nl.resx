@@ -124,13 +124,16 @@
     <value>Extensie toevoegen</value>
   </data>
   <data name="CollapseAll" xml:space="preserve">
-    <value>Alles verbergen</value>
+    <value>Inklappen</value>
   </data>
   <data name="Colors" xml:space="preserve">
     <value>Kleuren</value>
   </data>
   <data name="Directories" xml:space="preserve">
     <value>Mappen</value>
+  </data>
+  <data name="ErrorNoDirectories" xml:space="preserve">
+    <value>Je hebt nog geen mappen geselecteerd. Ga naar het instellingen menu.</value>
   </data>
   <data name="ExpandInfo" xml:space="preserve">
     <value>Vouw mappen uit bij opstarten en hernieuwen</value>
@@ -184,6 +187,6 @@
     <value>Selecteer taal</value>
   </data>
   <data name="ShowAll" xml:space="preserve">
-    <value>Alles tonen</value>
+    <value>Uitvouwen</value>
   </data>
 </root>

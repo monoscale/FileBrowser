@@ -110,6 +110,7 @@ namespace FileBrowser {
         private void UpdateColor() {
             DirectoryTreeView.ForeColor = Settings.Default.ColorForeTreeView;
             DirectoryTreeView.BackColor = Settings.Default.ColorBackTreeView;
+            PanelContent.BackColor = Settings.Default.ColorBackTreeView;
             PanelMainMenu.ForeColor = Settings.Default.ColorForeMenu;
             PanelMainMenu.BackColor = Settings.Default.ColorBackMenu;
         }
@@ -123,6 +124,9 @@ namespace FileBrowser {
             MenuButtonRefresh.Text = Resources.Strings.MenuRefresh;
             MenuButtonSettings.Text = Resources.Strings.MenuSettings;
             LabelSearch.Text = Resources.Strings.Search;
+            MenuButtonCollapseAll.Text = Resources.Strings.CollapseAll;
+            MenuButtonShowAll.Text = Resources.Strings.ShowAll;
+            DirectoryTreeView.UpdateText();
         }
 
         protected override void OnFormClosing( FormClosingEventArgs e ) {

@@ -124,7 +124,7 @@
     <value>Add Extension</value>
   </data>
   <data name="CollapseAll" xml:space="preserve">
-    <value>Collapse All</value>
+    <value>Collapse</value>
   </data>
   <data name="Colors" xml:space="preserve">
     <value>Colors</value>
@@ -187,6 +187,6 @@
     <value>Select Language</value>
   </data>
   <data name="ShowAll" xml:space="preserve">
-    <value>Show All</value>
+    <value>Show</value>
   </data>
 </root>

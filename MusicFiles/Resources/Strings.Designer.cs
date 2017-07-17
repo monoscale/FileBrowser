@@ -79,7 +79,7 @@ namespace FileBrowser.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Collapse All.
+        ///   Looks up a localized string similar to Collapse.
         /// </summary>
         internal static string CollapseAll {
             get {
@@ -268,7 +268,7 @@ namespace FileBrowser.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show All.
+        ///   Looks up a localized string similar to Show.
         /// </summary>
         internal static string ShowAll {
             get {

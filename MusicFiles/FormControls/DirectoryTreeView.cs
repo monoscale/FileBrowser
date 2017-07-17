@@ -15,13 +15,29 @@ namespace FileBrowser.FormControls {
 
         private DirectoryRepository directoryRepository;
         private ExtensionRepository extensionRepository;
+
+
+        
+        private TreeNode NoDirectoriesTreeNode; // TreeNode for when no directories are yet selected
         
         public DirectoryTreeView( DirectoryRepository directoryRepository, ExtensionRepository extensionReposiitory ) {
             InitializeComponent();
             this.directoryRepository = directoryRepository;
             this.extensionRepository = extensionReposiitory;
+
+
+            NoDirectoriesTreeNode = new TreeNode {
+                Text = Resources.Strings.ErrorNoDirectories,
+                ForeColor = Color.OrangeRed,
+                
+            };
         }
 
+
+
+        public void UpdateText() {
+            NoDirectoriesTreeNode.Text = Resources.Strings.ErrorNoDirectories;
+        }
 
 
         /// <summary>
@@ -37,12 +53,8 @@ namespace FileBrowser.FormControls {
             ICollection<string> extensions = extensionRepository.GetExtensions();
 
             if(directories.Count == 0) {
-                TreeNode notificationNode = new TreeNode {
-                    Text = Resources.Strings.ErrorNoDirectories,
-                    ForeColor = Color.OrangeRed
-                };
                 Enabled = false;
-                Nodes.Add(notificationNode);
+                Nodes.Add(NoDirectoriesTreeNode);
                 return;
             }
 
