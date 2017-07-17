@@ -1,5 +1,5 @@
-﻿using MusicFiles.Properties;
-using MusicFiles.Utils;
+﻿using FileBrowser.Properties;
+using FileBrowser.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MusicFiles.Forms
+namespace FileBrowser.Forms
 {
     public partial class HelpForm : Form
     {

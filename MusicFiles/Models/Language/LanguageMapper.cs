@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicFiles.Models.Language
+namespace FileBrowser.Models.Language
 {
     /// <summary>
     /// This class is able to map a language code to a specific language and vice versa

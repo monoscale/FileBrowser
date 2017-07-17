@@ -1,8 +1,8 @@
-﻿using MusicFiles.Models;
-using MusicFiles.Models.Language;
-using MusicFiles.Persistence.Repositories;
-using MusicFiles.Properties;
-using MusicFiles.Utils;
+﻿using FileBrowser.Models;
+using FileBrowser.Models.Language;
+using FileBrowser.Persistence.Repositories;
+using FileBrowser.Properties;
+using FileBrowser.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MusicFiles.Forms
+namespace FileBrowser.Forms
 {
     /// <summary>
     /// This form handles the settings
@@ -21,7 +21,7 @@ namespace MusicFiles.Forms
         private ExtensionRepository extensionRepository;
         private LanguageManager languageManager;
 
-        private ObservableCollection<MusicDirectory> directories;
+        private ObservableCollection<Directory> directories;
         private ObservableCollection<string> extensions;
 
 
@@ -62,10 +62,10 @@ namespace MusicFiles.Forms
 
             languageManager = new LanguageManager();
 
-            directories = new ObservableCollection<MusicDirectory>();
+            directories = new ObservableCollection<Directory>();
             extensions = new ObservableCollection<string>();
 
-            foreach (MusicDirectory directory in directoryRepository.GetDirectories())
+            foreach (Directory directory in directoryRepository.GetDirectories())
             {
                 directories.Add(directory);
             }
@@ -151,7 +151,7 @@ namespace MusicFiles.Forms
             if (result == DialogResult.OK)
             {
                 string path = folderBrowserDialog.SelectedPath;
-                MusicDirectory newDirectory = new MusicDirectory(path);
+                Directory newDirectory = new Directory(path);
                 if (directories.Contains(newDirectory))
                 {
                     MessageBoxUtils.ShowError("Duplicate folder", "This folder is already in the list.");
@@ -159,7 +159,7 @@ namespace MusicFiles.Forms
                 else
                 {
                     directoryRepository.AddDirectory(path);
-                    directories.Add(new MusicDirectory(path));
+                    directories.Add(new Directory(path));
                 }
 
             }
@@ -200,7 +200,7 @@ namespace MusicFiles.Forms
             {
 
                 string newPath = folderBrowserDialog.SelectedPath;
-                MusicDirectory newDirectory = new MusicDirectory(newPath); // new instance for comparing
+                Directory newDirectory = new Directory(newPath); // new instance for comparing
                 if (directories.Contains(newDirectory))
                 {
                     MessageBoxUtils.ShowError("Duplicate folder", "This folder is already in the list.");
@@ -233,7 +233,7 @@ namespace MusicFiles.Forms
         private void UpdateDirectories()
         {
             ListViewDirectories.Clear();
-            foreach (MusicDirectory directory in directories)
+            foreach (Directory directory in directories)
             {
                 ListViewDirectories.Items.Add(new ListViewItem(directory.Path));
             }

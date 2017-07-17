@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicFiles.Models.Language
+namespace FileBrowser.Models.Language
 {
     /// <summary>
     /// The class that knows which languages are available on this system

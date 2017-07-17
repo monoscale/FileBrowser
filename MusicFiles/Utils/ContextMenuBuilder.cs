@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MusicFiles.Utils
+namespace FileBrowser.Utils
 {
     /// <summary>
     /// Class that allows for easy ContextMenu creation

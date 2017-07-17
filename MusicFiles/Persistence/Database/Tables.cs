@@ -1,4 +1,4 @@
-﻿namespace MusicFiles.Persistence.Database
+﻿namespace FileBrowser.Persistence.Database
 {
     /// <summary>
     /// All the tables to be used in the database

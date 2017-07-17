@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2632FCA5-7E84-44B7-ACC6-4521C532BDDA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MusicFiles</RootNamespace>
-    <AssemblyName>MusicFiles</AssemblyName>
+    <RootNamespace>FileBrowser</RootNamespace>
+    <AssemblyName>FileBrowser</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -102,7 +102,7 @@
     </Compile>
     <Compile Include="Models\Language\LanguageManager.cs" />
     <Compile Include="Models\Language\LanguageCollection.cs" />
-    <Compile Include="Persistence\Database\MusicFilesDb.cs" />
+    <Compile Include="Persistence\Database\FileBrowserDb.cs" />
     <Compile Include="Persistence\Database\Tables.cs" />
     <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
@@ -116,7 +116,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\MusicDirectory.cs" />
+    <Compile Include="Models\Directory.cs" />
     <Compile Include="Models\NODE_STAT.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

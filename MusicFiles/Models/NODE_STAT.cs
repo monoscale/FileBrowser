@@ -1,4 +1,4 @@
-﻿namespace MusicFiles.Models
+﻿namespace FileBrowser.Models
 {
     /// <summary>
     /// Keeping track wether or not a node in the tree is a directory or a file

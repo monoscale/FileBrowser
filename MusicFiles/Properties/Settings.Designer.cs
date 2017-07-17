@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MusicFiles.Properties {
+namespace FileBrowser.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -97,7 +97,7 @@ namespace MusicFiles.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Music Files")]
+        [global::System.Configuration.DefaultSettingValueAttribute("File Browser")]
         public string Title {
             get {
                 return ((string)(this["Title"]));

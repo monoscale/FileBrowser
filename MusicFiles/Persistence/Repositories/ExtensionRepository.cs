@@ -1,20 +1,20 @@
 ﻿
 
-using MusicFiles.Persistence.Database;
+using FileBrowser.Persistence.Database;
 using System.Collections.Generic;
 using System.Data.SQLite;
 
-namespace MusicFiles.Persistence.Repositories
+namespace FileBrowser.Persistence.Repositories
 {
     public class ExtensionRepository
     {
 
-        private MusicFilesDb db;
+        private FileBrowserDb db;
 
 
         public ExtensionRepository()
         {
-            db = new MusicFilesDb();
+            db = new FileBrowserDb();
         }
 
 

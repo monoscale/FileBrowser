@@ -1,11 +1,11 @@
 ﻿using System.Data.SQLite;
 using System.IO;
 
-namespace MusicFiles.Persistence.Database
-{
-    public class MusicFilesDb
-    {
+namespace FileBrowser.Persistence.Database {
+    public class FileBrowserDb {
+
         private const string dbName = "musicfiles.sqlite";
+
         private const string sqliteVersion = "3";
         private const string connectionString = "Data Source=" + dbName + ";Version=" + sqliteVersion;
 
@@ -22,26 +22,21 @@ namespace MusicFiles.Persistence.Database
         /// <summary>
         /// Default constructor for MusicFilesDb
         /// </summary>
-        public MusicFilesDb()
-        {
+        public FileBrowserDb() {
             CreateDatabaseIfNotExists();
         }
 
         /// <summary>
         /// Creates the SQLite database file if it does not yet exist on the filesystem
         /// </summary>
-        public void CreateDatabaseIfNotExists()
-        {
-            if (File.Exists(dbName))
-            {
+        public void CreateDatabaseIfNotExists() {
+            if(File.Exists(dbName)) {
                 return;
             }
 
             SQLiteConnection.CreateFile(dbName);
-            using (SQLiteConnection connection = Connect())
-            {
-                using (SQLiteCommand command = new SQLiteCommand(connection))
-                {
+            using(SQLiteConnection connection = Connect()) {
+                using(SQLiteCommand command = new SQLiteCommand(connection)) {
                     connection.Open();
 
                     command.CommandText = folderTable;
@@ -56,12 +51,15 @@ namespace MusicFiles.Persistence.Database
         }
 
         /// <summary>
-        /// Returns a SQLite connection
+        /// Returns a SQLite connection<
         /// </summary>
         /// <returns></returns>
-        public SQLiteConnection Connect()
-        {
+        public SQLiteConnection Connect() {
             return new SQLiteConnection(connectionString);
+        }
+
+        public SQLiteConnection Connect( string connectionSstring ) {
+            return new SQLiteConnection(connectionSstring);
         }
     }
 }

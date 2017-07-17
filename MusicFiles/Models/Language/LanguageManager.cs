@@ -1,11 +1,11 @@
-﻿using MusicFiles.Properties;
+﻿using FileBrowser.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicFiles.Models.Language
+namespace FileBrowser.Models.Language
 {
     /// <summary>
     /// Class that controls the Language flow

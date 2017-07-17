@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MusicFiles.FormControls
+namespace FileBrowser.FormControls
 {
     public partial class HelpLabel : Label
     {

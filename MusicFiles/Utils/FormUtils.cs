@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MusicFiles.Utils
+namespace FileBrowser.Utils
 {
     public class FormUtils
     {

@@ -1,4 +1,4 @@
-﻿namespace MusicFiles.Forms
+﻿namespace FileBrowser.Forms
 {
     partial class HelpForm
     {
@@ -31,10 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HelpForm));
             this.PanelContent = new System.Windows.Forms.Panel();
-            this.HelpLabel4 = new MusicFiles.FormControls.HelpLabel(this.components);
-            this.HelpLabel3 = new MusicFiles.FormControls.HelpLabel(this.components);
-            this.HelpLabel2 = new MusicFiles.FormControls.HelpLabel(this.components);
-            this.HelpLabel1 = new MusicFiles.FormControls.HelpLabel(this.components);
+            this.HelpLabel4 = new FileBrowser.FormControls.HelpLabel(this.components);
+            this.HelpLabel3 = new FileBrowser.FormControls.HelpLabel(this.components);
+            this.HelpLabel2 = new FileBrowser.FormControls.HelpLabel(this.components);
+            this.HelpLabel1 = new FileBrowser.FormControls.HelpLabel(this.components);
             this.PanelContent.SuspendLayout();
             this.SuspendLayout();
             // 

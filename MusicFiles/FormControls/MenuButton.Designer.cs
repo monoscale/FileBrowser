@@ -1,4 +1,4 @@
-﻿namespace MusicFiles.UI
+﻿namespace FileBrowser.UI
 {
     partial class MenuButton
     {

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace MusicFiles.UI
+namespace FileBrowser.UI
 {
     public partial class MenuButton : Button
     {

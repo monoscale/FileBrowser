@@ -1,7 +1,7 @@
-﻿using MusicFiles.Models;
-using MusicFiles.Persistence.Repositories;
-using MusicFiles.Properties;
-using MusicFiles.Utils;
+﻿using FileBrowser.Models;
+using FileBrowser.Persistence.Repositories;
+using FileBrowser.Properties;
+using FileBrowser.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace MusicFiles.FormControls {
+namespace FileBrowser.FormControls {
     public partial class DirectoryTreeView : TreeView {
 
         private DirectoryRepository directoryRepository;
@@ -33,7 +33,7 @@ namespace MusicFiles.FormControls {
             Nodes.Clear(); // Clear the view
             int index = 0;
 
-            ICollection<MusicDirectory> directories = directoryRepository.GetDirectories();
+            ICollection<Models.Directory> directories = directoryRepository.GetDirectories();
             ICollection<string> extensions = extensionRepository.GetExtensions();
 
             if(directories.Count == 0) {
@@ -47,7 +47,7 @@ namespace MusicFiles.FormControls {
             }
 
             Enabled = true;
-            foreach(MusicDirectory directory in directories) {
+            foreach(Models.Directory directory in directories) {
                 try {
                     ICollection<FileInfo> files = directory.GetFiles(extensions);
 

@@ -1,4 +1,4 @@
-﻿namespace MusicFiles
+﻿namespace FileBrowser
 {
     partial class MainForm
     {
@@ -31,14 +31,14 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.PanelMainMenu = new System.Windows.Forms.Panel();
-            this.MenuButtonGuide = new MusicFiles.UI.MenuButton(this.components);
-            this.MenuButtonSettings = new MusicFiles.UI.MenuButton(this.components);
-            this.MenuButtonRefresh = new MusicFiles.UI.MenuButton(this.components);
+            this.MenuButtonGuide = new FileBrowser.UI.MenuButton(this.components);
+            this.MenuButtonSettings = new FileBrowser.UI.MenuButton(this.components);
+            this.MenuButtonRefresh = new FileBrowser.UI.MenuButton(this.components);
             this.PanelContent = new System.Windows.Forms.Panel();
             this.FlowLayoutPanelExtensions = new System.Windows.Forms.FlowLayoutPanel();
             this.FlowLayoutPanelMenu = new System.Windows.Forms.FlowLayoutPanel();
-            this.MenuButtonCollapseAll = new MusicFiles.UI.MenuButton(this.components);
-            this.MenuButtonShowAll = new MusicFiles.UI.MenuButton(this.components);
+            this.MenuButtonCollapseAll = new FileBrowser.UI.MenuButton(this.components);
+            this.MenuButtonShowAll = new FileBrowser.UI.MenuButton(this.components);
             this.PanelSearch = new System.Windows.Forms.Panel();
             this.LabelSearch = new System.Windows.Forms.Label();
             this.TextBoxSearch = new System.Windows.Forms.TextBox();

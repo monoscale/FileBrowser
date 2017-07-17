@@ -1,4 +1,4 @@
-﻿namespace MusicFiles.Forms
+﻿namespace FileBrowser.Forms
 {
     partial class SettingsForm
     {

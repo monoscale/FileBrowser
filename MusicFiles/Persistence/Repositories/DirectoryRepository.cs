@@ -1,29 +1,29 @@
 ﻿
-using MusicFiles.Models;
-using MusicFiles.Persistence.Database;
+using FileBrowser.Models;
+using FileBrowser.Persistence.Database;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 
-namespace MusicFiles.Persistence.Repositories
+namespace FileBrowser.Persistence.Repositories
 {
     public class DirectoryRepository
     {
-        private MusicFilesDb db;
+        private FileBrowserDb db;
 
 
         public DirectoryRepository()
         {
-            db = new MusicFilesDb();
+            db = new FileBrowserDb();
         }
 
         /// <summary>
         /// Returns the paths of all directories
         /// </summary>
         /// <returns>A list of stringts with the absolute paths of each directory</returns>
-        public ICollection<MusicDirectory> GetDirectories()
+        public ICollection<Directory> GetDirectories()
         {
-            ICollection<MusicDirectory> directories = new List<MusicDirectory>();
+            ICollection<Directory> directories = new List<Directory>();
             using (SQLiteConnection connection = db.Connect())
             {
                 using (SQLiteCommand command = new SQLiteCommand(connection))
@@ -39,7 +39,7 @@ namespace MusicFiles.Persistence.Repositories
                         while (reader.Read())
                         {
                             string path = (string)reader[Tables.DIRECTORY_TABLE_PATH];
-                            directories.Add(new MusicDirectory(path));
+                            directories.Add(new Directory(path));
                         }
                     }
                 }

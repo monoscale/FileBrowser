@@ -1,4 +1,4 @@
-﻿namespace MusicFiles.Properties {
+﻿namespace FileBrowser.Properties {
     
     
     // This class allows you to handle specific events on the settings class:

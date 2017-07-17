@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace MusicFiles.Models
+namespace FileBrowser.Models
 {
     /// <summary>
-    /// This class represents a directory that is dedicated to storing music related files
+    /// This class represents a directory
     /// </summary>
-    public class MusicDirectory : IEquatable<MusicDirectory>
+    public class Directory : IEquatable<Directory>
     {
         /// <summary>
         /// Path of the directory
@@ -35,7 +35,7 @@ namespace MusicFiles.Models
         /// Default constructor
         /// </summary>
         /// <param name="path">The path of the directory</param>
-        public MusicDirectory(string path)
+        public Directory(string path)
         {
             Path = path;
         }
@@ -60,11 +60,11 @@ namespace MusicFiles.Models
 
 
         /// <summary>
-        /// Overriden from IEquatable. Determines if an other MusicDirectory instance is equal to this one.
+        /// Overriden from IEquatable. Determines if an other Directory instance is equal to this one.
         /// </summary>
         /// <param name="other"></param>
         /// <returns>true if equal; else false</returns>
-        public bool Equals(MusicDirectory other)
+        public bool Equals(Directory other)
         {
             if (other == null)
             {

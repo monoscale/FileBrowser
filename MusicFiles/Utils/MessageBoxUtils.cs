@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MusicFiles.Utils
+namespace FileBrowser.Utils
 {
     /// <summary>
     /// Easy handling of MessageBox instances

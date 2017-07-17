@@ -1,4 +1,4 @@
-﻿namespace MusicFiles.FormControls
+﻿namespace FileBrowser.FormControls
 {
     partial class HelpLabel
     {

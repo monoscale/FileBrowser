@@ -1,10 +1,10 @@
-﻿using MusicFiles.FormControls;
-using MusicFiles.Forms;
-using MusicFiles.Models;
-using MusicFiles.Models.Language;
-using MusicFiles.Persistence.Repositories;
-using MusicFiles.Properties;
-using MusicFiles.Utils;
+﻿using FileBrowser.FormControls;
+using FileBrowser.Forms;
+using FileBrowser.Models;
+using FileBrowser.Models.Language;
+using FileBrowser.Persistence.Repositories;
+using FileBrowser.Properties;
+using FileBrowser.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +14,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MusicFiles {
+namespace FileBrowser {
     /// <summary>
     /// The main form
     /// </summary>
@@ -26,7 +26,7 @@ namespace MusicFiles {
 
         private LanguageManager languageManager;
 
-        private ICollection<MusicDirectory> musicDirectories;
+        private ICollection<Models.Directory> musicDirectories;
         private ICollection<string> extensions;
         private ICollection<string> filteredExtensions;
 
