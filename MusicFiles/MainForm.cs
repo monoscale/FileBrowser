@@ -74,6 +74,7 @@ namespace FileBrowser {
         }
 
         private void UpdateExtensionMenu() {
+            FlowLayoutPanelExtensions.Controls.Clear();
             foreach(string ext in extensions) {
                 CheckBox checkBoxExtension = new CheckBox {
                     Text = ext,
@@ -154,6 +155,7 @@ namespace FileBrowser {
             extensions = extensionRepository.GetExtensions();
 
             DirectoryTreeView.Generate(Settings.Default.Expand);
+            UpdateExtensionMenu();
         }
 
 
