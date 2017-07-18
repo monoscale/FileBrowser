@@ -129,11 +129,13 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Directory.cs" />
+    <Compile Include="Models\Folder.cs" />
     <Compile Include="Models\NODE_STAT.cs" />
+    <Compile Include="Persistence\Repositories\IFolderRepository.cs" />
+    <Compile Include="Persistence\Repositories\IExtensionRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Persistence\Repositories\DirectoryRepository.cs" />
+    <Compile Include="Persistence\Repositories\FolderRepository.cs" />
     <Compile Include="Persistence\Repositories\ExtensionRepository.cs" />
     <Compile Include="FormControls\MenuButton.cs">
       <SubType>Component</SubType>

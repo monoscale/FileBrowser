@@ -18,7 +18,7 @@ namespace FileBrowser
             Application.SetCompatibleTextRenderingDefault(false);
 
             MainForm mainForm = new MainForm();
-            mainForm.SetRepositories(new DirectoryRepository(), new ExtensionRepository());
+            mainForm.SetRepositories(new FolderRepository(), new ExtensionRepository());
             mainForm.SetDependencies(new LanguageManager(), new ThemeManager());
 
 

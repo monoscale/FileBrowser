@@ -18,12 +18,12 @@ namespace FileBrowser.FormControls {
     /// </summary>
     public partial class DirectoryTreeView : TreeView, Localizable {
 
-        private DirectoryRepository directoryRepository;
-        private ExtensionRepository extensionRepository;
+        private IFolderRepository folderRepository;
+        private IExtensionRepository extensionRepository;
 
-        public DirectoryTreeView( DirectoryRepository directoryRepository, ExtensionRepository extensionRepository ) {
+        public DirectoryTreeView( IFolderRepository folderRepository, IExtensionRepository extensionRepository ) {
             InitializeComponent();
-            this.directoryRepository = directoryRepository;
+            this.folderRepository = folderRepository;
             this.extensionRepository = extensionRepository;
             ShowNodeToolTips = true;
         }
@@ -44,11 +44,11 @@ namespace FileBrowser.FormControls {
         /// </summary>
         /// <param name="expand">Indicates wether or not the directories should be expanded; default value is false</param>
         public void Generate( bool expand = false ) {
-  
+
             Nodes.Clear(); // Clear the view
             int index = 0;
 
-            ICollection<Models.Directory> directories = directoryRepository.GetDirectories();
+            ICollection<Folder> directories = folderRepository.GetFolders();
             ICollection<string> extensions = extensionRepository.GetExtensions();
 
             if(directories.Count == 0) {
@@ -58,7 +58,7 @@ namespace FileBrowser.FormControls {
             }
 
             Enabled = true;
-            foreach(Models.Directory directory in directories) {
+            foreach(Folder directory in directories) {
                 try {
                     ICollection<FileInfo> files = directory.GetFiles(extensions);
 
@@ -70,7 +70,7 @@ namespace FileBrowser.FormControls {
                     }
 
                     if(dirNode.Nodes.Count == 0) {
-                        
+
                         dirNode.Nodes.Add(new NoMatchesTreeNode());
                     }
 
@@ -111,9 +111,8 @@ namespace FileBrowser.FormControls {
             nodesToDelete.ForEach(f => f.Remove()); // Delete the nodes
 
             foreach(TreeNode directory in Nodes) {
-                if(directory.Nodes.Count == 0) {
+                if(directory.Nodes.Count == 0 && !(directory is DirectoryNotFoundTreeNode)) {
                     directory.Nodes.Add(new NoMatchesTreeNode());
-
                 }
             }
             EndUpdate();

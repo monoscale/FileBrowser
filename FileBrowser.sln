@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileBrowser", "MusicFiles\FileBrowser.csproj", "{2632FCA5-7E84-44B7-ACC6-4521C532BDDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileBrowser.Tests", "FileBrowser.Tests\FileBrowser.Tests.csproj", "{B6573A50-5D20-4D7C-9F40-C897CD35F580}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{2632FCA5-7E84-44B7-ACC6-4521C532BDDA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2632FCA5-7E84-44B7-ACC6-4521C532BDDA}.Release|x86.ActiveCfg = Release|Any CPU
 		{2632FCA5-7E84-44B7-ACC6-4521C532BDDA}.Release|x86.Build.0 = Release|Any CPU
+		{B6573A50-5D20-4D7C-9F40-C897CD35F580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6573A50-5D20-4D7C-9F40-C897CD35F580}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6573A50-5D20-4D7C-9F40-C897CD35F580}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B6573A50-5D20-4D7C-9F40-C897CD35F580}.Debug|x86.Build.0 = Debug|Any CPU
+		{B6573A50-5D20-4D7C-9F40-C897CD35F580}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6573A50-5D20-4D7C-9F40-C897CD35F580}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6573A50-5D20-4D7C-9F40-C897CD35F580}.Release|x86.ActiveCfg = Release|Any CPU
+		{B6573A50-5D20-4D7C-9F40-C897CD35F580}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

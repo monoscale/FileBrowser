@@ -17,12 +17,14 @@ namespace FileBrowser.Forms {
     /// This form handles the settings
     /// </summary>
     public partial class SettingsForm : Form {
-        private DirectoryRepository directoryRepository;
-        private ExtensionRepository extensionRepository;
+
+
+        private IFolderRepository folderRepository;
+        private IExtensionRepository extensionRepository;
         private LanguageManager languageManager;
         private ThemeManager themeManager;
 
-        private ObservableCollection<Directory> directories;
+        private ObservableCollection<Folder> directories;
         private ObservableCollection<string> extensions;
 
 
@@ -42,8 +44,8 @@ namespace FileBrowser.Forms {
             InitializeComponent();
         }
 
-        public void SetRepositories( DirectoryRepository directoryRepository, ExtensionRepository extensionRepository ) {
-            this.directoryRepository = directoryRepository;
+        public void SetRepositories( IFolderRepository folderRepository, IExtensionRepository extensionRepository ) {
+            this.folderRepository = folderRepository;
             this.extensionRepository = extensionRepository;
         }
 
@@ -66,10 +68,10 @@ namespace FileBrowser.Forms {
         protected override void OnLoad( EventArgs e ) {
             Text = Settings.Default.Title + " - Settings";
 
-            directories = new ObservableCollection<Directory>();
+            directories = new ObservableCollection<Folder>();
             extensions = new ObservableCollection<string>();
 
-            foreach(Directory directory in directoryRepository.GetDirectories()) {
+            foreach(Folder directory in folderRepository.GetFolders()) {
                 directories.Add(directory);
             }
 
@@ -137,12 +139,12 @@ namespace FileBrowser.Forms {
             DialogResult result = folderBrowserDialog.ShowDialog();
             if(result == DialogResult.OK) {
                 string path = folderBrowserDialog.SelectedPath;
-                Directory newDirectory = new Directory(path);
+                Folder newDirectory = new Folder(path);
                 if(directories.Contains(newDirectory)) {
                     ErrorMessageBox.Show("Duplicate folder", "This folder is already in the list.");
                 } else {
-                    directoryRepository.AddDirectory(path);
-                    directories.Add(new Directory(path));
+                    folderRepository.AddFolder(path);
+                    directories.Add(new Folder(path));
                 }
 
             }
@@ -178,11 +180,11 @@ namespace FileBrowser.Forms {
             if(folderBrowserDialog.ShowDialog() == DialogResult.OK) {
 
                 string newPath = folderBrowserDialog.SelectedPath;
-                Directory newDirectory = new Directory(newPath); // new instance for comparing
+                Folder newDirectory = new Folder(newPath); // new instance for comparing
                 if(directories.Contains(newDirectory)) {
                     ErrorMessageBox.Show("Duplicate folder", "This folder is already in the list.");
                 } else {
-                    directoryRepository.EditDirectory(oldPath, newPath);
+                    folderRepository.EditFolder(oldPath, newPath);
                     directories.First(d => d.Path == oldPath).Path = newPath;
                     UpdateDirectories();
                 }
@@ -197,7 +199,7 @@ namespace FileBrowser.Forms {
         /// <param name="e">EventArgs</param>
         /// <param name="path">The path of the folder that will be removed </param>
         private void DeleteDirectory_Click( object sender, EventArgs e, string path ) {
-            directoryRepository.RemoveDirectory(path);
+            folderRepository.RemoveFolder(path);
             directories.Remove(directories.First(d => d.Path == path));
         }
 
@@ -206,7 +208,7 @@ namespace FileBrowser.Forms {
         /// </summary>
         private void UpdateDirectories() {
             ListViewDirectories.Clear();
-            foreach(Directory directory in directories) {
+            foreach(Folder directory in directories) {
                 ListViewDirectories.Items.Add(new ListViewItem(directory.Path));
             }
         }

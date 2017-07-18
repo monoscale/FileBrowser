@@ -13,21 +13,21 @@ using System.Windows.Forms;
 
 namespace FileBrowser {
 
-
-
     /// <summary>
     /// The main entry point of the application.
     /// </summary>
     public partial class MainForm : Form {
-        private DirectoryRepository directoryRepository;
-        private ExtensionRepository extensionRepository;
+
+
+        private IFolderRepository folderRepository;
+        private IExtensionRepository extensionRepository;
 
         private DirectoryTreeView DirectoryTreeView;
 
         private LanguageManager languageManager;
         private ThemeManager themeManager;
 
-        private ICollection<Models.Directory> musicDirectories;
+        private ICollection<Models.Folder> musicDirectories;
         private ICollection<string> extensions;
         private ICollection<string> filteredExtensions;
 
@@ -39,8 +39,8 @@ namespace FileBrowser {
         }
 
 
-        public void SetRepositories( DirectoryRepository directoryRepository, ExtensionRepository extensionRepository ) {
-            this.directoryRepository = directoryRepository;
+        public void SetRepositories( IFolderRepository folderRepository, IExtensionRepository extensionRepository ) {
+            this.folderRepository = folderRepository;
             this.extensionRepository = extensionRepository;
         }
 
@@ -60,11 +60,11 @@ namespace FileBrowser {
         protected override void OnLoad( EventArgs e ) {
 
             filteredExtensions = new List<string>();
-            musicDirectories = directoryRepository.GetDirectories();
+            musicDirectories = folderRepository.GetFolders();
             extensions = extensionRepository.GetExtensions();
 
             //Treeview specific UI
-            DirectoryTreeView = new DirectoryTreeView(directoryRepository, extensionRepository);
+            DirectoryTreeView = new DirectoryTreeView(folderRepository, extensionRepository);
             PanelContent.Controls.Add(DirectoryTreeView);
             PanelContent.Controls.SetChildIndex(DirectoryTreeView, 0);
             DirectoryTreeView.Anchor = AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
@@ -172,7 +172,7 @@ namespace FileBrowser {
         /// <seealso cref="DirectoryTreeView"/>
         /// </summary>
         private void MenuButtonRefresh_Click( object sender, EventArgs e ) {
-            musicDirectories = directoryRepository.GetDirectories();
+            musicDirectories = folderRepository.GetFolders();
             extensions = extensionRepository.GetExtensions();
 
             DirectoryTreeView.Generate(Settings.Default.Expand);
@@ -186,7 +186,7 @@ namespace FileBrowser {
         /// </summary>
         private void ButtonSettings_Click( object sender, EventArgs e ) {
             SettingsForm settingsForm = new SettingsForm();
-            settingsForm.SetRepositories(directoryRepository, extensionRepository);
+            settingsForm.SetRepositories(folderRepository, extensionRepository);
             settingsForm.SetDependencies(languageManager, themeManager);
             settingsForm.LanguageChanged += SettingsForm_LanguageChanged;
             settingsForm.ColorChanged += SettingsForm_ColorChanged;
