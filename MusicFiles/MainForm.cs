@@ -1,16 +1,12 @@
 ﻿using FileBrowser.FormControls;
 using FileBrowser.Forms;
-using FileBrowser.Models;
 using FileBrowser.Models.Language;
 using FileBrowser.Persistence.Repositories;
 using FileBrowser.Properties;
 using FileBrowser.Utils;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
-using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
