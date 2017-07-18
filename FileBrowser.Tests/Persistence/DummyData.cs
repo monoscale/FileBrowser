@@ -11,15 +11,15 @@ namespace FileBrowser.Tests.Persistence {
         /// <summary>
         /// Contains 3 files ( 2 txt and 1 docx) and one folder which contains 1 file (mp3)
         /// </summary>
-        public string MainValidFolder => "C:/Users/Bert/Documents/visual studio 2017/Projects/MusicFiles/FileBrowser.Tests/TestFolder";
+        public string MainValidFolder => "C:/Users/Bert/Documents/visual studio 2017/Projects/FileBrowser/FileBrowser.Tests/TestFolder";
         /// <summary>
         /// Contains nothing
         /// </summary>
-        public string SecondaryValidFolder => "C:/Users/Bert/Documents/visual studio 2017/Projects/MusicFiles/FileBrowser.Tests/TestFolderCopy";
+        public string SecondaryValidFolder => "C:/Users/Bert/Documents/visual studio 2017/Projects/FileBrowser/FileBrowser.Tests/TestFolderCopy";
         /// <summary>
         /// A folder that does not exist on the filesystem
         /// </summary>
-        public string FolderThatDoesNotExist => "C:/Users/Bert/Documents/visual studio 2017/Projects/MusicFiles/FileBrowser.Tests/NonExistent";
+        public string FolderThatDoesNotExist => "C:/Users/Bert/Documents/visual studio 2017/Projects/FileBrowser/FileBrowser.Tests/TestFolderInvalid";
 
 
 

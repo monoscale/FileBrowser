@@ -58,12 +58,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestFolder\file2.docx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FileBrowser\FileBrowser.csproj">
       <Project>{2632fca5-7e84-44b7-acc6-4521c532bdda}</Project>
       <Name>FileBrowser</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestFolder\File1.txt" />
+    <Content Include="TestFolder\FILE4.txt" />
+    <Content Include="TestFolder\SubDirectory\file3.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestFolderCopy\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
