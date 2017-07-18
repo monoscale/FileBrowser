@@ -43,7 +43,7 @@ namespace FileBrowser.FormControls {
         /// </summary>
         /// <param name="expand">Indicates wether or not the directories should be expanded; default value is false</param>
         public void Generate( bool expand = false ) {
-
+  
             Nodes.Clear(); // Clear the view
             int index = 0;
 
@@ -62,8 +62,6 @@ namespace FileBrowser.FormControls {
                     ICollection<FileInfo> files = directory.GetFiles(extensions);
 
                     TreeNode dirNode = new DirectoryTreeNode(directory.Path);
-
-
                     Nodes.Add(dirNode);
 
                     foreach(FileInfo file in files) {
@@ -71,6 +69,7 @@ namespace FileBrowser.FormControls {
                     }
 
                     if(dirNode.Nodes.Count == 0) {
+                        
                         dirNode.Nodes.Add(new NoMatchesTreeNode());
                     }
 
@@ -90,7 +89,7 @@ namespace FileBrowser.FormControls {
         /// </summary>
         /// <param name="text">The string to search for</param>
         public void Search( string query ) {
-            Visible = false;
+            BeginUpdate();
             query = query.ToLower();
             Generate(true);
             List<TreeNode> nodesToDelete = new List<TreeNode>();
@@ -117,7 +116,7 @@ namespace FileBrowser.FormControls {
                 }
             }
 
-            Visible = true;
+            EndUpdate();
         }
 
         /// <summary>
@@ -125,11 +124,11 @@ namespace FileBrowser.FormControls {
         /// </summary>
         /// <param name="extensions">The list of extensions</param>
         public void FilterExtensions( ICollection<string> extensions ) {
-            Visible = false;
+            BeginUpdate();
             Generate(true);
 
             if(extensions.Count == 0) {
-                Visible = true;
+                EndUpdate();
                 return;
             }
 
@@ -158,7 +157,7 @@ namespace FileBrowser.FormControls {
 
                 }
             }
-            Visible = true;
+            EndUpdate();
         }
 
         /// <summary>
@@ -218,5 +217,6 @@ namespace FileBrowser.FormControls {
         private void OpenFolder_Click( object sender, EventArgs e, string path ) {
             Process.Start(path);
         }
+
     }
 }

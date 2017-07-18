@@ -28,7 +28,7 @@ namespace FileBrowser {
         private DirectoryTreeView DirectoryTreeView;
 
         private LanguageManager languageManager;
-
+        
         private ICollection<Models.Directory> musicDirectories;
         private ICollection<string> extensions;
         private ICollection<string> filteredExtensions;
@@ -257,9 +257,9 @@ namespace FileBrowser {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MenuButtonCollapseAll_Click( object sender, EventArgs e ) {
-            DirectoryTreeView.Visible = false;
+            DirectoryTreeView.BeginUpdate();
             DirectoryTreeView.CollapseAll();
-            DirectoryTreeView.Visible = true;
+            DirectoryTreeView.EndUpdate();
         }
 
         /// <summary>
@@ -268,10 +268,10 @@ namespace FileBrowser {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MenuButtonShowAll_Click( object sender, EventArgs e ) {
-            DirectoryTreeView.Visible = false; // We do this so the treeview does not flicker
+            DirectoryTreeView.BeginUpdate();
             DirectoryTreeView.ExpandAll();
             DirectoryTreeView.Nodes[0].EnsureVisible(); // scroll to top
-            DirectoryTreeView.Visible = true;
+            DirectoryTreeView.EndUpdate();
         }
         #endregion
     }
