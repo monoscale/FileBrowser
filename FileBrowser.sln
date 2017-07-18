@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileBrowser", "MusicFiles\FileBrowser.csproj", "{2632FCA5-7E84-44B7-ACC6-4521C532BDDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileBrowser", "FileBrowser\FileBrowser.csproj", "{2632FCA5-7E84-44B7-ACC6-4521C532BDDA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileBrowser.Tests", "FileBrowser.Tests\FileBrowser.Tests.csproj", "{B6573A50-5D20-4D7C-9F40-C897CD35F580}"
 EndProject

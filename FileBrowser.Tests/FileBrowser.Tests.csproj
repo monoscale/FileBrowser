@@ -60,7 +60,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MusicFiles\FileBrowser.csproj">
+    <ProjectReference Include="..\FileBrowser\FileBrowser.csproj">
       <Project>{2632fca5-7e84-44b7-acc6-4521c532bdda}</Project>
       <Name>FileBrowser</Name>
     </ProjectReference>
