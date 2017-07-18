@@ -1,4 +1,5 @@
-﻿using FileBrowser.FormControls.TreeNodes;
+﻿using FileBrowser.FormControls.MessageBoxes;
+using FileBrowser.FormControls.TreeNodes;
 using FileBrowser.Models;
 using FileBrowser.Models.Language;
 using FileBrowser.Persistence.Repositories;
@@ -25,6 +26,7 @@ namespace FileBrowser.FormControls {
             InitializeComponent();
             this.directoryRepository = directoryRepository;
             this.extensionRepository = extensionReposiitory;
+            ShowNodeToolTips = true;
         }
 
 
@@ -115,7 +117,6 @@ namespace FileBrowser.FormControls {
 
                 }
             }
-
             EndUpdate();
         }
 
@@ -173,7 +174,7 @@ namespace FileBrowser.FormControls {
 
             } catch(Exception ex) {
 
-                MessageBoxUtils.ShowError("Unexpected error", ex.Message);
+                ErrorMessageBox.Show("Unexpected error", ex.Message);
             }
         }
 

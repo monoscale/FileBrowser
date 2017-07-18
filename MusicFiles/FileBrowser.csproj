@@ -94,6 +94,8 @@
     <Compile Include="FormControls\HelpLabel.Designer.cs">
       <DependentUpon>HelpLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormControls\MessageBoxes\ErrorMessageBox.cs" />
+    <Compile Include="FormControls\MessageBoxes\WarningMessageBox.cs" />
     <Compile Include="FormControls\TreeNodes\DirectoryNotFoundTreeNode.cs" />
     <Compile Include="FormControls\TreeNodes\DirectoryTreeNode.cs" />
     <Compile Include="FormControls\TreeNodes\NoDirectoriesTreeNode.cs" />
@@ -148,7 +150,6 @@
     <Compile Include="Utils\ContextMenuBuilder.cs" />
     <Compile Include="Utils\FormUtils.cs" />
     <Compile Include="Models\Language\LanguageMapper.cs" />
-    <Compile Include="Utils\MessageBoxUtils.cs" />
     <Compile Include="Utils\TitleBuilder.cs" />
     <EmbeddedResource Include="FormControls\DirectoryTreeView.resx">
       <DependentUpon>DirectoryTreeView.cs</DependentUpon>

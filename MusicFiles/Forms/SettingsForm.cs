@@ -1,4 +1,5 @@
-﻿using FileBrowser.Models;
+﻿using FileBrowser.FormControls.MessageBoxes;
+using FileBrowser.Models;
 using FileBrowser.Models.Language;
 using FileBrowser.Persistence.Repositories;
 using FileBrowser.Properties;
@@ -98,7 +99,7 @@ namespace FileBrowser.Forms
             }
             catch (ArgumentException)
             {
-                MessageBoxUtils.ShowError("Wrong language", "An invalid language was selected.");
+                ErrorMessageBox.Show("Wrong language", "An invalid language was selected.");
             }
         }
 
@@ -153,7 +154,7 @@ namespace FileBrowser.Forms
                 Directory newDirectory = new Directory(path);
                 if (directories.Contains(newDirectory))
                 {
-                    MessageBoxUtils.ShowError("Duplicate folder", "This folder is already in the list.");
+                    ErrorMessageBox.Show("Duplicate folder", "This folder is already in the list.");
                 }
                 else
                 {
@@ -202,7 +203,7 @@ namespace FileBrowser.Forms
                 Directory newDirectory = new Directory(newPath); // new instance for comparing
                 if (directories.Contains(newDirectory))
                 {
-                    MessageBoxUtils.ShowError("Duplicate folder", "This folder is already in the list.");
+                    ErrorMessageBox.Show("Duplicate folder", "This folder is already in the list.");
                 }
                 else
                 {
@@ -311,7 +312,7 @@ namespace FileBrowser.Forms
         {
             if (string.IsNullOrWhiteSpace(extension))
             {
-                MessageBoxUtils.ShowExclamation("Invalid extension", "The extension cannot be empty");
+                WarningMessageBox.Show("Invalid extension", "The extension cannot be empty");
                 return;
             }
 
@@ -323,7 +324,7 @@ namespace FileBrowser.Forms
 
             if (extensions.Contains(extension))
             {
-                MessageBoxUtils.ShowError("Duplicate extension", "This extension is already in the list.");
+                ErrorMessageBox.Show("Duplicate extension", "This extension is already in the list.");
             }
             else
             {
@@ -505,7 +506,7 @@ namespace FileBrowser.Forms
             }
             catch (ArgumentException)
             {
-                MessageBoxUtils.ShowError("Wrong language", "An invalid language was selected.");
+                ErrorMessageBox.Show("Wrong language", "An invalid language was selected.");
             }
 
         }
