@@ -135,6 +135,9 @@
   <data name="ErrorNoDirectories" xml:space="preserve">
     <value>Je hebt nog geen mappen geselecteerd. Ga naar het instellingen menu.</value>
   </data>
+  <data name="ErrorNoMatches" xml:space="preserve">
+    <value>Geen bestanden gevonden</value>
+  </data>
   <data name="ExpandInfo" xml:space="preserve">
     <value>Vouw mappen uit bij opstarten en hernieuwen</value>
   </data>

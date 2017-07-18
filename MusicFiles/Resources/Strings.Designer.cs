@@ -115,6 +115,15 @@ namespace FileBrowser.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No matches found.
+        /// </summary>
+        internal static string ErrorNoMatches {
+            get {
+                return ResourceManager.GetString("ErrorNoMatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expand directories on load and refresh.
         /// </summary>
         internal static string ExpandInfo {

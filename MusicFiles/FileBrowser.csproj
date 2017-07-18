@@ -94,6 +94,11 @@
     <Compile Include="FormControls\HelpLabel.Designer.cs">
       <DependentUpon>HelpLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormControls\TreeNodes\DirectoryNotFoundTreeNode.cs" />
+    <Compile Include="FormControls\TreeNodes\DirectoryTreeNode.cs" />
+    <Compile Include="FormControls\TreeNodes\NoDirectoriesTreeNode.cs" />
+    <Compile Include="FormControls\TreeNodes\NoMatchesTreeNode.cs" />
+    <Compile Include="FormControls\TreeNodes\SearchResultTreeNode.cs" />
     <Compile Include="Forms\HelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +107,7 @@
     </Compile>
     <Compile Include="Models\Language\LanguageManager.cs" />
     <Compile Include="Models\Language\LanguageCollection.cs" />
+    <Compile Include="Models\Language\Localizable.cs" />
     <Compile Include="Persistence\Database\FileBrowserDb.cs" />
     <Compile Include="Persistence\Database\Tables.cs" />
     <Compile Include="Forms\SettingsForm.cs">

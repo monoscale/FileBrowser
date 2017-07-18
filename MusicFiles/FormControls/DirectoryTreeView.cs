@@ -1,4 +1,6 @@
-﻿using FileBrowser.Models;
+﻿using FileBrowser.FormControls.TreeNodes;
+using FileBrowser.Models;
+using FileBrowser.Models.Language;
 using FileBrowser.Persistence.Repositories;
 using FileBrowser.Utils;
 using System;
@@ -14,33 +16,28 @@ namespace FileBrowser.FormControls {
     /// <summary>
     /// Subclass of <see cref="TreeView"/> with additional features
     /// </summary>
-    public partial class DirectoryTreeView : TreeView {
+    public partial class DirectoryTreeView : TreeView, Localizable {
 
         private DirectoryRepository directoryRepository;
         private ExtensionRepository extensionRepository;
 
-        private TreeNode NoDirectoriesTreeNode; // TreeNode for when no directories are yet selected
-        
         public DirectoryTreeView( DirectoryRepository directoryRepository, ExtensionRepository extensionReposiitory ) {
             InitializeComponent();
             this.directoryRepository = directoryRepository;
             this.extensionRepository = extensionReposiitory;
-
-            NoDirectoriesTreeNode = new TreeNode {
-                Text = Resources.Strings.ErrorNoDirectories,
-                ForeColor = Color.OrangeRed,  
-            };
         }
 
 
-
-        /// <summary>
-        /// Updates the text in the TreeView
-        /// </summary>
         public void UpdateText() {
-            NoDirectoriesTreeNode.Text = Resources.Strings.ErrorNoDirectories;
+            foreach(TreeNode directory in Nodes) {
+                foreach(TreeNode file in directory.Nodes) {
+                    if(file is Localizable) {
+                        Localizable node = (Localizable)file;
+                        node.UpdateText();
+                    }
+                }
+            }
         }
-
 
         /// <summary>
         /// Generates the treeview for the directories and files
@@ -56,7 +53,7 @@ namespace FileBrowser.FormControls {
 
             if(directories.Count == 0) {
                 Enabled = false;
-                Nodes.Add(NoDirectoriesTreeNode);
+                Nodes.Add(new NoDirectoriesTreeNode());
                 return;
             }
 
@@ -65,29 +62,17 @@ namespace FileBrowser.FormControls {
                 try {
                     ICollection<FileInfo> files = directory.GetFiles(extensions);
 
-                    TreeNode dirNode = new TreeNode() {
-                        Text = directory.Path,
-                        Tag = NODE_STAT.DIRECTORY
-                    };
+                    TreeNode dirNode = new DirectoryTreeNode(directory.Path);
+
 
                     Nodes.Add(dirNode);
 
                     foreach(FileInfo file in files) {
-                        TreeNode fileNode = new TreeNode() {
-                            Text = file.Name,
-                            ToolTipText = file.FullName,
-                            Tag = NODE_STAT.FILE
-                        };
-
-                        Nodes[index].Nodes.Add(fileNode);
+                        Nodes[index].Nodes.Add(new SearchResultTreeNode(file.Name, file.FullName));
                     }
 
                     if(dirNode.Nodes.Count == 0) {
-                        dirNode.Nodes.Add(new TreeNode {
-                            Text = "No matches found",
-                            ForeColor = Color.Red,
-                            Tag = NODE_STAT.INVALID
-                        });
+                        dirNode.Nodes.Add(new NoMatchesTreeNode());
                     }
 
                     if(expand) {
@@ -95,13 +80,7 @@ namespace FileBrowser.FormControls {
                     }
                     index++;
                 } catch(DirectoryNotFoundException dnfe) {
-                    TreeNode dirNode = new TreeNode() {
-                        Text = "(!) " + directory.Path,
-                        ToolTipText = dnfe.Message,
-                        Tag = NODE_STAT.INVALID
-                    };
-                    dirNode.ForeColor = Color.Red;
-                    Nodes.Add(dirNode);
+                    Nodes.Add(new DirectoryNotFoundTreeNode(directory.Path, dnfe.Message));
                 }
             }
             Nodes[0].EnsureVisible(); // make sure the top node is visible
@@ -134,11 +113,7 @@ namespace FileBrowser.FormControls {
 
             foreach(TreeNode directory in Nodes) {
                 if(directory.Nodes.Count == 0) {
-                    directory.Nodes.Add(new TreeNode {
-                        Text = "No matches found",
-                        ForeColor = Color.Red,
-                        Tag = NODE_STAT.INVALID
-                    });
+                    directory.Nodes.Add(new NoMatchesTreeNode());
 
                 }
             }
@@ -152,7 +127,7 @@ namespace FileBrowser.FormControls {
         /// <param name="extensions">The list of extensions</param>
         public void FilterExtensions( ICollection<string> extensions ) {
             Visible = false;
-            Generate( true);
+            Generate(true);
 
             if(extensions.Count == 0) {
                 Visible = true;
@@ -180,11 +155,7 @@ namespace FileBrowser.FormControls {
 
             foreach(TreeNode directory in Nodes) {
                 if(directory.Nodes.Count == 0) {
-                    directory.Nodes.Add(new TreeNode {
-                        Text = "No matches found",
-                        ForeColor = Color.Red,
-                        Tag = NODE_STAT.INVALID
-                    });
+                    directory.Nodes.Add(new NoMatchesTreeNode());
 
                 }
             }
