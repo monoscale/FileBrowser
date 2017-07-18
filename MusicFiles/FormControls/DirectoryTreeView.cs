@@ -21,10 +21,10 @@ namespace FileBrowser.FormControls {
         private DirectoryRepository directoryRepository;
         private ExtensionRepository extensionRepository;
 
-        public DirectoryTreeView( DirectoryRepository directoryRepository, ExtensionRepository extensionReposiitory ) {
+        public DirectoryTreeView( DirectoryRepository directoryRepository, ExtensionRepository extensionRepository ) {
             InitializeComponent();
             this.directoryRepository = directoryRepository;
-            this.extensionRepository = extensionReposiitory;
+            this.extensionRepository = extensionRepository;
             ShowNodeToolTips = true;
         }
 

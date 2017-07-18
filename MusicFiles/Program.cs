@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FileBrowser.Models.Language;
+using FileBrowser.Models.Themes;
+using FileBrowser.Persistence.Repositories;
+using System;
 using System.Windows.Forms;
 
 namespace FileBrowser
@@ -13,7 +16,13 @@ namespace FileBrowser
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            MainForm mainForm = new MainForm();
+            mainForm.SetRepositories(new DirectoryRepository(), new ExtensionRepository());
+            mainForm.SetDependencies(new LanguageManager(), new ThemeManager());
+
+
+            Application.Run(mainForm);
         }
     }
 }

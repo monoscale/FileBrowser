@@ -47,54 +47,6 @@ namespace FileBrowser.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WhiteSmoke")]
-        public global::System.Drawing.Color ColorBackMenu {
-            get {
-                return ((global::System.Drawing.Color)(this["ColorBackMenu"]));
-            }
-            set {
-                this["ColorBackMenu"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("White")]
-        public global::System.Drawing.Color ColorBackTreeView {
-            get {
-                return ((global::System.Drawing.Color)(this["ColorBackTreeView"]));
-            }
-            set {
-                this["ColorBackTreeView"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
-        public global::System.Drawing.Color ColorForeMenu {
-            get {
-                return ((global::System.Drawing.Color)(this["ColorForeMenu"]));
-            }
-            set {
-                this["ColorForeMenu"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Highlight")]
-        public global::System.Drawing.Color ColorForeTreeView {
-            get {
-                return ((global::System.Drawing.Color)(this["ColorForeTreeView"]));
-            }
-            set {
-                this["ColorForeTreeView"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("File Browser")]
@@ -134,6 +86,18 @@ namespace FileBrowser.Properties {
             }
             set {
                 this["Language"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Theme {
+            get {
+                return ((int)(this["Theme"]));
+            }
+            set {
+                this["Theme"] = value;
             }
         }
     }

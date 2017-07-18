@@ -1,6 +1,7 @@
 ﻿using FileBrowser.FormControls;
 using FileBrowser.Forms;
 using FileBrowser.Models.Language;
+using FileBrowser.Models.Themes;
 using FileBrowser.Persistence.Repositories;
 using FileBrowser.Properties;
 using FileBrowser.Utils;
@@ -24,7 +25,8 @@ namespace FileBrowser {
         private DirectoryTreeView DirectoryTreeView;
 
         private LanguageManager languageManager;
-        
+        private ThemeManager themeManager;
+
         private ICollection<Models.Directory> musicDirectories;
         private ICollection<string> extensions;
         private ICollection<string> filteredExtensions;
@@ -37,7 +39,15 @@ namespace FileBrowser {
         }
 
 
+        public void SetRepositories( DirectoryRepository directoryRepository, ExtensionRepository extensionRepository ) {
+            this.directoryRepository = directoryRepository;
+            this.extensionRepository = extensionRepository;
+        }
 
+        public void SetDependencies( LanguageManager languageManager, ThemeManager themeManager ) {
+            this.languageManager = languageManager;
+            this.themeManager = themeManager;
+        }
 
         /* EVENTS RELATED TO THE WHOLE FORM*/
         #region MAINFORM EVENTS
@@ -49,9 +59,6 @@ namespace FileBrowser {
         /// <param name="e">EventArgs</param>
         protected override void OnLoad( EventArgs e ) {
 
-            extensionRepository = new ExtensionRepository();
-            directoryRepository = new DirectoryRepository();
-            languageManager = new LanguageManager();
             filteredExtensions = new List<string>();
             musicDirectories = directoryRepository.GetDirectories();
             extensions = extensionRepository.GetExtensions();
@@ -112,11 +119,21 @@ namespace FileBrowser {
         }
 
         private void UpdateColor() {
-            DirectoryTreeView.ForeColor = Settings.Default.ColorForeTreeView;
-            DirectoryTreeView.BackColor = Settings.Default.ColorBackTreeView;
-            PanelContent.BackColor = Settings.Default.ColorBackTreeView;
-            PanelMainMenu.ForeColor = Settings.Default.ColorForeMenu;
-            PanelMainMenu.BackColor = Settings.Default.ColorBackMenu;
+
+            MenuButtonCollapseAll.ForeColor = themeManager.ColorTheme.DefaultText;
+            MenuButtonShowAll.ForeColor = themeManager.ColorTheme.DefaultText;
+            LabelSearch.ForeColor = themeManager.ColorTheme.DefaultText;
+            foreach(CheckBox checkBoxExtension in FlowLayoutPanelExtensions.Controls) {
+                checkBoxExtension.ForeColor = themeManager.ColorTheme.DefaultText;
+            }
+
+
+            PanelMainMenu.ForeColor = themeManager.ColorTheme.ForeGroundMenu;
+            PanelMainMenu.BackColor = themeManager.ColorTheme.BackGroundMenu;
+            PanelContent.BackColor = themeManager.ColorTheme.BackGroundTree;
+ 
+            DirectoryTreeView.BackColor = themeManager.ColorTheme.BackGroundTree;
+            DirectoryTreeView.ForeColor = themeManager.ColorTheme.ForeGroundTree;
         }
 
         private void UpdateText() {
@@ -169,6 +186,8 @@ namespace FileBrowser {
         /// </summary>
         private void ButtonSettings_Click( object sender, EventArgs e ) {
             SettingsForm settingsForm = new SettingsForm();
+            settingsForm.SetRepositories(directoryRepository, extensionRepository);
+            settingsForm.SetDependencies(languageManager, themeManager);
             settingsForm.LanguageChanged += SettingsForm_LanguageChanged;
             settingsForm.ColorChanged += SettingsForm_ColorChanged;
             FormUtils.OpenForm(settingsForm, Location);
@@ -269,6 +288,8 @@ namespace FileBrowser {
             DirectoryTreeView.Nodes[0].EnsureVisible(); // scroll to top
             DirectoryTreeView.EndUpdate();
         }
+
+
         #endregion
     }
 }

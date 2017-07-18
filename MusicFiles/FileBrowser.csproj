@@ -110,6 +110,11 @@
     <Compile Include="Models\Language\LanguageManager.cs" />
     <Compile Include="Models\Language\LanguageCollection.cs" />
     <Compile Include="Models\Language\Localizable.cs" />
+    <Compile Include="Models\Themes\ColorTheme.cs" />
+    <Compile Include="Models\Themes\DarkColorTheme.cs" />
+    <Compile Include="Models\Themes\LightColorTheme.cs" />
+    <Compile Include="Models\Themes\Theme.cs" />
+    <Compile Include="Models\Themes\ThemeManager.cs" />
     <Compile Include="Persistence\Database\FileBrowserDb.cs" />
     <Compile Include="Persistence\Database\Tables.cs" />
     <Compile Include="Forms\SettingsForm.cs">
@@ -150,6 +155,7 @@
     <Compile Include="Utils\ContextMenuBuilder.cs" />
     <Compile Include="Utils\FormUtils.cs" />
     <Compile Include="Models\Language\LanguageMapper.cs" />
+    <Compile Include="Utils\StringExtensions.cs" />
     <Compile Include="Utils\TitleBuilder.cs" />
     <EmbeddedResource Include="FormControls\DirectoryTreeView.resx">
       <DependentUpon>DirectoryTreeView.cs</DependentUpon>

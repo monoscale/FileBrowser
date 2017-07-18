@@ -40,18 +40,9 @@
             this.TextBoxExtensionInput = new System.Windows.Forms.TextBox();
             this.ButtonAddExtension = new System.Windows.Forms.Button();
             this.PanelAdd = new System.Windows.Forms.Panel();
-            this.ButtonBackMenuColor = new System.Windows.Forms.Button();
             this.ColorDialog = new System.Windows.Forms.ColorDialog();
-            this.LabelBackMenuColor = new System.Windows.Forms.Label();
-            this.TableLayoutPanelColors = new System.Windows.Forms.TableLayoutPanel();
-            this.LabelBackTreeViewColor = new System.Windows.Forms.Label();
-            this.ButtonBackTreeViewColor = new System.Windows.Forms.Button();
-            this.LabelForeMenuColor = new System.Windows.Forms.Label();
-            this.LabelForeTreeViewColor = new System.Windows.Forms.Label();
-            this.ButtonForeMenuColor = new System.Windows.Forms.Button();
-            this.ButtonForeTreeViewColor = new System.Windows.Forms.Button();
-            this.ButtonReset = new System.Windows.Forms.Button();
-            this.GroupBoxColors = new System.Windows.Forms.GroupBox();
+            this.ComboBoxColorTheme = new System.Windows.Forms.ComboBox();
+            this.LabelColorTheme = new System.Windows.Forms.Label();
             this.GroupBoxSettings = new System.Windows.Forms.GroupBox();
             this.LabelLanguage = new System.Windows.Forms.Label();
             this.ComboBoxLanguage = new System.Windows.Forms.ComboBox();
@@ -60,8 +51,6 @@
             this.GroupBoxExtensions.SuspendLayout();
             this.PanelAddExtension.SuspendLayout();
             this.PanelAdd.SuspendLayout();
-            this.TableLayoutPanelColors.SuspendLayout();
-            this.GroupBoxColors.SuspendLayout();
             this.GroupBoxSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -189,146 +178,37 @@
             this.PanelAdd.Size = new System.Drawing.Size(664, 211);
             this.PanelAdd.TabIndex = 4;
             // 
-            // ButtonBackMenuColor
+            // ComboBoxColorTheme
             // 
-            this.ButtonBackMenuColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.ButtonBackMenuColor.Location = new System.Drawing.Point(107, 6);
-            this.ButtonBackMenuColor.Name = "ButtonBackMenuColor";
-            this.ButtonBackMenuColor.Size = new System.Drawing.Size(24, 25);
-            this.ButtonBackMenuColor.TabIndex = 0;
-            this.ButtonBackMenuColor.UseVisualStyleBackColor = true;
-            this.ButtonBackMenuColor.Click += new System.EventHandler(this.ButtonBackMenuColor_Click);
+            this.ComboBoxColorTheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBoxColorTheme.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ComboBoxColorTheme.FormattingEnabled = true;
+            this.ComboBoxColorTheme.Location = new System.Drawing.Point(115, 72);
+            this.ComboBoxColorTheme.Name = "ComboBoxColorTheme";
+            this.ComboBoxColorTheme.Size = new System.Drawing.Size(136, 21);
+            this.ComboBoxColorTheme.TabIndex = 1;
+            this.ComboBoxColorTheme.SelectedIndexChanged += new System.EventHandler(this.ComboBoxColorTheme_SelectedIndexChanged);
             // 
-            // LabelBackMenuColor
+            // LabelColorTheme
             // 
-            this.LabelBackMenuColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LabelBackMenuColor.AutoSize = true;
-            this.LabelBackMenuColor.Location = new System.Drawing.Point(3, 12);
-            this.LabelBackMenuColor.Margin = new System.Windows.Forms.Padding(3);
-            this.LabelBackMenuColor.Name = "LabelBackMenuColor";
-            this.LabelBackMenuColor.Size = new System.Drawing.Size(98, 13);
-            this.LabelBackMenuColor.TabIndex = 1;
-            this.LabelBackMenuColor.Text = "Menu Background ";
-            this.LabelBackMenuColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // TableLayoutPanelColors
-            // 
-            this.TableLayoutPanelColors.ColumnCount = 4;
-            this.TableLayoutPanelColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.TableLayoutPanelColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.TableLayoutPanelColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.TableLayoutPanelColors.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 451F));
-            this.TableLayoutPanelColors.Controls.Add(this.LabelBackTreeViewColor, 0, 1);
-            this.TableLayoutPanelColors.Controls.Add(this.LabelBackMenuColor, 0, 0);
-            this.TableLayoutPanelColors.Controls.Add(this.ButtonBackMenuColor, 1, 0);
-            this.TableLayoutPanelColors.Controls.Add(this.ButtonBackTreeViewColor, 1, 1);
-            this.TableLayoutPanelColors.Controls.Add(this.LabelForeMenuColor, 2, 0);
-            this.TableLayoutPanelColors.Controls.Add(this.LabelForeTreeViewColor, 2, 1);
-            this.TableLayoutPanelColors.Controls.Add(this.ButtonForeMenuColor, 3, 0);
-            this.TableLayoutPanelColors.Controls.Add(this.ButtonForeTreeViewColor, 3, 1);
-            this.TableLayoutPanelColors.Controls.Add(this.ButtonReset, 0, 2);
-            this.TableLayoutPanelColors.Location = new System.Drawing.Point(6, 19);
-            this.TableLayoutPanelColors.Name = "TableLayoutPanelColors";
-            this.TableLayoutPanelColors.RowCount = 3;
-            this.TableLayoutPanelColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.TableLayoutPanelColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.TableLayoutPanelColors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.TableLayoutPanelColors.Size = new System.Drawing.Size(649, 111);
-            this.TableLayoutPanelColors.TabIndex = 2;
-            // 
-            // LabelBackTreeViewColor
-            // 
-            this.LabelBackTreeViewColor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.LabelBackTreeViewColor.AutoSize = true;
-            this.LabelBackTreeViewColor.Location = new System.Drawing.Point(3, 49);
-            this.LabelBackTreeViewColor.Name = "LabelBackTreeViewColor";
-            this.LabelBackTreeViewColor.Size = new System.Drawing.Size(84, 13);
-            this.LabelBackTreeViewColor.TabIndex = 5;
-            this.LabelBackTreeViewColor.Text = "List Background";
-            this.LabelBackTreeViewColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // ButtonBackTreeViewColor
-            // 
-            this.ButtonBackTreeViewColor.Location = new System.Drawing.Point(107, 40);
-            this.ButtonBackTreeViewColor.Name = "ButtonBackTreeViewColor";
-            this.ButtonBackTreeViewColor.Size = new System.Drawing.Size(24, 25);
-            this.ButtonBackTreeViewColor.TabIndex = 3;
-            this.ButtonBackTreeViewColor.UseVisualStyleBackColor = true;
-            this.ButtonBackTreeViewColor.Click += new System.EventHandler(this.ButtonBackTreeViewColor_Click);
-            // 
-            // LabelForeMenuColor
-            // 
-            this.LabelForeMenuColor.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.LabelForeMenuColor.AutoSize = true;
-            this.LabelForeMenuColor.Location = new System.Drawing.Point(137, 12);
-            this.LabelForeMenuColor.Margin = new System.Windows.Forms.Padding(3);
-            this.LabelForeMenuColor.Name = "LabelForeMenuColor";
-            this.LabelForeMenuColor.Size = new System.Drawing.Size(58, 13);
-            this.LabelForeMenuColor.TabIndex = 4;
-            this.LabelForeMenuColor.Text = "Menu Text";
-            this.LabelForeMenuColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LabelForeTreeViewColor
-            // 
-            this.LabelForeTreeViewColor.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.LabelForeTreeViewColor.AutoSize = true;
-            this.LabelForeTreeViewColor.Location = new System.Drawing.Point(148, 49);
-            this.LabelForeTreeViewColor.Name = "LabelForeTreeViewColor";
-            this.LabelForeTreeViewColor.Size = new System.Drawing.Size(47, 13);
-            this.LabelForeTreeViewColor.TabIndex = 2;
-            this.LabelForeTreeViewColor.Text = "List Text";
-            this.LabelForeTreeViewColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ButtonForeMenuColor
-            // 
-            this.ButtonForeMenuColor.Location = new System.Drawing.Point(201, 3);
-            this.ButtonForeMenuColor.Name = "ButtonForeMenuColor";
-            this.ButtonForeMenuColor.Size = new System.Drawing.Size(25, 25);
-            this.ButtonForeMenuColor.TabIndex = 6;
-            this.ButtonForeMenuColor.UseVisualStyleBackColor = true;
-            this.ButtonForeMenuColor.Click += new System.EventHandler(this.ButtonForeMenuColor_Click);
-            // 
-            // ButtonForeTreeViewColor
-            // 
-            this.ButtonForeTreeViewColor.Location = new System.Drawing.Point(201, 40);
-            this.ButtonForeTreeViewColor.Name = "ButtonForeTreeViewColor";
-            this.ButtonForeTreeViewColor.Size = new System.Drawing.Size(25, 25);
-            this.ButtonForeTreeViewColor.TabIndex = 7;
-            this.ButtonForeTreeViewColor.UseVisualStyleBackColor = true;
-            this.ButtonForeTreeViewColor.Click += new System.EventHandler(this.ButtonForeTreeViewColor_Click);
-            // 
-            // ButtonReset
-            // 
-            this.ButtonReset.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.ButtonReset.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ButtonReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonReset.Location = new System.Drawing.Point(3, 81);
-            this.ButtonReset.Name = "ButtonReset";
-            this.ButtonReset.Size = new System.Drawing.Size(75, 23);
-            this.ButtonReset.TabIndex = 8;
-            this.ButtonReset.Text = "Reset";
-            this.ButtonReset.UseVisualStyleBackColor = false;
-            this.ButtonReset.Click += new System.EventHandler(this.ButtonReset_Click);
-            // 
-            // GroupBoxColors
-            // 
-            this.GroupBoxColors.Controls.Add(this.TableLayoutPanelColors);
-            this.GroupBoxColors.Location = new System.Drawing.Point(10, 302);
-            this.GroupBoxColors.Name = "GroupBoxColors";
-            this.GroupBoxColors.Size = new System.Drawing.Size(664, 143);
-            this.GroupBoxColors.TabIndex = 5;
-            this.GroupBoxColors.TabStop = false;
-            this.GroupBoxColors.Text = "Colors (*requires restart)";
+            this.LabelColorTheme.AutoSize = true;
+            this.LabelColorTheme.Location = new System.Drawing.Point(9, 75);
+            this.LabelColorTheme.Name = "LabelColorTheme";
+            this.LabelColorTheme.Size = new System.Drawing.Size(100, 13);
+            this.LabelColorTheme.TabIndex = 0;
+            this.LabelColorTheme.Text = "Select Color Theme";
             // 
             // GroupBoxSettings
             // 
+            this.GroupBoxSettings.Controls.Add(this.ComboBoxColorTheme);
+            this.GroupBoxSettings.Controls.Add(this.LabelColorTheme);
             this.GroupBoxSettings.Controls.Add(this.LabelLanguage);
             this.GroupBoxSettings.Controls.Add(this.ComboBoxLanguage);
             this.GroupBoxSettings.Controls.Add(this.CheckBoxExpand);
             this.GroupBoxSettings.Dock = System.Windows.Forms.DockStyle.Top;
             this.GroupBoxSettings.Location = new System.Drawing.Point(10, 221);
             this.GroupBoxSettings.Name = "GroupBoxSettings";
-            this.GroupBoxSettings.Size = new System.Drawing.Size(664, 81);
+            this.GroupBoxSettings.Size = new System.Drawing.Size(664, 217);
             this.GroupBoxSettings.TabIndex = 6;
             this.GroupBoxSettings.TabStop = false;
             this.GroupBoxSettings.Text = "Settings";
@@ -347,9 +227,9 @@
             this.ComboBoxLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBoxLanguage.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.ComboBoxLanguage.FormattingEnabled = true;
-            this.ComboBoxLanguage.Location = new System.Drawing.Point(103, 43);
+            this.ComboBoxLanguage.Location = new System.Drawing.Point(115, 43);
             this.ComboBoxLanguage.Name = "ComboBoxLanguage";
-            this.ComboBoxLanguage.Size = new System.Drawing.Size(148, 21);
+            this.ComboBoxLanguage.Size = new System.Drawing.Size(136, 21);
             this.ComboBoxLanguage.TabIndex = 1;
             this.ComboBoxLanguage.SelectedIndexChanged += new System.EventHandler(this.ComboBoxLanguage_SelectedIndexChanged);
             // 
@@ -370,7 +250,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(684, 451);
-            this.Controls.Add(this.GroupBoxColors);
             this.Controls.Add(this.GroupBoxSettings);
             this.Controls.Add(this.PanelAdd);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -385,9 +264,6 @@
             this.PanelAddExtension.ResumeLayout(false);
             this.PanelAddExtension.PerformLayout();
             this.PanelAdd.ResumeLayout(false);
-            this.TableLayoutPanelColors.ResumeLayout(false);
-            this.TableLayoutPanelColors.PerformLayout();
-            this.GroupBoxColors.ResumeLayout(false);
             this.GroupBoxSettings.ResumeLayout(false);
             this.GroupBoxSettings.PerformLayout();
             this.ResumeLayout(false);
@@ -408,20 +284,11 @@
         private System.Windows.Forms.Button ButtonSubmit;
         private System.Windows.Forms.Panel PanelAdd;
         private System.Windows.Forms.ColorDialog ColorDialog;
-        private System.Windows.Forms.Button ButtonBackMenuColor;
-        private System.Windows.Forms.Label LabelBackMenuColor;
-        private System.Windows.Forms.TableLayoutPanel TableLayoutPanelColors;
-        private System.Windows.Forms.Label LabelForeTreeViewColor;
-        private System.Windows.Forms.Button ButtonBackTreeViewColor;
-        private System.Windows.Forms.Label LabelForeMenuColor;
-        private System.Windows.Forms.Label LabelBackTreeViewColor;
-        private System.Windows.Forms.Button ButtonForeMenuColor;
-        private System.Windows.Forms.Button ButtonForeTreeViewColor;
-        private System.Windows.Forms.Button ButtonReset;
-        private System.Windows.Forms.GroupBox GroupBoxColors;
         private System.Windows.Forms.GroupBox GroupBoxSettings;
         private System.Windows.Forms.CheckBox CheckBoxExpand;
         private System.Windows.Forms.ComboBox ComboBoxLanguage;
         private System.Windows.Forms.Label LabelLanguage;
+        private System.Windows.Forms.Label LabelColorTheme;
+        private System.Windows.Forms.ComboBox ComboBoxColorTheme;
     }
 }
