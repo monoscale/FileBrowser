@@ -2,6 +2,11 @@
 using System.Windows.Forms;
 
 namespace FileBrowser.FormControls.TreeNodes {
+
+
+    /// <summary>
+    /// TreeNode that represents a directory
+    /// </summary>
     public class DirectoryTreeNode : TreeNode{
 
         public DirectoryTreeNode(string path) {

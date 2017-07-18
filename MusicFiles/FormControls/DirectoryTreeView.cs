@@ -31,8 +31,7 @@ namespace FileBrowser.FormControls {
         public void UpdateText() {
             foreach(TreeNode directory in Nodes) {
                 foreach(TreeNode file in directory.Nodes) {
-                    if(file is Localizable) {
-                        Localizable node = (Localizable)file;
+                    if(file is Localizable node) {
                         node.UpdateText();
                     }
                 }
@@ -68,7 +67,7 @@ namespace FileBrowser.FormControls {
                     Nodes.Add(dirNode);
 
                     foreach(FileInfo file in files) {
-                        Nodes[index].Nodes.Add(new SearchResultTreeNode(file.Name, file.FullName));
+                        Nodes[index].Nodes.Add(new FileTreeNode(file.Name, file.FullName));
                     }
 
                     if(dirNode.Nodes.Count == 0) {
