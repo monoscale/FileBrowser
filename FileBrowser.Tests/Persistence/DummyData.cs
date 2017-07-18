@@ -15,7 +15,7 @@ namespace FileBrowser.Tests.Persistence {
         /// <summary>
         /// Contains nothing
         /// </summary>
-        public string SecondaryValidFolder => "C:/Users/Bert/Documents/visual studio 2017/Projects/FileBrowser/FileBrowser.Tests/TestFolderCopy";
+        public string SecondaryValidFolder => "C:/Users/Bert/Documents/visual studio 2017/Projects/FileBrowser/FileBrowser.Tests/TestFolderEmpty";
         /// <summary>
         /// A folder that does not exist on the filesystem
         /// </summary>
