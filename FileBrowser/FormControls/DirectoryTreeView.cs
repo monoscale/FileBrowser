@@ -30,7 +30,7 @@ namespace FileBrowser.FormControls {
             ShowNodeToolTips = true;
         }
 
-        public void SetDependencies(ThemeManager themeManager ) {
+        public void SetDependencies( ThemeManager themeManager ) {
             this.themeManager = themeManager;
         }
 
@@ -136,7 +136,7 @@ namespace FileBrowser.FormControls {
             nodesToDelete.ForEach(f => f.Remove()); // Delete the nodes
 
             foreach(TreeNode directory in Nodes) {
-                if(directory.Nodes.Count == 0 && !(directory is DirectoryNotFoundTreeNode)) {
+                if(directory.Nodes.Count == 0 && !( directory is DirectoryNotFoundTreeNode )) {
                     directory.Nodes.Add(new NoMatchesTreeNode(themeManager));
                 }
             }
@@ -220,6 +220,8 @@ namespace FileBrowser.FormControls {
             string text = string.Empty; // The text to show in the contextmenu
 
             if((NODE_STAT)clickedNode.Tag == NODE_STAT.FILE) {
+                builder.Add("Open with another program", ( s, ea ) => ChangeRunningProgram(s, ea, clickedNode.ToolTipText));
+
                 path = clickedNode.ToolTipText;
                 path = Path.GetDirectoryName(path) + Path.DirectorySeparatorChar;
                 text = "Open file location";
@@ -228,8 +230,24 @@ namespace FileBrowser.FormControls {
                 text = "Open folder";
             }
 
-            builder.Add(text, ( s, ea ) => OpenFolder_Click(s, ea, path));
+            builder.Add(text, ( s, ea ) => OpenFolder(s, ea, path));
+
             builder.Show();
+        }
+
+
+        /// <summary>
+        /// Opens the windows dialog for choosing another program to run a file with
+        /// </summary>
+
+        private void ChangeRunningProgram( object sender, EventArgs e, string path ) {
+
+            Process process = new Process();
+
+            process.EnableRaisingEvents = false;
+            process.StartInfo.FileName = "rundll32.exe";
+            process.StartInfo.Arguments = "shell32,OpenAs_RunDLL " + path;
+            process.Start();
         }
 
         /// <summary>
@@ -238,7 +256,7 @@ namespace FileBrowser.FormControls {
         /// <param name="sender">ToolStripMenuItem</param>
         /// <param name="e">EventArgs</param>
         /// <param name="path">The folder to open</param>
-        private void OpenFolder_Click( object sender, EventArgs e, string path ) {
+        private void OpenFolder( object sender, EventArgs e, string path ) {
             Process.Start(path);
         }
 
