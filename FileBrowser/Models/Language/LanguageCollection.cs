@@ -18,7 +18,7 @@ namespace FileBrowser.Models.Language
         public IDictionary<string, string> Languages { get; }
 
         /// <summary>
-        /// Initializes the Dictionary of languages
+        /// Initializes the Dictionary of languages. This is the only place where a new language can be added.
         /// </summary>
         public LanguageCollection()
         {
@@ -26,6 +26,7 @@ namespace FileBrowser.Models.Language
             {
                 { "en", "English" },
                 { "nl", "Nederlands" }
+                
             };
 
         }

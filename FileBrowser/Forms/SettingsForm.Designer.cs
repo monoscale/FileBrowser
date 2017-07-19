@@ -81,7 +81,9 @@
             this.GroupBoxDirectories.Controls.Add(this.ButtonAddDirectory);
             this.GroupBoxDirectories.Controls.Add(this.ListViewDirectories);
             this.GroupBoxDirectories.Location = new System.Drawing.Point(3, 3);
+            this.GroupBoxDirectories.Margin = new System.Windows.Forms.Padding(0);
             this.GroupBoxDirectories.Name = "GroupBoxDirectories";
+            this.GroupBoxDirectories.Padding = new System.Windows.Forms.Padding(0);
             this.GroupBoxDirectories.Size = new System.Drawing.Size(325, 202);
             this.GroupBoxDirectories.TabIndex = 2;
             this.GroupBoxDirectories.TabStop = false;
@@ -106,7 +108,9 @@
             this.GroupBoxExtensions.Controls.Add(this.ButtonAddExtension);
             this.GroupBoxExtensions.Controls.Add(this.ListViewExtensions);
             this.GroupBoxExtensions.Location = new System.Drawing.Point(339, 3);
+            this.GroupBoxExtensions.Margin = new System.Windows.Forms.Padding(0);
             this.GroupBoxExtensions.Name = "GroupBoxExtensions";
+            this.GroupBoxExtensions.Padding = new System.Windows.Forms.Padding(0);
             this.GroupBoxExtensions.Size = new System.Drawing.Size(322, 202);
             this.GroupBoxExtensions.TabIndex = 3;
             this.GroupBoxExtensions.TabStop = false;
@@ -170,12 +174,14 @@
             // 
             // PanelAdd
             // 
+            this.PanelAdd.AutoSize = true;
             this.PanelAdd.Controls.Add(this.GroupBoxDirectories);
             this.PanelAdd.Controls.Add(this.GroupBoxExtensions);
             this.PanelAdd.Dock = System.Windows.Forms.DockStyle.Top;
             this.PanelAdd.Location = new System.Drawing.Point(10, 10);
+            this.PanelAdd.Margin = new System.Windows.Forms.Padding(0);
             this.PanelAdd.Name = "PanelAdd";
-            this.PanelAdd.Size = new System.Drawing.Size(664, 211);
+            this.PanelAdd.Size = new System.Drawing.Size(664, 205);
             this.PanelAdd.TabIndex = 4;
             // 
             // ComboBoxColorTheme
@@ -200,15 +206,16 @@
             // 
             // GroupBoxSettings
             // 
+            this.GroupBoxSettings.AutoSize = true;
             this.GroupBoxSettings.Controls.Add(this.ComboBoxColorTheme);
             this.GroupBoxSettings.Controls.Add(this.LabelColorTheme);
             this.GroupBoxSettings.Controls.Add(this.LabelLanguage);
             this.GroupBoxSettings.Controls.Add(this.ComboBoxLanguage);
             this.GroupBoxSettings.Controls.Add(this.CheckBoxExpand);
             this.GroupBoxSettings.Dock = System.Windows.Forms.DockStyle.Top;
-            this.GroupBoxSettings.Location = new System.Drawing.Point(10, 221);
+            this.GroupBoxSettings.Location = new System.Drawing.Point(10, 215);
             this.GroupBoxSettings.Name = "GroupBoxSettings";
-            this.GroupBoxSettings.Size = new System.Drawing.Size(664, 217);
+            this.GroupBoxSettings.Size = new System.Drawing.Size(664, 112);
             this.GroupBoxSettings.TabIndex = 6;
             this.GroupBoxSettings.TabStop = false;
             this.GroupBoxSettings.Text = "Settings";
@@ -248,6 +255,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(684, 451);
             this.Controls.Add(this.GroupBoxSettings);
@@ -267,6 +275,7 @@
             this.GroupBoxSettings.ResumeLayout(false);
             this.GroupBoxSettings.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

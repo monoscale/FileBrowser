@@ -7,9 +7,9 @@ namespace FileBrowser.Models.Themes {
 
         public override Color DefaultText => Color.White;
 
-        public override Color ErrorText => Color.OrangeRed;
+        public override Color ErrorText => Color.Yellow;
 
-        public override Color BackGroundMenu => Color.FromArgb(62, 62, 66); // Dark gray
+        public override Color BackGroundMenu => Color.FromArgb(45, 45, 48); // Dark gray
 
         public override Color ForeGroundMenu => Color.White;
 

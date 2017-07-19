@@ -16,7 +16,7 @@ namespace FileBrowser.Forms {
     /// <summary>
     /// This form handles the settings
     /// </summary>
-    public partial class SettingsForm : Form {
+    public partial class SettingsForm : Form, ILocalizable {
 
 
         private IFolderRepository folderRepository;
@@ -66,7 +66,9 @@ namespace FileBrowser.Forms {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected override void OnLoad( EventArgs e ) {
-            Text = Settings.Default.Title + " - Settings";
+            TitleBuilder titleBuilder = new TitleBuilder();
+            
+            Text = titleBuilder.BuildSecondaryTitle(Resources.Strings.MenuSettings);
 
             directories = new ObservableCollection<Folder>();
             extensions = new ObservableCollection<string>();
@@ -85,12 +87,11 @@ namespace FileBrowser.Forms {
             UpdateDirectories();
             UpdateExtensions();
             UpdateSettings();
-            UpdateColor();
             UpdateText();
             base.OnLoad(e);
         }
 
-        private void UpdateSettings() {
+        public void UpdateSettings() {
             try {
                 CheckBoxExpand.Checked = Settings.Default.Expand;
                 ComboBoxLanguage.Items.AddRange(languageManager.GetReadableLanguages().ToArray());
@@ -98,20 +99,17 @@ namespace FileBrowser.Forms {
                 string language = languageManager.CodeToLanguage(code);
                 ComboBoxLanguage.SelectedItem = language;
             } catch(ArgumentException) {
-                ErrorMessageBox.Show("Wrong language", "An invalid language was selected.");
+                ErrorMessageBox.Show(Resources.Strings.InvalidLangugeTitle, Resources.Strings.InvalidLanguageDescription);
             }
 
             ComboBoxColorTheme.Items.AddRange(Enum.GetNames(typeof(Theme)));
             ComboBoxColorTheme.SelectedItem = themeManager.GetTheme().ToString();
         }
 
-        private void UpdateColor() {
-
-        }
         /// <summary>
         /// Updates the UI text according to the chosen language
         /// </summary>
-        private void UpdateText() {
+        public void UpdateText() {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(languageManager.GetPreferredLanguageCode());
             TitleBuilder titleBuilder = new TitleBuilder();
             Text = titleBuilder.BuildSecondaryTitle(Resources.Strings.MenuSettings);
@@ -141,7 +139,7 @@ namespace FileBrowser.Forms {
                 string path = folderBrowserDialog.SelectedPath;
                 Folder newDirectory = new Folder(path);
                 if(directories.Contains(newDirectory)) {
-                    ErrorMessageBox.Show("Duplicate folder", "This folder is already in the list.");
+                    ErrorMessageBox.Show(Resources.Strings.DuplicateFolderTitle, Resources.Strings.DuplicateFolderDescription);
                 } else {
                     folderRepository.AddFolder(path);
                     directories.Add(new Folder(path));
@@ -182,7 +180,7 @@ namespace FileBrowser.Forms {
                 string newPath = folderBrowserDialog.SelectedPath;
                 Folder newDirectory = new Folder(newPath); // new instance for comparing
                 if(directories.Contains(newDirectory)) {
-                    ErrorMessageBox.Show("Duplicate folder", "This folder is already in the list.");
+                    ErrorMessageBox.Show(Resources.Strings.DuplicateFolderTitle, Resources.Strings.DuplicateFolderDescription);
                 } else {
                     folderRepository.EditFolder(oldPath, newPath);
                     directories.First(d => d.Path == oldPath).Path = newPath;
@@ -278,7 +276,7 @@ namespace FileBrowser.Forms {
         /// <param name="extension">The extension to validate</param>
         private void AddExtension( string extension ) {
             if(string.IsNullOrWhiteSpace(extension)) {
-                WarningMessageBox.Show("Invalid extension", "The extension cannot be empty");
+                WarningMessageBox.Show(Resources.Strings.InvalidExtensionTitle, Resources.Strings.InvalidExtensionEmpty);
                 return;
             }
 
@@ -288,7 +286,7 @@ namespace FileBrowser.Forms {
             }
 
             if(extensions.Contains(extension)) {
-                ErrorMessageBox.Show("Duplicate extension", "This extension is already in the list.");
+                ErrorMessageBox.Show(Resources.Strings.DuplicateExtensionTitle, Resources.Strings.DuplicateExtensionDescription);
             } else {
 
                 extensionRepository.AddExtension(extension);
@@ -319,7 +317,7 @@ namespace FileBrowser.Forms {
                 if(e.Button == MouseButtons.Right) {
                     ContextMenuStrip ContextMenuDirectories = new ContextMenuStrip();
 
-                    ToolStripMenuItem DeleteExtension = new ToolStripMenuItem("Delete");
+                    ToolStripMenuItem DeleteExtension = new ToolStripMenuItem(Resources.Strings.Delete);
                     DeleteExtension.Click += ( s, ea ) => DeleteExtension_Click(s, ea, extension);
 
                     ContextMenuDirectories.Items.AddRange(new[] { DeleteExtension });
@@ -360,60 +358,8 @@ namespace FileBrowser.Forms {
         }
         #endregion
 
-        /**
-         * COLORS
-         */
-        #region COLORS
-        /// <summary>
-        /// Change the background color of PanelMenu
-        /// </summary>
-        /// <param name="sender">ButtonBackMenuColor</param>
-        /// <param name="e">EventArgs</param>
-        private void ButtonBackMenuColor_Click( object sender, EventArgs e ) {
-            ChangeColor("ColorBackMenu", (Button)sender);
-        }
-
-        /// <summary>
-        /// Change the background color of TreeViewDirectories
-        /// </summary>
-        /// <param name="sender">ButtonBackTreeViewColor</param>
-        /// <param name="e">EventArgs</param>
-        private void ButtonBackTreeViewColor_Click( object sender, EventArgs e ) {
-            ChangeColor("ColorBackTreeView", (Button)sender);
-        }
-
-        /// <summary>
-        /// Change the foreground color of PanelMenu
-        /// </summary>
-        /// <param name="sender">ButtonForeMenuColor</param>
-        /// <param name="e">EventArgs</param>
-        private void ButtonForeMenuColor_Click( object sender, EventArgs e ) {
-            ChangeColor("ColorForeMenu", (Button)sender);
-        }
-
-        /// <summary>
-        /// Change the foreground color of TreeViewDirectories
-        /// </summary>
-        /// <param name="sender">ButtonForeTreeView</param>
-        /// <param name="e">EventArgs</param>
-        private void ButtonForeTreeViewColor_Click( object sender, EventArgs e ) {
-            ChangeColor("ColorForeTreeView", (Button)sender);
-        }
-
-        /// <summary>
-        /// Change a color and also the button that called it
-        /// </summary>
-        /// <param name="setting">The value of the setting that must be changed</param>
-        /// <param name="button">The button that called this function</param>
-        private void ChangeColor( string colorComponent, Button button ) {
-            if(ColorDialog.ShowDialog() == DialogResult.OK) {
-                Settings.Default.PropertyValues[colorComponent].PropertyValue = ColorDialog.Color;
-                button.BackColor = ColorDialog.Color;
-                ColorChanged(this, new EventArgs());
-            }
-        }
-
-        #endregion
+       
+        
 
 
         /*
@@ -434,7 +380,7 @@ namespace FileBrowser.Forms {
                 UpdateText();
                 LanguageChanged(this, new EventArgs());
             } catch(ArgumentException) {
-                ErrorMessageBox.Show("Wrong language", "An invalid language was selected.");
+                ErrorMessageBox.Show(Resources.Strings.InvalidLangugeTitle, Resources.Strings.InvalidLanguageDescription);
             }
 
         }

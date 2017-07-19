@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using FileBrowser.Models.Language;
+using FileBrowser.Models.Themes;
 
 namespace FileBrowser.FormControls.TreeNodes {
 
@@ -9,16 +10,25 @@ namespace FileBrowser.FormControls.TreeNodes {
     /// <summary>
     /// TreeNode that represents no matching result for a directory.
     /// </summary>
-    public class NoMatchesTreeNode : TreeNode, Localizable {
+    public class NoMatchesTreeNode : TreeNode, ILocalizable, IThemeable
+        {
 
-        public NoMatchesTreeNode() {
+        private ThemeManager themeManager;
+
+        public NoMatchesTreeNode(ThemeManager themeManager) {
+            this.themeManager = themeManager;
             Text = Resources.Strings.ErrorNoMatches;
-            ForeColor = Color.OrangeRed;
+            ForeColor = themeManager.ColorTheme.ErrorText;
             Tag = NODE_STAT.INVALID;
         }
 
         public void UpdateText() {
             Text = Resources.Strings.ErrorNoMatches;
         }
+
+        public void UpdateTheme() {
+            ForeColor = themeManager.ColorTheme.ErrorText;
+        }
+
     }
 }

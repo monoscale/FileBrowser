@@ -1,4 +1,5 @@
 ﻿using FileBrowser.Models.Language;
+using FileBrowser.Models.Themes;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,16 +10,22 @@ namespace FileBrowser.FormControls.TreeNodes {
     /// <summary>
     /// TreeNode that represents a message when the user has not selected a single directory yet.
     /// </summary>
-    public class NoDirectoriesTreeNode : TreeNode, Localizable {
+    public class NoDirectoriesTreeNode : TreeNode, ILocalizable, IThemeable {
 
-        public NoDirectoriesTreeNode() {
+        private ThemeManager themeManager;
+
+        public NoDirectoriesTreeNode(ThemeManager themeManager) {
+            this.themeManager = themeManager;
             Text = Resources.Strings.ErrorNoDirectories;
-            ForeColor = Color.OrangeRed;
+            ForeColor = themeManager.ColorTheme.ErrorText;
         }
-
 
         public void UpdateText() {
             Text = Resources.Strings.ErrorNoDirectories;
+        }
+
+        public void UpdateTheme() {
+            ForeColor = themeManager.ColorTheme.ErrorText;
         }
     }
 }

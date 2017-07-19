@@ -140,7 +140,7 @@
             this.MenuButtonCollapseAll.Location = new System.Drawing.Point(0, 0);
             this.MenuButtonCollapseAll.Margin = new System.Windows.Forms.Padding(0);
             this.MenuButtonCollapseAll.Name = "MenuButtonCollapseAll";
-            this.MenuButtonCollapseAll.Size = new System.Drawing.Size(75, 21);
+            this.MenuButtonCollapseAll.Size = new System.Drawing.Size(75, 26);
             this.MenuButtonCollapseAll.TabIndex = 2;
             this.MenuButtonCollapseAll.Text = "Collapse All";
             this.MenuButtonCollapseAll.UseVisualStyleBackColor = true;
@@ -154,7 +154,7 @@
             this.MenuButtonShowAll.Location = new System.Drawing.Point(75, 0);
             this.MenuButtonShowAll.Margin = new System.Windows.Forms.Padding(0);
             this.MenuButtonShowAll.Name = "MenuButtonShowAll";
-            this.MenuButtonShowAll.Size = new System.Drawing.Size(75, 21);
+            this.MenuButtonShowAll.Size = new System.Drawing.Size(75, 26);
             this.MenuButtonShowAll.TabIndex = 3;
             this.MenuButtonShowAll.Text = "Show All";
             this.MenuButtonShowAll.UseVisualStyleBackColor = true;
@@ -182,8 +182,6 @@
             // 
             // TextBoxSearch
             // 
-            this.TextBoxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxSearch.Location = new System.Drawing.Point(59, 12);
             this.TextBoxSearch.Name = "TextBoxSearch";
             this.TextBoxSearch.Size = new System.Drawing.Size(372, 20);

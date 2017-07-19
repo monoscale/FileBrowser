@@ -109,10 +109,11 @@
     </Compile>
     <Compile Include="Models\Language\LanguageManager.cs" />
     <Compile Include="Models\Language\LanguageCollection.cs" />
-    <Compile Include="Models\Language\Localizable.cs" />
+    <Compile Include="Models\Language\ILocalizable.cs" />
     <Compile Include="Models\Themes\ColorTheme.cs" />
     <Compile Include="Models\Themes\DarkColorTheme.cs" />
     <Compile Include="Models\Themes\LightColorTheme.cs" />
+    <Compile Include="Models\Themes\IThemeable.cs" />
     <Compile Include="Models\Themes\Theme.cs" />
     <Compile Include="Models\Themes\ThemeManager.cs" />
     <Compile Include="Persistence\Database\FileBrowserDb.cs" />

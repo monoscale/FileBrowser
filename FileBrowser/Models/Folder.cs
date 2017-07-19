@@ -25,7 +25,7 @@ namespace FileBrowser.Models
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException("Path of the directory cannot be empty.");
+                    throw new ArgumentException(Resources.Strings.ArgumentExceptionPathFolder);
                 }
                 path = value;
             }

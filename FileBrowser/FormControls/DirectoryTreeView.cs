@@ -2,6 +2,7 @@
 using FileBrowser.FormControls.TreeNodes;
 using FileBrowser.Models;
 using FileBrowser.Models.Language;
+using FileBrowser.Models.Themes;
 using FileBrowser.Persistence.Repositories;
 using FileBrowser.Utils;
 using System;
@@ -16,10 +17,11 @@ namespace FileBrowser.FormControls {
     /// <summary>
     /// Subclass of <see cref="TreeView"/> with additional features
     /// </summary>
-    public partial class DirectoryTreeView : TreeView, Localizable {
+    public partial class DirectoryTreeView : TreeView, ILocalizable, IThemeable {
 
         private IFolderRepository folderRepository;
         private IExtensionRepository extensionRepository;
+        private ThemeManager themeManager;
 
         public DirectoryTreeView( IFolderRepository folderRepository, IExtensionRepository extensionRepository ) {
             InitializeComponent();
@@ -28,16 +30,39 @@ namespace FileBrowser.FormControls {
             ShowNodeToolTips = true;
         }
 
+        public void SetDependencies(ThemeManager themeManager ) {
+            this.themeManager = themeManager;
+        }
+
 
         public void UpdateText() {
             foreach(TreeNode directory in Nodes) {
                 foreach(TreeNode file in directory.Nodes) {
-                    if(file is Localizable node) {
+                    if(file is ILocalizable node) {
                         node.UpdateText();
                     }
                 }
             }
         }
+
+
+        public void UpdateTheme() {
+
+            BackColor = themeManager.ColorTheme.BackGroundTree;
+            ForeColor = themeManager.ColorTheme.ForeGroundTree;
+            foreach(TreeNode directory in Nodes) {
+                if(directory is IThemeable dir) {
+                    dir.UpdateTheme();
+                }
+                foreach(TreeNode file in directory.Nodes) {
+                    if(file is IThemeable fil) {
+                        fil.UpdateTheme();
+                    }
+                }
+            }
+        }
+
+
 
         /// <summary>
         /// Generates the treeview for the directories and files
@@ -53,7 +78,7 @@ namespace FileBrowser.FormControls {
 
             if(directories.Count == 0) {
                 Enabled = false;
-                Nodes.Add(new NoDirectoriesTreeNode());
+                Nodes.Add(new NoDirectoriesTreeNode(themeManager));
                 return;
             }
 
@@ -71,7 +96,7 @@ namespace FileBrowser.FormControls {
 
                     if(dirNode.Nodes.Count == 0) {
 
-                        dirNode.Nodes.Add(new NoMatchesTreeNode());
+                        dirNode.Nodes.Add(new NoMatchesTreeNode(themeManager));
                     }
 
                     if(expand) {
@@ -79,7 +104,7 @@ namespace FileBrowser.FormControls {
                     }
                     index++;
                 } catch(DirectoryNotFoundException dnfe) {
-                    Nodes.Add(new DirectoryNotFoundTreeNode(directory.Path, dnfe.Message));
+                    Nodes.Add(new DirectoryNotFoundTreeNode(directory.Path, dnfe.Message, themeManager));
                 }
             }
             Nodes[0].EnsureVisible(); // make sure the top node is visible
@@ -112,7 +137,7 @@ namespace FileBrowser.FormControls {
 
             foreach(TreeNode directory in Nodes) {
                 if(directory.Nodes.Count == 0 && !(directory is DirectoryNotFoundTreeNode)) {
-                    directory.Nodes.Add(new NoMatchesTreeNode());
+                    directory.Nodes.Add(new NoMatchesTreeNode(themeManager));
                 }
             }
             EndUpdate();
@@ -152,7 +177,7 @@ namespace FileBrowser.FormControls {
 
             foreach(TreeNode directory in Nodes) {
                 if(directory.Nodes.Count == 0) {
-                    directory.Nodes.Add(new NoMatchesTreeNode());
+                    directory.Nodes.Add(new NoMatchesTreeNode(themeManager));
 
                 }
             }

@@ -7,6 +7,7 @@ using FileBrowser.Properties;
 using FileBrowser.Utils;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
@@ -16,7 +17,7 @@ namespace FileBrowser {
     /// <summary>
     /// The main entry point of the application.
     /// </summary>
-    public partial class MainForm : Form {
+    public partial class MainForm : Form, ILocalizable, IThemeable {
 
 
         private IFolderRepository folderRepository;
@@ -37,7 +38,6 @@ namespace FileBrowser {
         public MainForm() {
             InitializeComponent();
         }
-
 
         public void SetRepositories( IFolderRepository folderRepository, IExtensionRepository extensionRepository ) {
             this.folderRepository = folderRepository;
@@ -65,6 +65,7 @@ namespace FileBrowser {
 
             //Treeview specific UI
             DirectoryTreeView = new DirectoryTreeView(folderRepository, extensionRepository);
+            DirectoryTreeView.SetDependencies(themeManager);
             PanelContent.Controls.Add(DirectoryTreeView);
             PanelContent.Controls.SetChildIndex(DirectoryTreeView, 0);
             DirectoryTreeView.Anchor = AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
@@ -76,7 +77,7 @@ namespace FileBrowser {
 
             UpdateSizeAndLocation();
             UpdateExtensionMenu();
-            UpdateColor();
+            UpdateTheme();
             UpdateText();
 
             DirectoryTreeView.Generate(Settings.Default.Expand);
@@ -110,7 +111,7 @@ namespace FileBrowser {
         /// <summary>
         /// Sets the saved size and location of the form
         /// </summary>
-        private void UpdateSizeAndLocation() {
+        public void UpdateSizeAndLocation() {
             if(!FormUtils.IsOnScreen(this)) {
                 Location = Settings.Default.WindowLocation;
             }
@@ -118,7 +119,7 @@ namespace FileBrowser {
             Location = Settings.Default.WindowLocation;
         }
 
-        private void UpdateColor() {
+        public void UpdateTheme() {
 
             MenuButtonCollapseAll.ForeColor = themeManager.ColorTheme.DefaultText;
             MenuButtonShowAll.ForeColor = themeManager.ColorTheme.DefaultText;
@@ -131,12 +132,11 @@ namespace FileBrowser {
             PanelMainMenu.ForeColor = themeManager.ColorTheme.ForeGroundMenu;
             PanelMainMenu.BackColor = themeManager.ColorTheme.BackGroundMenu;
             PanelContent.BackColor = themeManager.ColorTheme.BackGroundTree;
- 
-            DirectoryTreeView.BackColor = themeManager.ColorTheme.BackGroundTree;
-            DirectoryTreeView.ForeColor = themeManager.ColorTheme.ForeGroundTree;
+
+            DirectoryTreeView.UpdateTheme();
         }
 
-        private void UpdateText() {
+        public void UpdateText() {
 
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(languageManager.GetPreferredLanguageCode());
             TitleBuilder titleBuilder = new TitleBuilder();
@@ -162,6 +162,7 @@ namespace FileBrowser {
             Settings.Default.Save();
             base.OnFormClosing(e);
         }
+
         #endregion
 
         /* EVENTS RELATED THE THE MENU */
@@ -198,7 +199,7 @@ namespace FileBrowser {
         /// <seealso cref="SettingsForm"/>
         /// </summary>
         private void SettingsForm_ColorChanged( object sender, EventArgs e ) {
-            UpdateColor();
+            UpdateTheme();
         }
 
         /// <summary>

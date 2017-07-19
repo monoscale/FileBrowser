@@ -79,6 +79,15 @@ namespace FileBrowser.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Path of the directory cannot be empty..
+        /// </summary>
+        internal static string ArgumentExceptionPathFolder {
+            get {
+                return ResourceManager.GetString("ArgumentExceptionPathFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collapse.
         /// </summary>
         internal static string CollapseAll {
@@ -97,11 +106,65 @@ namespace FileBrowser.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Directories.
         /// </summary>
         internal static string Directories {
             get {
                 return ResourceManager.GetString("Directories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This extension already exists in the list.
+        /// </summary>
+        internal static string DuplicateExtensionDescription {
+            get {
+                return ResourceManager.GetString("DuplicateExtensionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate extension.
+        /// </summary>
+        internal static string DuplicateExtensionTitle {
+            get {
+                return ResourceManager.GetString("DuplicateExtensionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This folder already exists in the list.
+        /// </summary>
+        internal static string DuplicateFolderDescription {
+            get {
+                return ResourceManager.GetString("DuplicateFolderDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate Folder.
+        /// </summary>
+        internal static string DuplicateFolderTitle {
+            get {
+                return ResourceManager.GetString("DuplicateFolderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This directory does not exist anymore on your computer.
+        /// </summary>
+        internal static string ErrorDirectoryNotFound {
+            get {
+                return ResourceManager.GetString("ErrorDirectoryNotFound", resourceCulture);
             }
         }
         
@@ -174,6 +237,42 @@ namespace FileBrowser.Resources {
         internal static string HelpTwo {
             get {
                 return ResourceManager.GetString("HelpTwo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The extension canno bt empty.
+        /// </summary>
+        internal static string InvalidExtensionEmpty {
+            get {
+                return ResourceManager.GetString("InvalidExtensionEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid extension.
+        /// </summary>
+        internal static string InvalidExtensionTitle {
+            get {
+                return ResourceManager.GetString("InvalidExtensionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An invalid language was selected.
+        /// </summary>
+        internal static string InvalidLanguageDescription {
+            get {
+                return ResourceManager.GetString("InvalidLanguageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Language.
+        /// </summary>
+        internal static string InvalidLangugeTitle {
+            get {
+                return ResourceManager.GetString("InvalidLangugeTitle", resourceCulture);
             }
         }
         

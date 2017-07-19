@@ -9,7 +9,7 @@ namespace FileBrowser.Models.Language {
     /// <summary>
     /// Interface that allows a class to be localized
     /// </summary>
-    public interface Localizable {
+    public interface ILocalizable {
         void UpdateText();
     }
 }
