@@ -241,7 +241,7 @@ namespace FileBrowser.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The extension canno bt empty.
+        ///   Looks up a localized string similar to The extension cannot be empty.
         /// </summary>
         internal static string InvalidExtensionEmpty {
             get {
@@ -291,6 +291,15 @@ namespace FileBrowser.Resources {
         internal static string ListForeground {
             get {
                 return ResourceManager.GetString("ListForeground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        internal static string MenuAbout {
+            get {
+                return ResourceManager.GetString("MenuAbout", resourceCulture);
             }
         }
         

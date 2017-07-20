@@ -69,7 +69,7 @@ namespace FileBrowser.Forms {
             TitleBuilder titleBuilder = new TitleBuilder();
             
             Text = titleBuilder.BuildSecondaryTitle(Resources.Strings.MenuSettings);
-
+            Icon = Properties.Resources.Icon;
             directories = new ObservableCollection<Folder>();
             extensions = new ObservableCollection<string>();
 

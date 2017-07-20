@@ -1,13 +1,5 @@
-﻿using FileBrowser.Properties;
-using FileBrowser.Utils;
+﻿using FileBrowser.Utils;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FileBrowser.Forms
@@ -23,6 +15,7 @@ namespace FileBrowser.Forms
         {
             TitleBuilder titleBuilder = new TitleBuilder();
             Text = titleBuilder.BuildSecondaryTitle(Resources.Strings.MenuHelp);
+            Icon = Properties.Resources.Icon;
             HelpLabel1.Text = "1. " + Resources.Strings.HelpOne;
             HelpLabel2.Text = "2. " + Resources.Strings.HelpTwo;
             HelpLabel3.Text = "3. " + Resources.Strings.HelpThree;

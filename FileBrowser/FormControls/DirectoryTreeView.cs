@@ -95,7 +95,6 @@ namespace FileBrowser.FormControls {
                     }
 
                     if(dirNode.Nodes.Count == 0) {
-
                         dirNode.Nodes.Add(new NoMatchesTreeNode(themeManager));
                     }
 

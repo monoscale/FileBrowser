@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.PanelMainMenu = new System.Windows.Forms.Panel();
+            this.MenuButtonAbout = new FileBrowser.UI.MenuButton(this.components);
             this.MenuButtonGuide = new FileBrowser.UI.MenuButton(this.components);
             this.MenuButtonSettings = new FileBrowser.UI.MenuButton(this.components);
             this.MenuButtonRefresh = new FileBrowser.UI.MenuButton(this.components);
@@ -51,6 +52,7 @@
             // PanelMainMenu
             // 
             this.PanelMainMenu.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.PanelMainMenu.Controls.Add(this.MenuButtonAbout);
             this.PanelMainMenu.Controls.Add(this.MenuButtonGuide);
             this.PanelMainMenu.Controls.Add(this.MenuButtonSettings);
             this.PanelMainMenu.Controls.Add(this.MenuButtonRefresh);
@@ -62,6 +64,19 @@
             this.PanelMainMenu.Name = "PanelMainMenu";
             this.PanelMainMenu.Size = new System.Drawing.Size(141, 561);
             this.PanelMainMenu.TabIndex = 0;
+            // 
+            // MenuButtonAbout
+            // 
+            this.MenuButtonAbout.Dock = System.Windows.Forms.DockStyle.Top;
+            this.MenuButtonAbout.FlatAppearance.BorderSize = 0;
+            this.MenuButtonAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MenuButtonAbout.Location = new System.Drawing.Point(0, 129);
+            this.MenuButtonAbout.Name = "MenuButtonAbout";
+            this.MenuButtonAbout.Size = new System.Drawing.Size(141, 43);
+            this.MenuButtonAbout.TabIndex = 7;
+            this.MenuButtonAbout.Text = "About";
+            this.MenuButtonAbout.UseVisualStyleBackColor = true;
+            this.MenuButtonAbout.Click += new System.EventHandler(this.MenuButtonAbout_Click);
             // 
             // MenuButtonGuide
             // 
@@ -223,5 +238,6 @@
         private UI.MenuButton MenuButtonCollapseAll;
         private UI.MenuButton MenuButtonShowAll;
         private System.Windows.Forms.FlowLayoutPanel FlowLayoutPanelExtensions;
+        private UI.MenuButton MenuButtonAbout;
     }
 }

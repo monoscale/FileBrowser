@@ -63,6 +63,7 @@ namespace FileBrowser {
             musicDirectories = folderRepository.GetFolders();
             extensions = extensionRepository.GetExtensions();
 
+            Icon = Properties.Resources.Icon;
             //Treeview specific UI
             DirectoryTreeView = new DirectoryTreeView(folderRepository, extensionRepository);
             DirectoryTreeView.SetDependencies(themeManager);
@@ -147,6 +148,7 @@ namespace FileBrowser {
             LabelSearch.Text = Resources.Strings.Search;
             MenuButtonCollapseAll.Text = Resources.Strings.CollapseAll;
             MenuButtonShowAll.Text = Resources.Strings.ShowAll;
+            MenuButtonAbout.Text = Resources.Strings.MenuAbout;
             DirectoryTreeView.UpdateText();
         }
 
@@ -216,6 +218,16 @@ namespace FileBrowser {
         /// </summary>
         private void MenuButtonGuide_Click( object sender, EventArgs e ) {
             FormUtils.OpenForm(new HelpForm(), Location);
+        }
+
+
+        /// <summary>
+        /// Opens the about view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuButtonAbout_Click( object sender, EventArgs e ) {
+            FormUtils.OpenForm(new AboutForm(), Location);
         }
         #endregion
 
