@@ -1,30 +1,37 @@
-﻿using FileBrowser.Models.Language;
+﻿using FileBrowser.Models;
+using FileBrowser.Models.Language;
 using FileBrowser.Models.Themes;
 using FileBrowser.Persistence.Repositories;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace FileBrowser
-{
-    static class Program
-    {
+namespace FileBrowser {
+    static class Program {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
-        {
+        static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+           
+
+            RepositoryController repositoryController = new RepositoryController {
+                FolderRepository = new FolderRepository(),
+                ExtensionRepository = new ExtensionRepository()
+            };
+
+            DependencyController dependencyController = new DependencyController {
+                LanguageManager = new LanguageManager(),
+                ThemeManager = new ThemeManager()
+            };
 
 
-
-            MainForm mainForm = new MainForm();
-            mainForm.SetRepositories(new FolderRepository(), new ExtensionRepository());
-            mainForm.SetDependencies(new LanguageManager(), new ThemeManager());
-
+            MainForm mainForm = new MainForm(repositoryController, dependencyController);
 
             Application.Run(mainForm);
         }
+
     }
 }

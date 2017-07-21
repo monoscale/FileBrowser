@@ -19,20 +19,17 @@ namespace FileBrowser.FormControls {
     /// </summary>
     public partial class DirectoryTreeView : TreeView, ILocalizable, IThemeable {
 
-        private IFolderRepository folderRepository;
-        private IExtensionRepository extensionRepository;
-        private ThemeManager themeManager;
 
-        public DirectoryTreeView( IFolderRepository folderRepository, IExtensionRepository extensionRepository ) {
+        private RepositoryController repositoryController;
+        private DependencyController dependencyController;
+
+        public DirectoryTreeView( RepositoryController repositoryController, DependencyController dependencyController) {
             InitializeComponent();
-            this.folderRepository = folderRepository;
-            this.extensionRepository = extensionRepository;
+            this.repositoryController = repositoryController;
+            this.dependencyController = dependencyController;
             ShowNodeToolTips = true;
         }
 
-        public void SetDependencies( ThemeManager themeManager ) {
-            this.themeManager = themeManager;
-        }
 
 
         public void UpdateText() {
@@ -48,8 +45,8 @@ namespace FileBrowser.FormControls {
 
         public void UpdateTheme() {
 
-            BackColor = themeManager.ColorTheme.BackGroundTree;
-            ForeColor = themeManager.ColorTheme.ForeGroundTree;
+            BackColor = dependencyController.ThemeManager.ColorTheme.BackGroundTree;
+            ForeColor = dependencyController.ThemeManager.ColorTheme.ForeGroundTree;
             foreach(TreeNode directory in Nodes) {
                 if(directory is IThemeable dir) {
                     dir.UpdateTheme();
@@ -73,12 +70,12 @@ namespace FileBrowser.FormControls {
             Nodes.Clear(); // Clear the view
             int index = 0;
 
-            ICollection<Folder> directories = folderRepository.GetFolders();
-            ICollection<string> extensions = extensionRepository.GetExtensions();
+            ICollection<Folder> directories = repositoryController.FolderRepository.GetFolders();
+            ICollection<string> extensions = repositoryController.ExtensionRepository.GetExtensions();
 
             if(directories.Count == 0) {
                 Enabled = false;
-                Nodes.Add(new NoDirectoriesTreeNode(themeManager));
+                Nodes.Add(new NoDirectoriesTreeNode(dependencyController.ThemeManager));
                 return;
             }
 
@@ -95,7 +92,7 @@ namespace FileBrowser.FormControls {
                     }
 
                     if(dirNode.Nodes.Count == 0) {
-                        dirNode.Nodes.Add(new NoMatchesTreeNode(themeManager));
+                        dirNode.Nodes.Add(new NoMatchesTreeNode(dependencyController.ThemeManager));
                     }
 
                     if(expand) {
@@ -103,7 +100,7 @@ namespace FileBrowser.FormControls {
                     }
                     index++;
                 } catch(DirectoryNotFoundException dnfe) {
-                    Nodes.Add(new DirectoryNotFoundTreeNode(directory.Path, dnfe.Message, themeManager));
+                    Nodes.Add(new DirectoryNotFoundTreeNode(directory.Path, dnfe.Message, dependencyController.ThemeManager));
                 }
             }
             Nodes[0].EnsureVisible(); // make sure the top node is visible
@@ -136,7 +133,7 @@ namespace FileBrowser.FormControls {
 
             foreach(TreeNode directory in Nodes) {
                 if(directory.Nodes.Count == 0 && !( directory is DirectoryNotFoundTreeNode )) {
-                    directory.Nodes.Add(new NoMatchesTreeNode(themeManager));
+                    directory.Nodes.Add(new NoMatchesTreeNode(dependencyController.ThemeManager));
                 }
             }
             EndUpdate();
@@ -176,7 +173,7 @@ namespace FileBrowser.FormControls {
 
             foreach(TreeNode directory in Nodes) {
                 if(directory.Nodes.Count == 0) {
-                    directory.Nodes.Add(new NoMatchesTreeNode(themeManager));
+                    directory.Nodes.Add(new NoMatchesTreeNode(dependencyController.ThemeManager));
 
                 }
             }

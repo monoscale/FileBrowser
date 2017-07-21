@@ -1,5 +1,6 @@
 ﻿using FileBrowser.FormControls;
 using FileBrowser.Forms;
+using FileBrowser.Models;
 using FileBrowser.Models.Language;
 using FileBrowser.Models.Themes;
 using FileBrowser.Persistence.Repositories;
@@ -19,34 +20,22 @@ namespace FileBrowser {
     /// </summary>
     public partial class MainForm : Form, ILocalizable, IThemeable {
 
-
-        private IFolderRepository folderRepository;
-        private IExtensionRepository extensionRepository;
+        private RepositoryController repositoryController;
+        private DependencyController dependencyController;
 
         private DirectoryTreeView DirectoryTreeView;
 
-        private LanguageManager languageManager;
-        private ThemeManager themeManager;
-
-        private ICollection<Models.Folder> musicDirectories;
+        private ICollection<Folder> musicDirectories;
         private ICollection<string> extensions;
         private ICollection<string> filteredExtensions;
 
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public MainForm() {
+        public MainForm(RepositoryController repositoryController, DependencyController dependencyController) {
             InitializeComponent();
-        }
-
-        public void SetRepositories( IFolderRepository folderRepository, IExtensionRepository extensionRepository ) {
-            this.folderRepository = folderRepository;
-            this.extensionRepository = extensionRepository;
-        }
-
-        public void SetDependencies( LanguageManager languageManager, ThemeManager themeManager ) {
-            this.languageManager = languageManager;
-            this.themeManager = themeManager;
+            this.repositoryController = repositoryController;
+            this.dependencyController = dependencyController;
         }
 
         /* EVENTS RELATED TO THE WHOLE FORM*/
@@ -57,16 +46,15 @@ namespace FileBrowser {
         /// <seealso cref="DirectoryTreeView"/>
         /// <remarks>This method should never be called by the User, but by <see cref="MainForm"/> itself</remarks>
         /// <param name="e">EventArgs</param>
-        protected override void OnLoad( EventArgs e ) {
+        protected override void OnLoad(EventArgs e) {
 
             filteredExtensions = new List<string>();
-            musicDirectories = folderRepository.GetFolders();
-            extensions = extensionRepository.GetExtensions();
-
+            musicDirectories = repositoryController.FolderRepository.GetFolders();
+            extensions = repositoryController.ExtensionRepository.GetExtensions();
             Icon = Properties.Resources.Icon;
             //Treeview specific UI
-            DirectoryTreeView = new DirectoryTreeView(folderRepository, extensionRepository);
-            DirectoryTreeView.SetDependencies(themeManager);
+            DirectoryTreeView = new DirectoryTreeView(repositoryController, dependencyController);
+
             PanelContent.Controls.Add(DirectoryTreeView);
             PanelContent.Controls.SetChildIndex(DirectoryTreeView, 0);
             DirectoryTreeView.Anchor = AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
@@ -87,7 +75,7 @@ namespace FileBrowser {
 
         private void UpdateExtensionMenu() {
             FlowLayoutPanelExtensions.Controls.Clear();
-            foreach(string ext in extensions) {
+            foreach (string ext in extensions) {
                 CheckBox checkBoxExtension = new CheckBox {
                     Text = ext,
                     AutoSize = true,
@@ -98,11 +86,12 @@ namespace FileBrowser {
             }
         }
 
-        private void CheckBoxExtension_CheckedChanged( object sender, EventArgs e ) {
+        private void CheckBoxExtension_CheckedChanged(object sender, EventArgs e) {
             CheckBox checkBoxExtension = (CheckBox)sender;
-            if(checkBoxExtension.Checked) {
+            if (checkBoxExtension.Checked) {
                 filteredExtensions.Add(checkBoxExtension.Text);
-            } else {
+            }
+            else {
                 filteredExtensions.Remove(checkBoxExtension.Text);
             }
 
@@ -113,7 +102,7 @@ namespace FileBrowser {
         /// Sets the saved size and location of the form
         /// </summary>
         public void UpdateSizeAndLocation() {
-            if(!FormUtils.IsOnScreen(this)) {
+            if (!FormUtils.IsOnScreen(this)) {
                 Location = Settings.Default.WindowLocation;
             }
             Size = Settings.Default.WindowSize;
@@ -122,24 +111,24 @@ namespace FileBrowser {
 
         public void UpdateTheme() {
 
-            MenuButtonCollapseAll.ForeColor = themeManager.ColorTheme.DefaultText;
-            MenuButtonShowAll.ForeColor = themeManager.ColorTheme.DefaultText;
-            LabelSearch.ForeColor = themeManager.ColorTheme.DefaultText;
-            foreach(CheckBox checkBoxExtension in FlowLayoutPanelExtensions.Controls) {
-                checkBoxExtension.ForeColor = themeManager.ColorTheme.DefaultText;
+            MenuButtonCollapseAll.ForeColor = dependencyController.ThemeManager.ColorTheme.DefaultText;
+            MenuButtonShowAll.ForeColor = dependencyController.ThemeManager.ColorTheme.DefaultText;
+            LabelSearch.ForeColor = dependencyController.ThemeManager.ColorTheme.DefaultText;
+            foreach (CheckBox checkBoxExtension in FlowLayoutPanelExtensions.Controls) {
+                checkBoxExtension.ForeColor = dependencyController.ThemeManager.ColorTheme.DefaultText;
             }
 
 
-            PanelMainMenu.ForeColor = themeManager.ColorTheme.ForeGroundMenu;
-            PanelMainMenu.BackColor = themeManager.ColorTheme.BackGroundMenu;
-            PanelContent.BackColor = themeManager.ColorTheme.BackGroundTree;
+            PanelMainMenu.ForeColor = dependencyController.ThemeManager.ColorTheme.ForeGroundMenu;
+            PanelMainMenu.BackColor = dependencyController.ThemeManager.ColorTheme.BackGroundMenu;
+            PanelContent.BackColor = dependencyController.ThemeManager.ColorTheme.BackGroundTree;
 
             DirectoryTreeView.UpdateTheme();
         }
 
         public void UpdateText() {
 
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(languageManager.GetPreferredLanguageCode());
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(dependencyController.LanguageManager.GetPreferredLanguageCode());
             TitleBuilder titleBuilder = new TitleBuilder();
             Text = titleBuilder.BuildPrimaryTitle();
             MenuButtonGuide.Text = Resources.Strings.MenuHelp;
@@ -152,12 +141,13 @@ namespace FileBrowser {
             DirectoryTreeView.UpdateText();
         }
 
-        protected override void OnFormClosing( FormClosingEventArgs e ) {
+        protected override void OnFormClosing(FormClosingEventArgs e) {
             Settings.Default.WindowLocation = Location;
 
-            if(WindowState == FormWindowState.Normal) {
+            if (WindowState == FormWindowState.Normal) {
                 Settings.Default.WindowSize = Size;
-            } else {
+            }
+            else {
                 Settings.Default.WindowSize = RestoreBounds.Size;
             }
 
@@ -174,9 +164,9 @@ namespace FileBrowser {
         /// Refreshes the TreeView
         /// <seealso cref="DirectoryTreeView"/>
         /// </summary>
-        private void MenuButtonRefresh_Click( object sender, EventArgs e ) {
-            musicDirectories = folderRepository.GetFolders();
-            extensions = extensionRepository.GetExtensions();
+        private void MenuButtonRefresh_Click(object sender, EventArgs e) {
+            musicDirectories = repositoryController.FolderRepository.GetFolders();
+            extensions = repositoryController.ExtensionRepository.GetExtensions();
 
             DirectoryTreeView.Generate(Settings.Default.Expand);
             UpdateExtensionMenu();
@@ -187,10 +177,8 @@ namespace FileBrowser {
         /// Open the settings view
         /// <seealso cref="SettingsForm"/>
         /// </summary>
-        private void ButtonSettings_Click( object sender, EventArgs e ) {
-            SettingsForm settingsForm = new SettingsForm();
-            settingsForm.SetRepositories(folderRepository, extensionRepository);
-            settingsForm.SetDependencies(languageManager, themeManager);
+        private void ButtonSettings_Click(object sender, EventArgs e) {
+            SettingsForm settingsForm = new SettingsForm(repositoryController, dependencyController);
             settingsForm.LanguageChanged += SettingsForm_LanguageChanged;
             settingsForm.ColorChanged += SettingsForm_ColorChanged;
             FormUtils.OpenForm(settingsForm, Location);
@@ -200,7 +188,7 @@ namespace FileBrowser {
         /// Occurs when a color is changed in the SettingsForm
         /// <seealso cref="SettingsForm"/>
         /// </summary>
-        private void SettingsForm_ColorChanged( object sender, EventArgs e ) {
+        private void SettingsForm_ColorChanged(object sender, EventArgs e) {
             UpdateTheme();
         }
 
@@ -208,7 +196,7 @@ namespace FileBrowser {
         /// Occurs when the language is changed in the SettingsForm
         /// <seealso cref="SettingsForm"/>
         /// </summary>
-        private void SettingsForm_LanguageChanged( object sender, EventArgs e ) {
+        private void SettingsForm_LanguageChanged(object sender, EventArgs e) {
             UpdateText();
         }
 
@@ -216,7 +204,7 @@ namespace FileBrowser {
         /// Opens the help view
         /// <seealso cref="HelpForm"/>
         /// </summary>
-        private void MenuButtonGuide_Click( object sender, EventArgs e ) {
+        private void MenuButtonGuide_Click(object sender, EventArgs e) {
             FormUtils.OpenForm(new HelpForm(), Location);
         }
 
@@ -226,7 +214,7 @@ namespace FileBrowser {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuButtonAbout_Click( object sender, EventArgs e ) {
+        private void MenuButtonAbout_Click(object sender, EventArgs e) {
             FormUtils.OpenForm(new AboutForm(), Location);
         }
         #endregion
@@ -238,8 +226,8 @@ namespace FileBrowser {
         /// Occurs when a doubleclick occured in the TreeView
         /// <seealso cref="DirectoryTreeView.DoubleClicked(TreeNode)"/>
         /// </summary>
-        private void DirectoryTreeViews_NodeMouseDoubleClick( object sender, TreeNodeMouseClickEventArgs e ) {
-            if(e.Button == MouseButtons.Left) {
+        private void DirectoryTreeViews_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e) {
+            if (e.Button == MouseButtons.Left) {
                 DirectoryTreeView.DoubleClicked(e.Node);
             }
 
@@ -249,8 +237,8 @@ namespace FileBrowser {
         /// Occurs when right clicking inside the treeview. 
         /// <seealso cref="DirectoryTreeView.RightClicked(TreeNode)"/>
         /// </summary>
-        private void DirectoryTreeViews_NodeMouseClick( object sender, TreeNodeMouseClickEventArgs e ) {
-            if(e.Button == MouseButtons.Right) {
+        private void DirectoryTreeViews_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e) {
+            if (e.Button == MouseButtons.Right) {
                 DirectoryTreeView.RightClicked(e.Node);
             }
 
@@ -259,8 +247,8 @@ namespace FileBrowser {
         /// <summary>
         /// Occurs when Enter is pressed while focused on TextBoxSearch and searches The DirectoryTreeView
         /// </summary>
-        private void TextBoxSearch_KeyDown( object sender, KeyEventArgs e ) {
-            if(e.KeyCode != Keys.Enter) {
+        private void TextBoxSearch_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode != Keys.Enter) {
                 return;
             }
             e.SuppressKeyPress = true;
@@ -272,9 +260,9 @@ namespace FileBrowser {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TextBoxSearch_TextChanged( object sender, EventArgs e ) {
+        private void TextBoxSearch_TextChanged(object sender, EventArgs e) {
             string input = TextBoxSearch.Text;
-            if(string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input)) {
+            if (string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input)) {
                 DirectoryTreeView.Generate(true);
             }
         }
@@ -284,7 +272,7 @@ namespace FileBrowser {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuButtonCollapseAll_Click( object sender, EventArgs e ) {
+        private void MenuButtonCollapseAll_Click(object sender, EventArgs e) {
             DirectoryTreeView.BeginUpdate();
             DirectoryTreeView.CollapseAll();
             DirectoryTreeView.EndUpdate();
@@ -295,7 +283,7 @@ namespace FileBrowser {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuButtonShowAll_Click( object sender, EventArgs e ) {
+        private void MenuButtonShowAll_Click(object sender, EventArgs e) {
             DirectoryTreeView.BeginUpdate();
             DirectoryTreeView.ExpandAll();
             DirectoryTreeView.Nodes[0].EnsureVisible(); // scroll to top

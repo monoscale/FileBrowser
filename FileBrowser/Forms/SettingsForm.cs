@@ -19,10 +19,9 @@ namespace FileBrowser.Forms {
     public partial class SettingsForm : Form, ILocalizable {
 
 
-        private IFolderRepository folderRepository;
-        private IExtensionRepository extensionRepository;
-        private LanguageManager languageManager;
-        private ThemeManager themeManager;
+
+        private RepositoryController repositoryController;
+        private DependencyController dependencyController;
 
         private ObservableCollection<Folder> directories;
         private ObservableCollection<string> extensions;
@@ -40,19 +39,12 @@ namespace FileBrowser.Forms {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public SettingsForm() {
+        public SettingsForm( RepositoryController repositoryController, DependencyController dependencyController ) {
             InitializeComponent();
+            this.repositoryController = repositoryController;
+            this.dependencyController = dependencyController;
         }
 
-        public void SetRepositories( IFolderRepository folderRepository, IExtensionRepository extensionRepository ) {
-            this.folderRepository = folderRepository;
-            this.extensionRepository = extensionRepository;
-        }
-
-        public void SetDependencies( LanguageManager languageManager, ThemeManager themeManager ) {
-            this.languageManager = languageManager;
-            this.themeManager = themeManager;
-        }
 
 
         /**
@@ -66,18 +58,15 @@ namespace FileBrowser.Forms {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected override void OnLoad( EventArgs e ) {
-            TitleBuilder titleBuilder = new TitleBuilder();
-            
-            Text = titleBuilder.BuildSecondaryTitle(Resources.Strings.MenuSettings);
-            Icon = Properties.Resources.Icon;
+
             directories = new ObservableCollection<Folder>();
             extensions = new ObservableCollection<string>();
-
-            foreach(Folder directory in folderRepository.GetFolders()) {
+            Icon = Properties.Resources.Icon;
+            foreach(Folder directory in repositoryController.FolderRepository.GetFolders()) {
                 directories.Add(directory);
             }
 
-            foreach(string extension in extensionRepository.GetExtensions()) {
+            foreach(string extension in repositoryController.ExtensionRepository.GetExtensions()) {
                 extensions.Add(extension);
             }
 
@@ -94,23 +83,23 @@ namespace FileBrowser.Forms {
         public void UpdateSettings() {
             try {
                 CheckBoxExpand.Checked = Settings.Default.Expand;
-                ComboBoxLanguage.Items.AddRange(languageManager.GetReadableLanguages().ToArray());
-                string code = languageManager.GetPreferredLanguageCode();
-                string language = languageManager.CodeToLanguage(code);
+                ComboBoxLanguage.Items.AddRange(dependencyController.LanguageManager.GetReadableLanguages().ToArray());
+                string code = dependencyController.LanguageManager.GetPreferredLanguageCode();
+                string language = dependencyController.LanguageManager.CodeToLanguage(code);
                 ComboBoxLanguage.SelectedItem = language;
             } catch(ArgumentException) {
                 ErrorMessageBox.Show(Resources.Strings.InvalidLangugeTitle, Resources.Strings.InvalidLanguageDescription);
             }
 
             ComboBoxColorTheme.Items.AddRange(Enum.GetNames(typeof(Theme)));
-            ComboBoxColorTheme.SelectedItem = themeManager.GetTheme().ToString();
+            ComboBoxColorTheme.SelectedItem = dependencyController.ThemeManager.GetTheme().ToString();
         }
 
         /// <summary>
         /// Updates the UI text according to the chosen language
         /// </summary>
         public void UpdateText() {
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(languageManager.GetPreferredLanguageCode());
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(dependencyController.LanguageManager.GetPreferredLanguageCode());
             TitleBuilder titleBuilder = new TitleBuilder();
             Text = titleBuilder.BuildSecondaryTitle(Resources.Strings.MenuSettings);
             GroupBoxDirectories.Text = Resources.Strings.Directories;
@@ -141,7 +130,7 @@ namespace FileBrowser.Forms {
                 if(directories.Contains(newDirectory)) {
                     ErrorMessageBox.Show(Resources.Strings.DuplicateFolderTitle, Resources.Strings.DuplicateFolderDescription);
                 } else {
-                    folderRepository.AddFolder(path);
+                    repositoryController.FolderRepository.AddFolder(path);
                     directories.Add(new Folder(path));
                 }
 
@@ -182,7 +171,7 @@ namespace FileBrowser.Forms {
                 if(directories.Contains(newDirectory)) {
                     ErrorMessageBox.Show(Resources.Strings.DuplicateFolderTitle, Resources.Strings.DuplicateFolderDescription);
                 } else {
-                    folderRepository.EditFolder(oldPath, newPath);
+                    repositoryController.FolderRepository.EditFolder(oldPath, newPath);
                     directories.First(d => d.Path == oldPath).Path = newPath;
                     UpdateDirectories();
                 }
@@ -197,7 +186,7 @@ namespace FileBrowser.Forms {
         /// <param name="e">EventArgs</param>
         /// <param name="path">The path of the folder that will be removed </param>
         private void DeleteDirectory_Click( object sender, EventArgs e, string path ) {
-            folderRepository.RemoveFolder(path);
+            repositoryController.FolderRepository.RemoveFolder(path);
             directories.Remove(directories.First(d => d.Path == path));
         }
 
@@ -289,7 +278,7 @@ namespace FileBrowser.Forms {
                 ErrorMessageBox.Show(Resources.Strings.DuplicateExtensionTitle, Resources.Strings.DuplicateExtensionDescription);
             } else {
 
-                extensionRepository.AddExtension(extension);
+                repositoryController.ExtensionRepository.AddExtension(extension);
                 extensions.Add(extension);
                 AddExtensionComplete();
             }
@@ -333,7 +322,7 @@ namespace FileBrowser.Forms {
         /// <param name="e">EventArgs</param>
         /// <param name="extension">The name of the extension that needs to be removed</param>
         private void DeleteExtension_Click( object sender, EventArgs e, string extension ) {
-            extensionRepository.RemoveExtension(extension);
+            repositoryController.ExtensionRepository.RemoveExtension(extension);
             extensions.Remove(extension);
         }
 
@@ -375,8 +364,8 @@ namespace FileBrowser.Forms {
             try {
                 string selected = (string)ComboBoxLanguage.SelectedItem;
 
-                string code = languageManager.LanguageToCode(selected);
-                languageManager.SavePreferredLanguageCode(code);
+                string code = dependencyController.LanguageManager.LanguageToCode(selected);
+                dependencyController.LanguageManager.SavePreferredLanguageCode(code);
                 UpdateText();
                 LanguageChanged(this, new EventArgs());
             } catch(ArgumentException) {
@@ -389,7 +378,7 @@ namespace FileBrowser.Forms {
             string selected = (string)ComboBoxColorTheme.SelectedItem;
             Theme theme;
             Enum.TryParse(selected, out theme);
-            themeManager.SetTheme(theme);
+            dependencyController.ThemeManager.SetTheme(theme);
             ColorChanged(this, new EventArgs());
         }
     }

@@ -26,6 +26,9 @@ namespace FileBrowser.Models.Themes {
                 case Theme.DARK:
                     ColorTheme = new DarkColorTheme();
                     break;
+                default:
+                    ColorTheme = new LightColorTheme();
+                    break;
             }
         }
 
