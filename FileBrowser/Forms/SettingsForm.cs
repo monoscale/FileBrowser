@@ -19,7 +19,6 @@ namespace FileBrowser.Forms {
     public partial class SettingsForm : Form, ILocalizable {
 
 
-
         private RepositoryController repositoryController;
         private DependencyController dependencyController;
 

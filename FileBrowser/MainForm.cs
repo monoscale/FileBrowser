@@ -23,6 +23,8 @@ namespace FileBrowser {
         private RepositoryController repositoryController;
         private DependencyController dependencyController;
 
+        private SettingsForm settingsFormInstance;
+
         private DirectoryTreeView DirectoryTreeView;
 
         private ICollection<Folder> musicDirectories;
@@ -178,10 +180,19 @@ namespace FileBrowser {
         /// <seealso cref="SettingsForm"/>
         /// </summary>
         private void ButtonSettings_Click(object sender, EventArgs e) {
-            SettingsForm settingsForm = new SettingsForm(repositoryController, dependencyController);
-            settingsForm.LanguageChanged += SettingsForm_LanguageChanged;
-            settingsForm.ColorChanged += SettingsForm_ColorChanged;
-            FormUtils.OpenForm(settingsForm, Location);
+            ///Don't allow two of the same form to be active at once
+            if(settingsFormInstance == null) {
+                SettingsForm settingsForm = new SettingsForm(repositoryController, dependencyController);
+                settingsForm.LanguageChanged += SettingsForm_LanguageChanged;
+                settingsForm.ColorChanged += SettingsForm_ColorChanged;
+                settingsFormInstance = settingsForm;
+                
+                FormUtils.OpenForm(settingsForm, Location);
+            }
+            else {
+                settingsFormInstance.Focus();
+            }
+
         }
 
         /// <summary>
