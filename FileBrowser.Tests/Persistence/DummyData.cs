@@ -1,4 +1,6 @@
 ﻿using FileBrowser.Models;
+using FileBrowser.Persistence.Repositories;
+using FileBrowser.Tests.Persistence.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace FileBrowser.Tests.Persistence {
     public class DummyData {
+
+
+ 
 
         /// <summary>
         /// Contains 3 files ( 2 txt and 1 docx) and one folder which contains 1 file (mp3)
@@ -25,7 +30,7 @@ namespace FileBrowser.Tests.Persistence {
 
         public string TxtExtension = ".txt";
         public string Mp3Extension = ".mp3";
-            
+
 
         public ICollection<string> Extensions => new List<string> {
                   TxtExtension,

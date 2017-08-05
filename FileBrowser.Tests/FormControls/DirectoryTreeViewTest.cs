@@ -6,6 +6,7 @@ using FileBrowser.Tests.Persistence;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using FileBrowser.Models.Themes;
+using FileBrowser.Models;
 
 namespace FileBrowser.Tests.FormControls {
     [TestClass]
@@ -17,8 +18,9 @@ namespace FileBrowser.Tests.FormControls {
         [TestInitialize]
         public void Before() {
             dummyData = new DummyData();
+
             directoryTreeView = new DirectoryTreeView(new MockFolderRepository(dummyData), new MockExtensionRepository(dummyData));
-            directoryTreeView.SetDependencies(new ThemeManager());
+
         }
 
         [TestMethod]

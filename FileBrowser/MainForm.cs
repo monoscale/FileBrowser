@@ -97,7 +97,8 @@ namespace FileBrowser {
                 filteredExtensions.Remove(checkBoxExtension.Text);
             }
 
-            DirectoryTreeView.FilterExtensions(filteredExtensions);
+            DirectoryTreeView.Search(TextBoxSearch.Text, filteredExtensions);
+         //   DirectoryTreeView.FilterExtensions(filteredExtensions);
         }
 
         /// <summary>
@@ -263,7 +264,7 @@ namespace FileBrowser {
                 return;
             }
             e.SuppressKeyPress = true;
-            DirectoryTreeView.Search(TextBoxSearch.Text);
+            DirectoryTreeView.Search(TextBoxSearch.Text, filteredExtensions);
         }
 
         /// <summary>
@@ -274,7 +275,7 @@ namespace FileBrowser {
         private void TextBoxSearch_TextChanged(object sender, EventArgs e) {
             string input = TextBoxSearch.Text;
             if (string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input)) {
-                DirectoryTreeView.Generate(true);
+                DirectoryTreeView.Search(null, filteredExtensions);
             }
         }
 
