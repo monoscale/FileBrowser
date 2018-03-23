@@ -161,7 +161,8 @@ namespace FileBrowser.FormControls {
                     bool matches = false;
                     string filename = file.Text.ToLower();
                     foreach (string ext in extensions) {
-                        if (filename.Contains(ext)) {
+                        string fileext = filename.Substring(filename.IndexOf('.'));
+                        if (fileext.Equals(ext)) {
                             matches = true;
                         }
                     }
@@ -226,6 +227,36 @@ namespace FileBrowser.FormControls {
             builder.Add(text, (s, ea) => OpenFolder(s, ea, path));
 
             builder.Show();
+        }
+
+
+        //TODO
+        private ImageList GetImageList()
+        {
+            ImageList imageList = new ImageList();
+            ICollection<Folder> directories = repositoryController.FolderRepository.GetFolders();
+            ICollection<string> extensions = repositoryController.ExtensionRepository.GetExtensions();
+            Dictionary<string, bool> ExtensionOccured = new Dictionary<string, bool>();
+
+            int index = 0;
+            foreach (Folder directory in directories)
+            {
+                try
+                {
+                    ICollection<FileInfo> files = directory.GetFiles(extensions);
+                    foreach (FileInfo file in files)
+                    {
+
+                        Nodes[index].Nodes.Add(new FileTreeNode(file.Name, file.FullName));
+                    }     
+                    index++;
+                }
+                catch (DirectoryNotFoundException dnfe)
+                {
+                    Nodes.Add(new DirectoryNotFoundTreeNode(directory.Path, dnfe.Message, dependencyController.ThemeManager));
+                }
+            }
+            return imageList;
         }
 
 

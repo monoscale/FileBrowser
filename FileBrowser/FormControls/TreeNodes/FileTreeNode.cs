@@ -1,4 +1,6 @@
 ﻿using FileBrowser.Models;
+using FileBrowser.Utils;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace FileBrowser.FormControls.TreeNodes {
@@ -8,10 +10,12 @@ namespace FileBrowser.FormControls.TreeNodes {
     /// TreeNode that represents a file 
     /// </summary>
     public class FileTreeNode: TreeNode {
-        public FileTreeNode(string name, string fullName) {
+        public FileTreeNode(string name, string fullPath) {
             Text = name;
-            ToolTipText = fullName;
+            ToolTipText = fullPath;
             Tag = NODE_STAT.FILE;
         }
     }
+
+    
 }

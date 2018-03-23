@@ -106,7 +106,7 @@
     <Compile Include="FormControls\TreeNodes\DirectoryTreeNode.cs" />
     <Compile Include="FormControls\TreeNodes\NoDirectoriesTreeNode.cs" />
     <Compile Include="FormControls\TreeNodes\NoMatchesTreeNode.cs" />
-    <Compile Include="FormControls\TreeNodes\SearchResultTreeNode.cs" />
+    <Compile Include="FormControls\TreeNodes\FileTreeNode.cs" />
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
