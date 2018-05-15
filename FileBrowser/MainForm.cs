@@ -114,12 +114,13 @@ namespace FileBrowser
         /// </summary>
         public void UpdateSizeAndLocation()
         {
+            /*
             if (!FormUtils.IsOnScreen(this))
             {
                 Location = Settings.Default.WindowLocation;
             }
             Size = Settings.Default.WindowSize;
-            Location = Settings.Default.WindowLocation;
+            Location = Settings.Default.WindowLocation;*/
         }
 
         public void UpdateTheme()
