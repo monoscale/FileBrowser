@@ -1,5 +1,5 @@
 # FileBrowser
-A handy tool to gather files you care about in one spot. It scans a list of predefined folders you can chose and produces a flat list of the content in that folder, for extensions that you are interested in. I use it primarily for music files that are scattered all around the filesystem.
+A handy tool to gather files you care about in one spot. It scans a list of predefined folders you can chose and produces a flat list of the deep content in that folder, for extensions that you are interested in. I use it primarily for music files that are scattered all around the filesystem.
 
 I can't be bothered to make changes or finetune it anymore since it works as I want it to. However, if you have a great idea or have some annoying bug I will fix it.
 
