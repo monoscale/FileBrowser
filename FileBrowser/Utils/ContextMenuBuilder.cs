@@ -27,7 +27,7 @@ namespace FileBrowser.Utils
         /// <summary>
         /// Adds a ToolStripMenuItem to the ContextMenuStrip
         /// </summary>
-        /// <param name="name">The text on the ToolStrip</param>
+        /// <param name="text">The text on the ToolStrip</param>
         /// <param name="handler">The event that occurs when clicking the ToolStripMenuItem</param>
         public void Add(string text, EventHandler handler)
         {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileBrowser.Models.Language {
+﻿namespace FileBrowser.Domain.Language {
 
     /// <summary>
     /// Interface that allows a class to be localized

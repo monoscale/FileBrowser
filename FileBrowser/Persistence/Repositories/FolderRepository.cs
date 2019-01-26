@@ -1,9 +1,9 @@
-﻿
-using FileBrowser.Models;
-using FileBrowser.Persistence.Database;
+﻿using FileBrowser.Persistence.Database;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using FileBrowser.Domain;
+using FileBrowser.Domain.Models;
 
 namespace FileBrowser.Persistence.Repositories {
     public class FolderRepository : IFolderRepository {

@@ -1,11 +1,11 @@
-﻿using FileBrowser.Models;
-using FileBrowser.Persistence.Repositories;
+﻿using FileBrowser.Persistence.Repositories;
 using FileBrowser.Tests.Persistence.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FileBrowser.Domain;
 
 namespace FileBrowser.Tests.Persistence {
     public class DummyData {

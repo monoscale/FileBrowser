@@ -1,8 +1,8 @@
-﻿using FileBrowser.Models;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
-using FileBrowser.Models.Language;
-using FileBrowser.Models.Themes;
+using FileBrowser.Domain;
+using FileBrowser.Domain.Language;
+using FileBrowser.Domain.Themes;
 
 namespace FileBrowser.FormControls.TreeNodes {
 

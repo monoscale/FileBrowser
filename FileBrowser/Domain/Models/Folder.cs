@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace FileBrowser.Models
-{
+namespace FileBrowser.Domain.Models {
     /// <summary>
     /// This class represents a directory
     /// </summary>
-    public class Folder : IEquatable<Folder>
-    {
+    public class Folder : IEquatable<Folder> {
         /// <summary>
         /// Path of the directory
         /// </summary>
@@ -18,13 +16,10 @@ namespace FileBrowser.Models
         /// <summary>
         /// Gets or sets the path of the directory
         /// </summary>
-        public string Path
-        {
+        public string Path {
             get => path;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
+            set {
+                if (string.IsNullOrWhiteSpace(value)) {
                     throw new ArgumentException(Resources.Strings.ArgumentExceptionPathFolder);
                 }
                 path = value;
@@ -35,8 +30,7 @@ namespace FileBrowser.Models
         /// Default constructor
         /// </summary>
         /// <param name="path">The path of the directory</param>
-        public Folder(string path)
-        {
+        public Folder(string path) {
             Path = path;
         }
 
@@ -45,12 +39,10 @@ namespace FileBrowser.Models
         /// </summary>
         /// <param name="extensions">A collection of extensions</param>
         /// <returns>A collection of files that match the extensions</returns>
-        public ICollection<FileInfo> GetFiles(ICollection<string> extensions)
-        {
-            DirectoryInfo directory = new DirectoryInfo(path);
+        public ICollection<FileInfo> GetFiles(ICollection<string> extensions) {
+            DirectoryInfo directory = new DirectoryInfo(Path);
             List<FileInfo> files = new List<FileInfo>();
-            foreach (string ext in extensions)
-            {
+            foreach (string ext in extensions) {
                 string regex = "*" + ext;
                 files.AddRange(directory.GetFiles(regex, SearchOption.AllDirectories));
             }
@@ -64,10 +56,8 @@ namespace FileBrowser.Models
         /// </summary>
         /// <param name="other"></param>
         /// <returns>true if equal; else false</returns>
-        public bool Equals(Folder other)
-        {
-            if (other == null)
-            {
+        public bool Equals(Folder other) {
+            if (other == null) {
                 return false;
             }
             return (Path.Equals(other.Path));
@@ -78,11 +68,10 @@ namespace FileBrowser.Models
         /// <summary>
         /// Special File Comparer that treats digits as numerical rather than text
         /// </summary>
-        private class FileInfoComparer : IComparer<FileInfo>
-        {
+        private class FileInfoComparer : IComparer<FileInfo> {
 
             [DllImport("shlwapi.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
-            public static extern int StrCmpLogicalW(string x, string y);
+            private static extern int StrCmpLogicalW(string x, string y);
 
 
             /// <summary>
@@ -94,8 +83,7 @@ namespace FileBrowser.Models
             /// 1 if x > y
             /// -1 if x < y
             /// </returns>
-            public int Compare(FileInfo x, FileInfo y)
-            {
+            public int Compare(FileInfo x, FileInfo y) {
                 return StrCmpLogicalW(x.Name, y.Name);
             }
         }

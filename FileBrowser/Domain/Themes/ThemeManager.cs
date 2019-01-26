@@ -1,6 +1,6 @@
 ﻿using FileBrowser.Properties;
 
-namespace FileBrowser.Models.Themes {
+namespace FileBrowser.Domain.Themes {
     public class ThemeManager {
 
         /// <summary>

@@ -1,8 +1,5 @@
 ﻿using FileBrowser.FormControls;
 using FileBrowser.Forms;
-using FileBrowser.Models;
-using FileBrowser.Models.Language;
-using FileBrowser.Models.Themes;
 using FileBrowser.Persistence.Repositories;
 using FileBrowser.Properties;
 using FileBrowser.Utils;
@@ -12,6 +9,10 @@ using System.Drawing;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
+using FileBrowser.Domain;
+using FileBrowser.Domain.Language;
+using FileBrowser.Domain.Models;
+using FileBrowser.Domain.Themes;
 
 namespace FileBrowser
 {
@@ -153,7 +154,6 @@ namespace FileBrowser
             LabelSearch.Text = Resources.Strings.Search;
             MenuButtonCollapseAll.Text = Resources.Strings.CollapseAll;
             MenuButtonShowAll.Text = Resources.Strings.ShowAll;
-            MenuButtonAbout.Text = Resources.Strings.MenuAbout;
             DirectoryTreeView.UpdateText();
         }
 
@@ -237,15 +237,6 @@ namespace FileBrowser
         }
 
 
-        /// <summary>
-        /// Opens the about view
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuButtonAbout_Click(object sender, EventArgs e)
-        {
-            FormUtils.OpenForm(new AboutForm(), Location);
-        }
         #endregion
 
         /* EVENTS RELATED TO THE TREEVIEW */

@@ -1,9 +1,10 @@
-﻿using FileBrowser.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FileBrowser.Domain;
+using FileBrowser.Domain.Models;
 
 namespace FileBrowser.Persistence.Repositories {
     public interface IFolderRepository {

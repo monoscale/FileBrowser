@@ -1,5 +1,5 @@
-﻿using FileBrowser.Models;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using FileBrowser.Domain;
 
 namespace FileBrowser.FormControls.TreeNodes {
 

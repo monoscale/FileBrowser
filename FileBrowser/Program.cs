@@ -1,10 +1,10 @@
-﻿using FileBrowser.Models;
-using FileBrowser.Models.Language;
-using FileBrowser.Models.Themes;
-using FileBrowser.Persistence.Repositories;
+﻿using FileBrowser.Persistence.Repositories;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using FileBrowser.Domain;
+using FileBrowser.Domain.Language;
+using FileBrowser.Domain.Themes;
 
 namespace FileBrowser {
     static class Program {

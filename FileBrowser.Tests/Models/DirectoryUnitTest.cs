@@ -1,9 +1,9 @@
-﻿using FileBrowser.Models;
-using FileBrowser.Tests.Persistence;
+﻿using FileBrowser.Tests.Persistence;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using FileBrowser.Domain;
 
 namespace FileBrowser.Tests.Models {
 

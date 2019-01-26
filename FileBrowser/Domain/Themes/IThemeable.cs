@@ -1,4 +1,4 @@
-﻿namespace FileBrowser.Models.Themes {
+﻿namespace FileBrowser.Domain.Themes {
     public interface IThemeable { 
         void UpdateTheme();
     }

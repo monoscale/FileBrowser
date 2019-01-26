@@ -1,4 +1,4 @@
-﻿namespace FileBrowser.Models.Themes {
+﻿namespace FileBrowser.Domain.Themes {
 
     public enum Theme {
         LIGHT,

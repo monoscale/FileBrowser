@@ -1,4 +1,4 @@
-﻿namespace FileBrowser.Models
+﻿namespace FileBrowser.Domain
 {
     /// <summary>
     /// Keeping track wether or not a node in the tree is a directory or a file

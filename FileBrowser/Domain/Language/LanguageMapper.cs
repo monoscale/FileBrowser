@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FileBrowser.Models.Language
+namespace FileBrowser.Domain.Language
 {
     /// <summary>
     /// This class is able to map a language code to a specific language and vice versa

@@ -1,9 +1,7 @@
-﻿
-using System.Configuration;
+﻿using System.Configuration;
 using System.Drawing;
-using System.Windows.Forms;
 
-namespace FileBrowser.Models.Themes {
+namespace FileBrowser.Domain.Themes {
 
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
     public abstract class ColorTheme {

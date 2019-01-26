@@ -1,11 +1,7 @@
-﻿using FileBrowser.Properties;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using FileBrowser.Properties;
 
-namespace FileBrowser.Models.Language
+namespace FileBrowser.Domain.Language
 {
     /// <summary>
     /// Class that controls the Language flow
@@ -29,7 +25,7 @@ namespace FileBrowser.Models.Language
         /// <summary>
         /// Stores the language in the User preferences
         /// </summary>
-        /// <param>The language code</param>
+        /// <param name="code">The language code</param>
         public void SavePreferredLanguageCode(string code)
         {
             Settings.Default.Language = code;

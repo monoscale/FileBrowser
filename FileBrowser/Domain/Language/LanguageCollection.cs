@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FileBrowser.Models.Language
+namespace FileBrowser.Domain.Language
 {
     /// <summary>
     /// The class that knows which languages are available on this system

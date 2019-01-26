@@ -1,7 +1,4 @@
 ﻿using FileBrowser.FormControls.MessageBoxes;
-using FileBrowser.Models;
-using FileBrowser.Models.Language;
-using FileBrowser.Models.Themes;
 using FileBrowser.Persistence.Repositories;
 using FileBrowser.Properties;
 using FileBrowser.Utils;
@@ -11,6 +8,10 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using FileBrowser.Domain;
+using FileBrowser.Domain.Language;
+using FileBrowser.Domain.Models;
+using FileBrowser.Domain.Themes;
 
 namespace FileBrowser.Forms {
     /// <summary>
@@ -38,7 +39,7 @@ namespace FileBrowser.Forms {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public SettingsForm( RepositoryController repositoryController, DependencyController dependencyController ) {
+        public SettingsForm(RepositoryController repositoryController, DependencyController dependencyController) {
             InitializeComponent();
             this.repositoryController = repositoryController;
             this.dependencyController = dependencyController;
@@ -56,16 +57,16 @@ namespace FileBrowser.Forms {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected override void OnLoad( EventArgs e ) {
+        protected override void OnLoad(EventArgs e) {
 
             directories = new ObservableCollection<Folder>();
             extensions = new ObservableCollection<string>();
             Icon = Properties.Resources.Icon;
-            foreach(Folder directory in repositoryController.FolderRepository.GetFolders()) {
+            foreach (Folder directory in repositoryController.FolderRepository.GetFolders()) {
                 directories.Add(directory);
             }
 
-            foreach(string extension in repositoryController.ExtensionRepository.GetExtensions()) {
+            foreach (string extension in repositoryController.ExtensionRepository.GetExtensions()) {
                 extensions.Add(extension);
             }
 
@@ -86,7 +87,7 @@ namespace FileBrowser.Forms {
                 string code = dependencyController.LanguageManager.GetPreferredLanguageCode();
                 string language = dependencyController.LanguageManager.CodeToLanguage(code);
                 ComboBoxLanguage.SelectedItem = language;
-            } catch(ArgumentException) {
+            } catch (ArgumentException) {
                 ErrorMessageBox.Show(Resources.Strings.InvalidLangugeTitle, Resources.Strings.InvalidLanguageDescription);
             }
 
@@ -120,13 +121,13 @@ namespace FileBrowser.Forms {
         /// </summary>
         /// <param name="sender">ButtonAddDirectory</param>
         /// <param name="e">EventArgs</param>
-        private void ButtonAddDirectory_Click( object sender, EventArgs e ) {
+        private void ButtonAddDirectory_Click(object sender, EventArgs e) {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             DialogResult result = folderBrowserDialog.ShowDialog();
-            if(result == DialogResult.OK) {
+            if (result == DialogResult.OK) {
                 string path = folderBrowserDialog.SelectedPath;
                 Folder newDirectory = new Folder(path);
-                if(directories.Contains(newDirectory)) {
+                if (directories.Contains(newDirectory)) {
                     ErrorMessageBox.Show(Resources.Strings.DuplicateFolderTitle, Resources.Strings.DuplicateFolderDescription);
                 } else {
                     repositoryController.FolderRepository.AddFolder(path);
@@ -141,15 +142,15 @@ namespace FileBrowser.Forms {
         /// </summary>
         /// <param name="sender">ListViewDirectories</param>
         /// <param name="e">MouseEventArgs</param>
-        private void ListViewDirectories_MouseClick( object sender, MouseEventArgs e ) {
+        private void ListViewDirectories_MouseClick(object sender, MouseEventArgs e) {
             ListView listView = (ListView)sender;
-            if(listView.SelectedItems.Count > 0) {
+            if (listView.SelectedItems.Count > 0) {
                 ListViewItem selectedListViewItem = listView.SelectedItems[0];
                 string path = selectedListViewItem.Text;
-                if(e.Button == MouseButtons.Right) {
+                if (e.Button == MouseButtons.Right) {
                     ContextMenuBuilder builder = new ContextMenuBuilder();
-                    builder.Add("Edit", ( s, ea ) => EditDirectory_Click(s, ea, path));
-                    builder.Add("Delete", ( s, ea ) => DeleteDirectory_Click(s, ea, path));
+                    builder.Add("Edit", (s, ea) => EditDirectory_Click(s, ea, path));
+                    builder.Add("Delete", (s, ea) => DeleteDirectory_Click(s, ea, path));
                     builder.Show();
                 }
             }
@@ -161,13 +162,13 @@ namespace FileBrowser.Forms {
         /// <param name="s">ToolStripMenuItemEditDirectory (Created programmatically in ListViewDirectories_MouseClick)</param>
         /// <param name="e">EventArgs</param>
         /// <param name="oldPath">The path of the folder that is getting edited</param>
-        private void EditDirectory_Click( object s, EventArgs e, string oldPath ) {
+        private void EditDirectory_Click(object s, EventArgs e, string oldPath) {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-            if(folderBrowserDialog.ShowDialog() == DialogResult.OK) {
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK) {
 
                 string newPath = folderBrowserDialog.SelectedPath;
                 Folder newDirectory = new Folder(newPath); // new instance for comparing
-                if(directories.Contains(newDirectory)) {
+                if (directories.Contains(newDirectory)) {
                     ErrorMessageBox.Show(Resources.Strings.DuplicateFolderTitle, Resources.Strings.DuplicateFolderDescription);
                 } else {
                     repositoryController.FolderRepository.EditFolder(oldPath, newPath);
@@ -184,7 +185,7 @@ namespace FileBrowser.Forms {
         /// <param name="sender">ToolStripMenuItemDeleteDirectory (Created programmatically in ListViewDirectories_MouseClick)</param>
         /// <param name="e">EventArgs</param>
         /// <param name="path">The path of the folder that will be removed </param>
-        private void DeleteDirectory_Click( object sender, EventArgs e, string path ) {
+        private void DeleteDirectory_Click(object sender, EventArgs e, string path) {
             repositoryController.FolderRepository.RemoveFolder(path);
             directories.Remove(directories.First(d => d.Path == path));
         }
@@ -194,7 +195,7 @@ namespace FileBrowser.Forms {
         /// </summary>
         private void UpdateDirectories() {
             ListViewDirectories.Clear();
-            foreach(Folder directory in directories) {
+            foreach (Folder directory in directories) {
                 ListViewDirectories.Items.Add(new ListViewItem(directory.Path));
             }
         }
@@ -204,7 +205,7 @@ namespace FileBrowser.Forms {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Directories_CollectionChanged( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e ) {
+        private void Directories_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             UpdateDirectories();
         }
 
@@ -221,7 +222,7 @@ namespace FileBrowser.Forms {
         /// </summary>
         /// <param name="sender">ButtonAddExtension</param>
         /// <param name="e">EventArgs</param>
-        private void ButtonAddExtension_Click( object sender, EventArgs e ) {
+        private void ButtonAddExtension_Click(object sender, EventArgs e) {
             ButtonAddExtension.Visible = false;
             PanelAddExtension.Visible = true;
             TextBoxExtensionInput.Focus();
@@ -232,7 +233,7 @@ namespace FileBrowser.Forms {
         /// </summary>
         /// <param name="sender">ButtonSubmit</param>
         /// <param name="e">EventArgs</param>
-        private void ButtonSubmit_Click( object sender, EventArgs e ) {
+        private void ButtonSubmit_Click(object sender, EventArgs e) {
             AddExtension(TextBoxExtensionInput.Text);
         }
 
@@ -241,8 +242,8 @@ namespace FileBrowser.Forms {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TextBoxExtensionInput_KeyDown( object sender, KeyEventArgs e ) {
-            if(e.KeyCode == Keys.Enter) {
+        private void TextBoxExtensionInput_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
                 AddExtension(TextBoxExtensionInput.Text);
                 e.SuppressKeyPress = true;
 
@@ -254,7 +255,7 @@ namespace FileBrowser.Forms {
         /// </summary>
         /// <param name="sender">Button Cancel</param>
         /// <param name="e">EventArgs</param>
-        private void ButtonCancel_Click( object sender, EventArgs e ) {
+        private void ButtonCancel_Click(object sender, EventArgs e) {
             AddExtensionComplete();
         }
 
@@ -262,18 +263,18 @@ namespace FileBrowser.Forms {
         /// Validates the inputted extension and adds to the database if valid
         /// </summary>
         /// <param name="extension">The extension to validate</param>
-        private void AddExtension( string extension ) {
-            if(string.IsNullOrWhiteSpace(extension)) {
+        private void AddExtension(string extension) {
+            if (string.IsNullOrWhiteSpace(extension)) {
                 WarningMessageBox.Show(Resources.Strings.InvalidExtensionTitle, Resources.Strings.InvalidExtensionEmpty);
                 return;
             }
 
             // Add a . if the user forgets it
-            if(!extension.StartsWith(".")) {
+            if (!extension.StartsWith(".")) {
                 extension = "." + extension;
             }
 
-            if(extensions.Contains(extension)) {
+            if (extensions.Contains(extension)) {
                 ErrorMessageBox.Show(Resources.Strings.DuplicateExtensionTitle, Resources.Strings.DuplicateExtensionDescription);
             } else {
 
@@ -297,16 +298,16 @@ namespace FileBrowser.Forms {
         /// </summary>
         /// <param name="sender">ListViewExtensions</param>
         /// <param name="e">MouseEventArgs</param>
-        private void ListViewExtensions_MouseClick( object sender, MouseEventArgs e ) {
+        private void ListViewExtensions_MouseClick(object sender, MouseEventArgs e) {
             ListView listView = (ListView)sender;
-            if(listView.SelectedItems.Count > 0) {
+            if (listView.SelectedItems.Count > 0) {
                 ListViewItem selectedListViewItem = listView.SelectedItems[0];
                 string extension = selectedListViewItem.Text;
-                if(e.Button == MouseButtons.Right) {
+                if (e.Button == MouseButtons.Right) {
                     ContextMenuStrip ContextMenuDirectories = new ContextMenuStrip();
 
                     ToolStripMenuItem DeleteExtension = new ToolStripMenuItem(Resources.Strings.Delete);
-                    DeleteExtension.Click += ( s, ea ) => DeleteExtension_Click(s, ea, extension);
+                    DeleteExtension.Click += (s, ea) => DeleteExtension_Click(s, ea, extension);
 
                     ContextMenuDirectories.Items.AddRange(new[] { DeleteExtension });
                     ContextMenuDirectories.Show(Cursor.Position);
@@ -320,7 +321,7 @@ namespace FileBrowser.Forms {
         /// <param name="sender">ToolStripMenuItemDeleteExtension (Created programmatically in ListViewExtensions_MouseClick)</param>
         /// <param name="e">EventArgs</param>
         /// <param name="extension">The name of the extension that needs to be removed</param>
-        private void DeleteExtension_Click( object sender, EventArgs e, string extension ) {
+        private void DeleteExtension_Click(object sender, EventArgs e, string extension) {
             repositoryController.ExtensionRepository.RemoveExtension(extension);
             extensions.Remove(extension);
         }
@@ -330,7 +331,7 @@ namespace FileBrowser.Forms {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Extensions_CollectionChanged( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e ) {
+        private void Extensions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             UpdateExtensions();
         }
 
@@ -340,14 +341,14 @@ namespace FileBrowser.Forms {
         /// </summary>
         private void UpdateExtensions() {
             ListViewExtensions.Clear();
-            foreach(string extension in extensions) {
+            foreach (string extension in extensions) {
                 ListViewExtensions.Items.Add(new ListViewItem(extension));
             }
         }
         #endregion
 
-       
-        
+
+
 
 
         /*
@@ -355,11 +356,11 @@ namespace FileBrowser.Forms {
          */
         #region SETTINGS
 
-        private void CheckBoxExpand_CheckedChanged( object sender, EventArgs e ) {
+        private void CheckBoxExpand_CheckedChanged(object sender, EventArgs e) {
             Settings.Default.Expand = CheckBoxExpand.Checked;
         }
 
-        private void ComboBoxLanguage_SelectedIndexChanged( object sender, EventArgs e ) {
+        private void ComboBoxLanguage_SelectedIndexChanged(object sender, EventArgs e) {
             try {
                 string selected = (string)ComboBoxLanguage.SelectedItem;
 
@@ -367,13 +368,13 @@ namespace FileBrowser.Forms {
                 dependencyController.LanguageManager.SavePreferredLanguageCode(code);
                 UpdateText();
                 LanguageChanged(this, new EventArgs());
-            } catch(ArgumentException) {
+            } catch (ArgumentException) {
                 ErrorMessageBox.Show(Resources.Strings.InvalidLangugeTitle, Resources.Strings.InvalidLanguageDescription);
             }
 
         }
 
-        private void ComboBoxColorTheme_SelectedIndexChanged( object sender, EventArgs e ) {
+        private void ComboBoxColorTheme_SelectedIndexChanged(object sender, EventArgs e) {
             string selected = (string)ComboBoxColorTheme.SelectedItem;
             Theme theme;
             Enum.TryParse(selected, out theme);

@@ -5,8 +5,6 @@ using FileBrowser.Tests.Persistence.Repositories;
 using FileBrowser.Tests.Persistence;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using FileBrowser.Models.Themes;
-using FileBrowser.Models;
 
 namespace FileBrowser.Tests.FormControls {
     [TestClass]

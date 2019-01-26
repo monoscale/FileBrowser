@@ -1,8 +1,6 @@
-﻿
-using System;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace FileBrowser.Models.Themes {
+namespace FileBrowser.Domain.Themes {
     class DarkColorTheme : ColorTheme {
 
         public override Color DefaultText => Color.White;

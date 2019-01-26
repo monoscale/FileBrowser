@@ -1,8 +1,5 @@
 ﻿using FileBrowser.FormControls.MessageBoxes;
 using FileBrowser.FormControls.TreeNodes;
-using FileBrowser.Models;
-using FileBrowser.Models.Language;
-using FileBrowser.Models.Themes;
 using FileBrowser.Persistence.Repositories;
 using FileBrowser.Utils;
 using System;
@@ -10,6 +7,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using FileBrowser.Domain;
+using FileBrowser.Domain.Language;
+using FileBrowser.Domain.Models;
+using FileBrowser.Domain.Themes;
 
 namespace FileBrowser.FormControls {
 

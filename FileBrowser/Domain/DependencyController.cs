@@ -1,7 +1,7 @@
-﻿using FileBrowser.Models.Language;
-using FileBrowser.Models.Themes;
+﻿using FileBrowser.Domain.Language;
+using FileBrowser.Domain.Themes;
 
-namespace FileBrowser.Models {
+namespace FileBrowser.Domain {
     public class DependencyController {
 
 

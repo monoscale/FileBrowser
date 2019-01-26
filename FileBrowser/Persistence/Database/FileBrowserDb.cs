@@ -30,13 +30,13 @@ namespace FileBrowser.Persistence.Database {
         /// Creates the SQLite database file if it does not yet exist on the filesystem
         /// </summary>
         public void CreateDatabaseIfNotExists() {
-            if(File.Exists(dbName)) {
+            if (File.Exists(dbName)) {
                 return;
             }
 
             SQLiteConnection.CreateFile(dbName);
-            using(SQLiteConnection connection = Connect()) {
-                using(SQLiteCommand command = new SQLiteCommand(connection)) {
+            using (SQLiteConnection connection = Connect()) {
+                using (SQLiteCommand command = new SQLiteCommand(connection)) {
                     connection.Open();
 
                     command.CommandText = folderTable;
@@ -58,7 +58,7 @@ namespace FileBrowser.Persistence.Database {
             return new SQLiteConnection(connectionString);
         }
 
-        public SQLiteConnection Connect( string connectionSstring ) {
+        public SQLiteConnection Connect(string connectionSstring) {
             return new SQLiteConnection(connectionSstring);
         }
     }
