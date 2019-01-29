@@ -104,5 +104,14 @@ namespace FileBrowser.Properties {
                 return ResourceManager.GetString("MenuButtonSettings", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FileBrowser.
+        /// </summary>
+        public static string ProgramName {
+            get {
+                return ResourceManager.GetString("ProgramName", resourceCulture);
+            }
+        }
     }
 }

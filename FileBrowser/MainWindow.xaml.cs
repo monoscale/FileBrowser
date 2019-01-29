@@ -10,9 +10,12 @@ namespace FileBrowser {
 
         public MainWindow() {
             InitializeComponent();
-    
+
         }
 
 
+        private void MenuButtonRefresh_OnClick(object sender, RoutedEventArgs e) {
+            FileBrowserTreeView.PopulateTreeView();
+        }
     }
 }
