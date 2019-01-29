@@ -24,7 +24,7 @@ namespace FileBrowser.Model {
             get => path;
             set {
                 if (string.IsNullOrWhiteSpace(value)) {
-                    throw new ArgumentException(Resources.Strings.ArgumentExceptionPathFolder);
+                    throw new ArgumentException(Resources.ArgumentExceptionPathFolder);
                 }
                 path = value;
             }

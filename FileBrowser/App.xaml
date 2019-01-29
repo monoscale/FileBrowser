@@ -4,19 +4,28 @@
              xmlns:local="clr-namespace:FileBrowser"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         <Style x:Key="MenuButton" TargetType="Button">
-             <Setter Property="BorderThickness" Value="5" />
-             <Setter Property="Foreground" Value="Black" />
-             <Setter Property="BorderBrush" >
-                 <Setter.Value>
-                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                         <GradientStop Color="Yellow" Offset="0.0" />
-                         <GradientStop Color="Red" Offset="0.25" />
-                         <GradientStop Color="Blue" Offset="0.75" />
-                         <GradientStop Color="LimeGreen" Offset="1.0" />
-                     </LinearGradientBrush>
-                 </Setter.Value>
-             </Setter>
+
+
+        <Style x:Key="MenuButton" TargetType="Button">
+            <!-- remove border -->
+            <Setter Property="BorderThickness" Value="0" />
+            
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="Padding" Value="30,10,30,10" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontFamily" Value="Inconsolata" />
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+
+        <Style x:Key="Menu" TargetType="StackPanel">
+            <Setter Property="Background" Value="WhiteSmoke" />
         </Style>
     </Application.Resources>
 </Application>

@@ -4,22 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileBrowser"
+
+        xmlns:properties="clr-namespace:FileBrowser.Properties"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xml:lang="en-US"
+        Title="MainWindow" Height="600" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
-            <Button Style="{StaticResource MenuButton}">Refresh</Button>
-            <Button Style="{StaticResource MenuButton}">Settings</Button>
-            <Button Style="{StaticResource MenuButton}">Help</Button>
-            <Button Style="{StaticResource MenuButton}">About</Button>
+
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" Style="{StaticResource Menu}">
+            <Button Style="{StaticResource MenuButton}" Content="{x:Static properties:Resources.MenuButtonRefresh}"/>
+            <Button Style="{StaticResource MenuButton}" Content="{x:Static properties:Resources.MenuButtonSettings}"/>
+            <Button Style="{StaticResource MenuButton}" Content="{x:Static properties:Resources.MenuButtonHelp}"/>
+            <Button Style="{StaticResource MenuButton}" Content="{x:Static properties:Resources.MenuButtonAbout}"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
-            <Button>Refresh</Button>
-            <Button>x</Button>
+
         </StackPanel>
 
     </Grid>
