@@ -10,11 +10,16 @@ namespace FileBrowser.Model.DAL.Mappings {
 
             HasMany<Folder>(c => c.Folders)
                 .WithRequired(f =>  f.Category)
+                .HasForeignKey(f => f.CategoryId)
                 .WillCascadeOnDelete(true);
 
+
             HasMany<FileExtension>(c => c.Extensions)
-                .WithRequired(e => e.Category)
+                .WithRequired(f => f.Category)
+                .HasForeignKey(f => f.CategoryId)
                 .WillCascadeOnDelete(true);
+
+
         }
     }
 }

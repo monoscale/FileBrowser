@@ -22,5 +22,9 @@ namespace FileBrowser.Model {
             Folders = folders;
             Extensions = extensions;
         }
+
+        public override string ToString() {
+            return Name;
+        }
     }
 }

@@ -120,6 +120,9 @@
   <data name="ArgumentExceptionPathFolder" xml:space="preserve">
     <value>Invalid Path</value>
   </data>
+  <data name="LabelSelectCategory" xml:space="preserve">
+    <value>Select Category: </value>
+  </data>
   <data name="MenuButtonAbout" xml:space="preserve">
     <value>About</value>
   </data>
@@ -133,6 +136,6 @@
     <value>Settings</value>
   </data>
   <data name="ProgramName" xml:space="preserve">
-    <value>FileBrowser</value>
+    <value>File Browser</value>
   </data>
 </root>

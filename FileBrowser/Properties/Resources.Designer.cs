@@ -70,6 +70,15 @@ namespace FileBrowser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Category: .
+        /// </summary>
+        public static string LabelSelectCategory {
+            get {
+                return ResourceManager.GetString("LabelSelectCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         public static string MenuButtonAbout {
@@ -106,7 +115,7 @@ namespace FileBrowser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FileBrowser.
+        ///   Looks up a localized string similar to File Browser.
         /// </summary>
         public static string ProgramName {
             get {

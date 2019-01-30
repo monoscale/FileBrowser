@@ -6,8 +6,10 @@
         public int FileExtensionId { get; set; }
         public string Extension { get; set; }
 
-       
-        public virtual Category Category { get; set; }
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+
+        public FileExtension() { }
 
         public FileExtension(string extension) {
             Extension = extension;

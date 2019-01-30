@@ -32,7 +32,14 @@ namespace FileBrowser.Model {
             }
         }
 
-        public virtual Category Category { get; set; }
+       
+        /// for entity framework
+      
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+        public Folder() {
+
+        }
 
         /// <summary>
         /// Default constructor
@@ -43,15 +50,15 @@ namespace FileBrowser.Model {
         }
 
         /// <summary>
-        /// Gets all the files that match the extensions
+        /// Gets all the files that match the extensions by performaing a deep search trough the whole file hierarchy, starting from the Path of this Folder object.
         /// </summary>
         /// <param name="extensions">A collection of extensions</param>
-        /// <returns>A collection of files that match the extensions</returns>
-        public ICollection<FileInfo> GetFiles(ICollection<string> extensions) {
+        /// <returns>A sorted collection of files that match the extensions</returns>
+        public ICollection<FileInfo> GetFiles(ICollection<FileExtension> extensions) {
             DirectoryInfo directory = new DirectoryInfo(Path);
             List<FileInfo> files = new List<FileInfo>();
-            foreach (string ext in extensions) {
-                string regex = "*" + ext;
+            foreach (FileExtension ext in extensions) {
+                string regex = "*" + ext.Extension;
                 files.AddRange(directory.GetFiles(regex, SearchOption.AllDirectories));
             }
             files.Sort(new FileInfoComparer());
@@ -68,7 +75,7 @@ namespace FileBrowser.Model {
             if (other == null) {
                 return false;
             }
-            return (Path.Equals(other.Path));
+            return Path.Equals(other.Path);
         }
 
 

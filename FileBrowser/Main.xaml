@@ -1,4 +1,4 @@
-﻿<Window x:Class="FileBrowser.MainWindow"
+﻿<Window x:Class="FileBrowser.View.Main"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,10 +8,9 @@
         xmlns:controls="clr-namespace:FileBrowser.Controls"
 
 
-
         mc:Ignorable="d"
         xml:lang="en-US"
-        Title="{x:Static properties:Resources.ProgramName}"
+        
         Height="600" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,11 +29,11 @@
             <Button Style="{StaticResource MenuButton}" Content="{x:Static properties:Resources.MenuButtonAbout}"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
-            <controls:CategoryUserControl x:Name="CategoryUserControl"/>
-            <Grid>
-                <controls:FileBrowserTreeViewControl x:Name="FileBrowserTreeView"/>
-            </Grid>
-
+            <StackPanel Orientation="Horizontal">
+                <Button>Epic</Button>
+                <Button>Not epic</Button>
+            </StackPanel>
+            <controls:FileBrowserTreeView x:Name="FileBrowserTreeView"/>
         </StackPanel>
 
     </Grid>

@@ -9,7 +9,7 @@ namespace FileBrowser.Model.DAL {
     /// </summary>
     public class FileBrowserContext : DbContext {
 
-        public DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
 
         public FileBrowserContext() : base("name=FileBrowserDbConnectionString") {
             Database.SetInitializer<FileBrowserContext>(new CreateDatabaseIfNotExists<FileBrowserContext>());
@@ -17,6 +17,7 @@ namespace FileBrowser.Model.DAL {
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             modelBuilder.Configurations.Add(new CategoryMapping());
+     
         }
     }
 }

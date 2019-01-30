@@ -74,6 +74,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\CategoryUserControl.xaml.cs">
+      <DependentUpon>CategoryUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FileBrowserTreeViewControl.xaml.cs">
+      <DependentUpon>FileBrowserTreeViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\CategoryViewModel.cs" />
+    <Page Include="Controls\CategoryUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FileBrowserTreeViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -83,7 +98,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Constants\ColorPalette.cs" />
-    <Compile Include="Controls\FileBrowserTreeView.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -93,7 +107,6 @@
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\DAL\FileBrowserContext.cs" />
     <Compile Include="Model\DAL\Mappings\CategoryMapping.cs" />
-    <Compile Include="Model\DAL\Mappings\FolderMapping.cs" />
     <Compile Include="Model\FileExtension.cs" />
     <Compile Include="Model\Folder.cs" />
     <Compile Include="Model\Repositories\CategoryRepository.cs" />
@@ -127,7 +140,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\" />
     <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

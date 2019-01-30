@@ -5,6 +5,7 @@ using System.Windows;
 using FileBrowser.Model;
 using FileBrowser.Model.DAL;
 using FileBrowser.Model.Repositories;
+using FileBrowser.ViewModel;
 
 
 namespace FileBrowser {
@@ -13,24 +14,19 @@ namespace FileBrowser {
     /// </summary>
     public partial class MainWindow : Window {
 
+        private ICategoryRepository repository;
 
-        public MainWindow() {
+        public MainWindow(ICategoryRepository repository) {
+            
             InitializeComponent();
-            ICategoryRepository repository = new CategoryRepository(new FileBrowserContext());
-            repository.Add(new Category("my name is not important"));
-            repository.SaveChanges();
-            IEnumerable<Category> categories = repository.FindAll();
-
-            Debug.WriteLine(categories.Count());
-
-
-
-
+            this.repository = repository;
+            CategoryUserControl.DataContext = new CategoryViewModel(repository);
+            FileBrowserTreeView.PopulateTreeView(((CategoryViewModel)CategoryUserControl.DataContext).SelectedCategory);
         }
 
 
         private void MenuButtonRefresh_OnClick(object sender, RoutedEventArgs e) {
-            FileBrowserTreeView.PopulateTreeView();
+            FileBrowserTreeView.PopulateTreeView(((CategoryViewModel)DataContext).SelectedCategory);
         }
     }
 }

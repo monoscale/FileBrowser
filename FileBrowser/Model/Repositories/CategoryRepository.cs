@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using FileBrowser.Model.DAL;
 
 namespace FileBrowser.Model.Repositories {
@@ -15,7 +17,7 @@ namespace FileBrowser.Model.Repositories {
         }
 
         public IEnumerable<Category> FindAll() {
-            return context.Categories;
+            return context.Categories.Include(c => c.Folders).Include(c => c.Extensions).ToList();
         }
 
         public void SaveChanges() {
