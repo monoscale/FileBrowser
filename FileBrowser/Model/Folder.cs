@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Runtime.InteropServices;
 using FileBrowser.Properties;
@@ -10,16 +9,19 @@ namespace FileBrowser.Model {
     /// This class represents a directory
     /// </summary>
     public class Folder : IEquatable<Folder> {
+
+      
+        public int FolderId { get; set; }
+
         /// <summary>
         /// Path of the directory
         /// </summary>
-
         private string path;
 
         /// <summary>
         /// Gets or sets the path of the directory
         /// </summary>
-        [Key]
+
         public string Path {
             get => path;
             set {
@@ -29,6 +31,8 @@ namespace FileBrowser.Model {
                 path = value;
             }
         }
+
+        public virtual Category Category { get; set; }
 
         /// <summary>
         /// Default constructor

@@ -1,4 +1,10 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Windows;
+using FileBrowser.Model;
+using FileBrowser.Model.DAL;
+using FileBrowser.Model.Repositories;
 
 
 namespace FileBrowser {
@@ -10,6 +16,15 @@ namespace FileBrowser {
 
         public MainWindow() {
             InitializeComponent();
+            ICategoryRepository repository = new CategoryRepository(new FileBrowserContext());
+            repository.Add(new Category("my name is not important"));
+            repository.SaveChanges();
+            IEnumerable<Category> categories = repository.FindAll();
+
+            Debug.WriteLine(categories.Count());
+
+
+
 
         }
 
