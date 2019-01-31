@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:FileBrowser"
         xmlns:properties="clr-namespace:FileBrowser.Properties"
         xmlns:controls="clr-namespace:FileBrowser.Controls"
-
+        xmlns:models="clr-namespace:FileBrowser.Model"
+        xmlns:viewmodels="clr-namespace:FileBrowser.ViewModel"
+        xmlns:constants="clr-namespace:FileBrowser.Constants"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
 
 
         mc:Ignorable="d"
@@ -29,13 +32,30 @@
             <Button Style="{StaticResource MenuButton}" Content="{x:Static properties:Resources.MenuButtonHelp}"/>
             <Button Style="{StaticResource MenuButton}" Content="{x:Static properties:Resources.MenuButtonAbout}"/>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
-            <controls:CategoryUserControl x:Name="CategoryUserControl"/>
-            <Grid>
-                <controls:FileBrowserTreeViewControl x:Name="FileBrowserTreeView"/>
+
+        <!-- GRID instead of STACKPANEL so the TREEVIEW is scrollable. -->
+        <Grid Grid.Column="1" Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <controls:CategoryUserControl x:Name="CategoryUserControl" Grid.Column="0" Grid.Row="0"/>
+            <Grid Grid.Column="0" Grid.Row="1">
+                <TreeView x:Name="FileBrowserTree" ItemsSource="{Binding TreeViewItems}">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Children}" DataType="{x:Type models:FileBrowserTreeItem}">
+                            <TreeViewItem Header="{Binding Name}" Foreground="{StaticResource ForeGroundTreeColor}"></TreeViewItem>
+                        </HierarchicalDataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
             </Grid>
 
-        </StackPanel>
+        </Grid>
 
     </Grid>
 </Window>

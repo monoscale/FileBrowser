@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using FileBrowser.Properties;
 
@@ -54,15 +55,15 @@ namespace FileBrowser.Model {
         /// </summary>
         /// <param name="extensions">A collection of extensions</param>
         /// <returns>A sorted collection of files that match the extensions</returns>
-        public ICollection<FileInfo> GetFiles(ICollection<FileExtension> extensions) {
+        public FileBrowserTreeItem GetFiles(ICollection<FileExtension> extensions) {
             DirectoryInfo directory = new DirectoryInfo(Path);
-            List<FileInfo> files = new List<FileInfo>();
+            FileBrowserTreeItem rootItem = new FileBrowserTreeItem(Path);
             foreach (FileExtension ext in extensions) {
                 string regex = "*" + ext.Extension;
-                files.AddRange(directory.GetFiles(regex, SearchOption.AllDirectories));
+                rootItem.Children.AddRange(directory.GetFiles(regex, SearchOption.AllDirectories).Select(fi => new FileBrowserTreeItem(fi.Name)));
             }
-            files.Sort(new FileInfoComparer());
-            return files;
+            rootItem.Children.Sort(new FileBrowserTreeItemComparer());
+            return rootItem;
         }
 
 
@@ -83,7 +84,7 @@ namespace FileBrowser.Model {
         /// <summary>
         /// Special File Comparer that treats digits as numerical rather than text
         /// </summary>
-        private class FileInfoComparer : IComparer<FileInfo> {
+        private class FileBrowserTreeItemComparer : IComparer<FileBrowserTreeItem> {
 
             [DllImport("shlwapi.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
             private static extern int StrCmpLogicalW(string x, string y);
@@ -98,7 +99,7 @@ namespace FileBrowser.Model {
             /// 1 if x > y
             /// -1 if x < y
             /// </returns>
-            public int Compare(FileInfo x, FileInfo y) {
+            public int Compare(FileBrowserTreeItem x, FileBrowserTreeItem y) {
                 return StrCmpLogicalW(x.Name, y.Name);
             }
         }

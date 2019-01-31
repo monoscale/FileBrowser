@@ -16,17 +16,29 @@ namespace FileBrowser {
 
         private ICategoryRepository repository;
 
+        private CategoryViewModel categoryViewModel;
+        private FileBrowserTreeViewModel fileBrowserTreeViewModel;
+
         public MainWindow(ICategoryRepository repository) {
-            
+
             InitializeComponent();
             this.repository = repository;
-            CategoryUserControl.DataContext = new CategoryViewModel(repository);
-            FileBrowserTreeView.PopulateTreeView(((CategoryViewModel)CategoryUserControl.DataContext).SelectedCategory);
+
+            categoryViewModel = new CategoryViewModel(repository);
+            fileBrowserTreeViewModel = new FileBrowserTreeViewModel();
+
+
+
+            CategoryUserControl.DataContext = categoryViewModel;
+            FileBrowserTree.DataContext = fileBrowserTreeViewModel;
+
+
+            fileBrowserTreeViewModel.Populate(categoryViewModel.SelectedCategory);
         }
 
 
         private void MenuButtonRefresh_OnClick(object sender, RoutedEventArgs e) {
-            FileBrowserTreeView.PopulateTreeView(((CategoryViewModel)DataContext).SelectedCategory);
+            fileBrowserTreeViewModel.Populate(categoryViewModel.SelectedCategory);
         }
     }
 }

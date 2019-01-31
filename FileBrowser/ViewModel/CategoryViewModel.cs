@@ -1,14 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FileBrowser.Model;
 using FileBrowser.Model.Repositories;
 
 namespace FileBrowser.ViewModel {
-    public class CategoryViewModel{
 
- 
-        public Category SelectedCategory { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
+    public class CategoryViewModel : ViewModel {
+
+        private Category selectedCategory;
+
+        public Category SelectedCategory {
+            get => selectedCategory;
+            set {
+                selectedCategory = value;
+                OnPropertyChanged("SelectedCategory");
+            }
+        }
+
+        public IEnumerable<Category> Categories { get; set; } 
 
         private ICategoryRepository repository;
 

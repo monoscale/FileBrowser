@@ -5,6 +5,8 @@
              Startup="StartUp">
     <Application.Resources>
 
+        <SolidColorBrush x:Key="ForeGroundTreeColor" Color="#3A90EC"/>
+
 
         <Style x:Key="MenuButton" TargetType="Button">
             <!-- remove border -->

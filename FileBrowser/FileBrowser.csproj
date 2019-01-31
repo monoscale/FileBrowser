@@ -77,15 +77,12 @@
     <Compile Include="Controls\CategoryUserControl.xaml.cs">
       <DependentUpon>CategoryUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FileBrowserTreeViewControl.xaml.cs">
-      <DependentUpon>FileBrowserTreeViewControl.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Model\FileBrowserTreeItem.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
+    <Compile Include="ViewModel\FileBrowserTreeViewModel.cs" />
+    <Compile Include="ViewModel\ViewModel.cs" />
     <Page Include="Controls\CategoryUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\FileBrowserTreeViewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
